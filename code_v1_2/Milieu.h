@@ -1,38 +1,42 @@
+// Milieu.h
 #ifndef _MILIEU_H_
 #define _MILIEU_H_
 
-
 #include "UImg.h"
-#include "Bestiole.h"
+#include "IBestiole.h"
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
-
 class Milieu : public UImg
 {
+private:
+    static const T white[];
 
-private :
-   static const T          white[];
+    int width, height;
+    std::vector<IBestiole*> listeBestioles;
+    void gererCollisions();
+    void gererNaissances();
+    void gererMorts();
 
-   int                     width, height;
-   std::vector<Bestiole>   listeBestioles;
+public:
+    Milieu(int _width, int _height);
+    ~Milieu();
 
-public :
-   Milieu( int _width, int _height );
-   ~Milieu( void );
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
 
-   int getWidth( void ) const { return width; };
-   int getHeight( void ) const { return height; };
+    void step();
 
-   void step( void );
+    void addMember(IBestiole* b);
+    void removeMember(IBestiole* b);
+    int nbVoisins(const IBestiole& b) const;
 
-   void addMember( const Bestiole & b ) { listeBestioles.push_back(b); listeBestioles.back().initCoords(width, height); }
-   int nbVoisins( const Bestiole & b );
-
+    std::vector<const IBestiole*> detecteBestiolesVoisines(const IBestiole& b) const;
+    bool testCollision(const IBestiole& b1, const IBestiole& b2);
 };
 
-
-#endif
+#endif // _MILIEU_H_

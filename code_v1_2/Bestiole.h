@@ -1,54 +1,80 @@
-#ifndef _BESTIOLES_H_
-#define _BESTIOLES_H_
+// Bestiole.h
+// Bestiole.h
+#ifndef _BESTIOLE_H_
+#define _BESTIOLE_H_
 
-
+#include "IBestiole.h"
+#include "ICapteur.h"
+#include "IAccessoire.h"
+#include "IComportement.h"
 #include "UImg.h"
 
 #include <iostream>
+#include <vector>
+#include <memory>
 
 using namespace std;
 
-
 class Milieu;
 
-
-class Bestiole
+class Bestiole : public IBestiole
 {
+private:
+    static const double AFF_SIZE;
+    static const double MAX_VITESSE;
+    static const double LIMITE_VUE;
 
-private :
-   static const double     AFF_SIZE;
-   static const double     MAX_VITESSE;
-   static const double     LIMITE_VUE;
+    static int next;
 
-   static int              next;
+    int identite;
+    int x, y;
+    double cumulX, cumulY;
+    double orientation;
+    double vitesse;
+    T* couleur;
+    int age;
+    int ageLimite;
+    
+    vector<ICapteur*> capteurs;
+    vector<IAccessoire*> accessoires;
+    IComportement* comportement;
 
-private :
-   int               identite;
-   int               x, y;
-   double            cumulX, cumulY;
-   double            orientation;
-   double            vitesse;
+    void bouge(int xLim, int yLim) override;
 
-   T               * couleur;
-
-private :
-   void bouge( int xLim, int yLim );
-
-public :                                           // Forme canonique :
-   Bestiole( void );                               // Constructeur par defaut
-   Bestiole( const Bestiole & b );                 // Constructeur de copies
-   ~Bestiole( void );                              // Destructeur
-                                                   // Operateur d'affectation binaire par defaut
-   void action( Milieu & monMilieu );
-   void draw( UImg & support );
-
-   bool jeTeVois( const Bestiole & b ) const;
-
-   void initCoords( int xLim, int yLim );
-
-   friend bool operator==( const Bestiole & b1, const Bestiole & b2 );
-
+public:
+    Bestiole();
+    Bestiole(const Bestiole& b);
+    ~Bestiole();
+    
+    // Méthodes de IBestiole
+    void action(Milieu& monMilieu) override;
+    void draw(UImg& support) override;
+    bool jeTeVois(const IBestiole& b) const override;
+    void initCoords(int xLim, int yLim) override;
+    std::pair<int, int> getPosition() const override { return std::pair<int, int>(x, y); }
+    double getVitesse() const override { return vitesse; }
+    double getOrientation() const override { return orientation; }
+    bool meurt() override;
+    IBestiole* clone() const override;
+    
+    // Méthodes supplémentaires
+    int getIdentite() const { return identite; }
+    void vieillir();
+    void ajouterCapteur(ICapteur* capteur);
+    void ajouterAccessoire(IAccessoire* accessoire);
+    void setComportement(IComportement* comp);
+    IComportement* getComportement() const { return comportement; }
+    
+    // Pour la détection des collisions
+    double getSize() const { return AFF_SIZE; }
+    
+    // Méthodes utiles pour les capteurs et accessoires
+    double getCoeffCamouflage() const;
+    bool detecte(const IBestiole& autre) const;
+    bool estDetectee(const IBestiole& autre) const;
+    void changeOrientation(double nouvelleOrientation);
+    
+    friend bool operator==(const Bestiole& b1, const Bestiole& b2);
 };
 
-
-#endif
+#endif // _BESTIOLE_H_
