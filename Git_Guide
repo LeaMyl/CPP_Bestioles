@@ -1,0 +1,66 @@
+1. Installer Git
+
+Si ce n’est pas déjà fait, il faut installer Git sur ton ordinateur. Tu peux le télécharger ici : https://git-scm.com/.
+2. Cloner le projet GitHub
+
+Si tu veux travailler sur un projet qui est déjà sur GitHub, tu dois le cloner. Voici comment faire :
+
+    Va sur la page du projet sur GitHub.
+
+    Clique sur le bouton Code (généralement situé en haut à droite du projet).
+
+    Copie l'URL de clonage (soit HTTPS, soit SSH). Par exemple :
+    https://github.com/utilisateur/nom-du-repository.git
+
+    Ouvre un terminal (ou Git Bash si tu es sous Windows).
+
+    Dans le terminal, navigue vers le dossier où tu veux que le projet soit cloné avec la commande cd :
+
+cd chemin/vers/ton/dossier
+
+Clone le projet en utilisant la commande suivante :
+
+    git clone https://github.com/utilisateur/nom-du-repository.git
+
+    Remplace l’URL par celle que tu as copiée.
+
+Cela va télécharger une copie du projet sur ton ordinateur.
+3. Configurer Git avec ton compte GitHub
+
+Si c'est la première fois que tu utilises Git, il faut aussi configurer ton nom et ton email pour qu'ils soient associés à tes commits :
+
+git config --global user.name "Ton Nom"
+git config --global user.email "ton.email@example.com"
+
+4. Accéder au projet cloné
+
+Une fois le projet cloné, tu peux y accéder en utilisant la commande cd :
+
+cd nom-du-repository
+
+5. Se connecter avec ton compte GitHub (si besoin d'authentification)
+
+Si tu veux pousser des modifications sur GitHub, tu dois t'assurer que Git peut s’authentifier sur GitHub. Il y a deux façons de faire cela :
+
+    Par HTTPS : GitHub te demandera ton nom d'utilisateur et ton mot de passe. Mais depuis août 2021, il faut utiliser un token d'accès personnel (PAT) à la place du mot de passe.
+    Par SSH : Tu peux aussi configurer une clé SSH pour ne pas avoir à entrer ton mot de passe à chaque fois.
+
+6. Pousser des modifications sur GitHub
+
+Après avoir fait des modifications dans ton projet, voici les étapes pour les envoyer sur GitHub :
+
+    Ajouter les fichiers modifiés à l'index Git :
+
+git add .
+
+Faire un commit avec un message expliquant les changements :
+
+git commit -m "Ton message de commit"
+
+Pousser les modifications sur GitHub :
+
+    git push origin main
+
+    Si tu travailles sur une autre branche que main, remplace-la par le nom de ta branche.
+
+Voilà, tu es maintenant connecté et tu peux travailler avec ton projet GitHub !
