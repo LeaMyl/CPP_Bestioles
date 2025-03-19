@@ -1,19 +1,26 @@
-// IComportement.h
-#ifndef _ICOMPORTEMENT_H_
-#define _ICOMPORTEMENT_H_
+#ifndef ICOMPORTEMENT_H
+#define ICOMPORTEMENT_H
 
-#include <string>
+#include <array>
 
-class IBestiole;
-class Milieu;
+// Déclaration anticipée de BestioleTestComp
+class BestioleTestComp;
+class MilieuTestComp;
 
-class IComportement
-{
+// Interface IComportement
+class IComportement {
 public:
-    virtual ~IComportement() = default;
-    virtual double calculerNouvelleDirection(const IBestiole & b, const Milieu & m) const = 0;
+    // Méthode virtuelle pure pour calculer la nouvelle direction d'une bestioleTestComp
+    virtual double calculerNouvelleDirection(const BestioleTestComp& bestioleTestComp, const MilieuTestComp& milieu) = 0;
+
+    // Méthode virtuelle pour obtenir la couleur associée au comportement
+    virtual std::array<int, 3> getCouleur() const = 0;
+
+    // Méthode virtuelle pour cloner le comportement (utile pour le polymorphisme)
     virtual IComportement* clone() const = 0;
-    virtual std::string getNom() const = 0;
+
+    // Destructeur virtuel pour assurer une destruction propre des objets dérivés
+    virtual ~IComportement() = default;
 };
 
-#endif // _ICOMPORTEMENT_H_
+#endif // ICOMPORTEMENT_H
