@@ -73,8 +73,9 @@ public:
     bool detecte(const IBestiole& autre) const;
     bool estDetectee(const IBestiole& autre) const;
     void changeOrientation(double nouvelleOrientation);
-    
+
     friend bool operator==(const Bestiole& b1, const Bestiole& b2);
+    void setVitesse(double nouvelleVitesse);
 };
 
 #endif // _BESTIOLE_H_

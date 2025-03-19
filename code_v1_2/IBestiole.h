@@ -8,6 +8,21 @@ class Milieu;
 
 class IBestiole
 {
+    public:
+    static const double AFF_SIZE;
+    static const double MAX_VITESSE;
+    static const double LIMITE_VUE;
+
+    static int next;
+
+    int identite;
+    int x, y;
+    double cumulX, cumulY;
+    double orientation;
+    double vitesse;
+    T* couleur;
+    int age;
+    int ageLimite;
 public:
     virtual ~IBestiole() = default;
     virtual void bouge(int xLim, int yLim) = 0;
@@ -16,7 +31,7 @@ public:
     virtual bool jeTeVois(const IBestiole & b) const = 0;
     virtual void initCoords(int xLim, int yLim) = 0;
     virtual std::pair<int, int> getPosition() const = 0;
-    double getSize() const { return AFF_SIZE; }
+    virtual double getSize() const = 0;
     virtual double getVitesse() const = 0;
     virtual double getOrientation() const = 0;
     virtual bool meurt() = 0;

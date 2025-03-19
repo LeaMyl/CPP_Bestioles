@@ -13,7 +13,7 @@ public:
     ~ComportementGregaire() override;
 
     // Implémentation de la méthode calculerNouvelleDirection
-    double calculerNouvelleDirection(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) override;
+    double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
     // Implémentation de la méthode getCouleur
     std::array<int, 3> getCouleur() const override;

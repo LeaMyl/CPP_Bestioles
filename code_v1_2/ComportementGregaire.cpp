@@ -1,6 +1,6 @@
 #include "ComportementGregaire.h"
-#include "BestioleTestComp.h"
-#include "MilieuTestComp.h"
+#include "Bestiole.h"
+#include "Milieu.h"
 #include <cmath>
 #include <vector>
 
@@ -17,7 +17,7 @@ ComportementGregaire::~ComportementGregaire() {
 }
 
 // Implémentation de calculerNouvelleDirection
-double ComportementGregaire::calculerNouvelleDirection(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) {
+double ComportementGregaire::calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) {
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
     if (voisines.empty()) {
         return bestiole.getOrientation();

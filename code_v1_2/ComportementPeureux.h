@@ -13,7 +13,7 @@ public:
     ~ComportementPeureux() override;
 
     // Implémentation de la méthode calculerNouvelleDirection
-    double calculerNouvelleDirection(const BestioleTestComp& bestioleTestComp, const MilieuTestComp& milieuTestComp) override;
+    double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
     // Implémentation de la méthode getCouleur
     std::array<int, 3> getCouleur() const override;
@@ -22,13 +22,13 @@ public:
     IComportement* clone() const override;
 
 private:
-    // Méthode pour vérifier si la bestioleTestComp doit fuir
-    bool doitFuir(const BestioleTestComp& bestioleTestComp, const MilieuTestComp& milieuTestComp) const;
+    // Méthode pour vérifier si la bestiole doit fuir
+    bool doitFuir(const Bestiole& bestiole, const Milieu& milieu) const;
 
     // Méthode pour calculer la direction de fuite
-    double calculerDirectionFuite(const BestioleTestComp& bestioleTestComp, const MilieuTestComp& milieuTestComp) const;
+    double calculerDirectionFuite(const Bestiole& bestiole, const Milieu& milieu) const;
 
-    // Attribut pour suivre si la bestioleTestComp est en train de fuir
+    // Attribut pour suivre si la bestiole est en train de fuir
     mutable bool enTrainDeFuir;
     mutable int dureeFuite; // Durée de la fuite (en pas de simulation)
 };

@@ -1,6 +1,6 @@
 #include "ComportementPeureux.h"
-#include "BestioleTestComp.h"
-#include "MilieuTestComp.h"
+#include "Bestiole.h"
+#include "Milieu.h"
 #include <cmath>
 #include <vector>
 
@@ -17,7 +17,7 @@ ComportementPeureux::~ComportementPeureux() {
 }
 
 // Implémentation de calculerNouvelleDirection
-double ComportementPeureux::calculerNouvelleDirection(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) {
+double ComportementPeureux::calculerNouvelleDirection( Bestiole& bestiole, const Milieu& milieu) {
     if (enTrainDeFuir) {
         dureeFuite--;
         if (dureeFuite <= 0) {
@@ -48,13 +48,14 @@ IComportement* ComportementPeureux::clone() const {
 }
 
 // Méthode pour vérifier si la bestiole doit fuir
-bool ComportementPeureux::doitFuir(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) const {
+bool ComportementPeureux::doitFuir(const Bestiole& bestiole, const Milieu& milieu) const {
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
-    return voisines.size() > 5;
+    //std::cout<<"hdhd = "<< voisines.size() <<std::endl;
+    return voisines.size() > 1;
 }
 
 // Méthode pour calculer la direction de fuite
-double ComportementPeureux::calculerDirectionFuite(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) const {
+double ComportementPeureux::calculerDirectionFuite(const Bestiole& bestiole, const Milieu& milieu) const {
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
     double directionMoyenne = 0.0;
     for (const auto& voisine : voisines) {

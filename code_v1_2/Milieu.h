@@ -18,9 +18,9 @@ private:
 
     int width, height;
     std::vector<IBestiole*> listeBestioles;
-    void gererCollisions();
-    void gererNaissances();
-    void gererMorts();
+    //void gererCollisions();
+    //void gererNaissances();
+    //void gererMorts();
 
 public:
     Milieu(int _width, int _height);

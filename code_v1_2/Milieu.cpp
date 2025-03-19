@@ -34,9 +34,9 @@ void Milieu::step()
     }
     
     // Gérer les collisions, naissances et morts
-    gererCollisions();
-    gererNaissances();
-    gererMorts();
+    //gererCollisions();
+    //gererNaissances();
+    //gererMorts();
     
     // Dessiner les bestioles
     for (auto& bestiole : listeBestioles) {

@@ -2,6 +2,8 @@
 #include "Configuration.h"
 #include <fstream>
 #include <iostream>
+#include <cmath>
+
 
 Configuration* Configuration::instance = nullptr;
 

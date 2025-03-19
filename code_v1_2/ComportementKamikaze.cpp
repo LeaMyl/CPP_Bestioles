@@ -1,6 +1,6 @@
 #include "ComportementKamikaze.h"
-#include "BestioleTestComp.h"
-#include "MilieuTestComp.h"
+#include "Bestiole.h"
+#include "Milieu.h"
 #include <cmath>
 #include <limits> // Pour utiliser std::numeric_limits
 
@@ -15,7 +15,7 @@ ComportementKamikaze::~ComportementKamikaze() {
 }
 
 // Implémentation de calculerNouvelleDirection
-double ComportementKamikaze::calculerNouvelleDirection(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) {
+double ComportementKamikaze::calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) {
     // Trouver la bestiole la plus proche
     const IBestiole* cible = trouverBestioleLaPlusProche(bestiole, milieu);
 
@@ -44,11 +44,11 @@ IComportement* ComportementKamikaze::clone() const {
 }
 
 // Méthode pour trouver la bestiole la plus proche
-const IBestiole* ComportementKamikaze::trouverBestioleLaPlusProche(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) const {
+const IBestiole* ComportementKamikaze::trouverBestioleLaPlusProche(const Bestiole& bestiole, const Milieu& milieu) const {
     const IBestiole* cible = nullptr;
     double distanceMin = std::numeric_limits<double>::max(); // Initialiser avec une valeur très grande
-
-    for (const auto& autre : milieu.getListeBestioles()) {
+    std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
+    for (const auto& autre : voisines) {
         if (&bestiole != autre) { // Ne pas se comparer à soi-même
             double dx = autre->getPosition().first - bestiole.getPosition().first;
             double dy = autre->getPosition().second - bestiole.getPosition().second;

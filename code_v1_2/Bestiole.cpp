@@ -33,7 +33,13 @@ Bestiole::Bestiole()
     couleur[1] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
     couleur[2] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
     
-    comportement = nullptr;
+    // Si un comportement est défini, utiliser sa couleur
+    if (comportement != nullptr) {
+        auto comportementCouleur = comportement->getCouleur();
+        couleur[0] = comportementCouleur[0];
+        couleur[1] = comportementCouleur[1];
+        couleur[2] = comportementCouleur[2];
+    }
 }
 
 Bestiole::Bestiole(const Bestiole& b)
@@ -171,11 +177,19 @@ void Bestiole::draw(UImg& support)
 
 bool Bestiole::jeTeVois(const IBestiole& b) const
 {
-    return detecte(b) && estDetectee(b);
+    //return detecte(b) && estDetectee(b);
+    double         dist;
+
+
+   dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
+   //std::cout<<"fuhezbfzhbfi = "<< dist <<std::endl;
+   return ( dist <= 500 );
+
 }
 
 bool Bestiole::detecte(const IBestiole& autre) const
 {
+    /*
     if (capteurs.empty()) {
         // Si aucun capteur, utiliser la détection par défaut
         auto pos = autre.getPosition();
@@ -189,7 +203,7 @@ bool Bestiole::detecte(const IBestiole& autre) const
             return true;
         }
     }
-    
+    */
     return false;
 }
 
@@ -256,9 +270,18 @@ void Bestiole::setComportement(IComportement* comp)
         delete comportement;
     }
     comportement = comp;
+    // Assigner la couleur en fonction du comportement
+    auto couleurComportement = comportement->getCouleur();
+    couleur[0] = couleurComportement[0];
+    couleur[1] = couleurComportement[1];
+    couleur[2] = couleurComportement[2];
 }
 
 bool operator==(const Bestiole& b1, const Bestiole& b2)
 {
     return (b1.identite == b2.identite);
+}
+
+void Bestiole::setVitesse(double nouvelleVitesse) {
+    vitesse = nouvelleVitesse;
 }

@@ -2,6 +2,7 @@
 #define COMPORTEMENTKAMIKAZE_H
 
 #include "IComportement.h"
+#include "IBestiole.h"
 
 // Classe ComportementKamikaze implémentant IComportement
 class ComportementKamikaze : public IComportement {
@@ -13,7 +14,7 @@ public:
     ~ComportementKamikaze() override;
 
     // Implémentation de la méthode calculerNouvelleDirection
-    double calculerNouvelleDirection(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) override;
+    double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
     // Implémentation de la méthode getCouleur
     std::array<int, 3> getCouleur() const override;
@@ -23,7 +24,7 @@ public:
 
 private:
     // Méthode pour trouver la bestiole la plus proche
-    const IBestiole* trouverBestioleLaPlusProche(const BestioleTestComp& bestiole, const MilieuTestComp& milieu) const;
+    const IBestiole* trouverBestioleLaPlusProche(const Bestiole& bestiole, const Milieu& milieu) const;
 };
 
 #endif // COMPORTEMENTKAMIKAZE_H
