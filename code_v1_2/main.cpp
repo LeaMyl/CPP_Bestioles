@@ -20,7 +20,7 @@ int main() {
 
     // Création et ajout des bestioles au milieu
     //int identite = 1;
-
+/*
     // Ajouter 8 bestioles avec comportement grégaire
     for (int i = 0; i < 8; ++i) {
         auto bestiole = std::make_unique<Bestiole>();  // Utiliser le constructeur par défaut
@@ -28,9 +28,9 @@ int main() {
         ecosysteme.getMilieu().addMember(bestiole.get());  // Ajouter au milieu
         ecosysteme.getMilieu().addMember(bestiole.release());  // Relâche la propriété du pointeur unique
     }
-
+*/
     // Ajouter 5 bestioles avec comportement peureux
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 1; ++i) {
         auto bestiole = std::make_unique<Bestiole>();
         bestiole->setComportement(&comportementPeureux);  // Comportement Peureux
         ecosysteme.getMilieu().addMember(bestiole.get());
@@ -38,7 +38,7 @@ int main() {
     }
 
     // Ajouter 7 bestioles avec comportement kamikaze
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < 1; ++i) {
         auto bestiole = std::make_unique<Bestiole>();
         bestiole->setComportement(&comportementKamikaze);  // Comportement Kamikaze
         ecosysteme.getMilieu().addMember(bestiole.get());

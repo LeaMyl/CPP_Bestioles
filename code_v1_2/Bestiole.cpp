@@ -202,19 +202,19 @@ void Bestiole::draw(UImg &support) {
 
 bool Bestiole::jeTeVois(const IBestiole& b) const
 {
-    //return detecte(b) && estDetectee(b);
-    double         dist;
+    return detecte(b) && estDetectee(b);
+    //double         dist;
 
 
-   dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
+   //dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
    //std::cout<<"fuhezbfzhbfi = "<< dist <<std::endl;
-   return ( dist <= 500 );
+   //return ( dist <= 500 );
 
 }
 
 bool Bestiole::detecte(const IBestiole& autre) const
 {
-    /*
+    
     if (capteurs.empty()) {
         // Si aucun capteur, utiliser la détection par défaut
         auto pos = autre.getPosition();
@@ -228,7 +228,7 @@ bool Bestiole::detecte(const IBestiole& autre) const
             return true;
         }
     }
-    */
+    
     return false;
 }
 
