@@ -7,8 +7,8 @@
 #include <cmath>
 
 const double Bestiole::AFF_SIZE = 8.;
-const double Bestiole::MAX_VITESSE = 10.;
-const double Bestiole::LIMITE_VUE = 30.;
+const double Bestiole::MAX_VITESSE = 3.;
+const double Bestiole::LIMITE_VUE = 50.;
 
 int Bestiole::next = 0;
 
@@ -170,7 +170,7 @@ void Bestiole::draw(UImg &support) {
     double xt = x + cos(orientation) * AFF_SIZE / 2.1;
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
  
-    double LIMITE_ECOUTE = LIMITE_VUE / 2;
+    double LIMITE_ECOUTE = LIMITE_VUE;
     int couleur_vue[3] = {255, 0, 0};  // Rouge pour la vision
     int couleur_ecoute[3] = {0, 0, 255}; // Bleu pour l'écoute
     float alpha_vue = 0.3f;   // Transparence 30% pour la vision

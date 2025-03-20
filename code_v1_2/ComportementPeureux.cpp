@@ -22,15 +22,21 @@ double ComportementPeureux::calculerNouvelleDirection( Bestiole& bestiole, const
         dureeFuite--;
         if (dureeFuite <= 0) {
             enTrainDeFuir = false;
-            bestiole.setVitesse(bestiole.getVitesse() / 2);
+            bestiole.setVitesse(3.);
         }
         return bestiole.getOrientation();
     }
 
     if (doitFuir(bestiole, milieu)) {
         enTrainDeFuir = true;
-        dureeFuite = 50;
-        bestiole.setVitesse(bestiole.getVitesse() * 2);
+        dureeFuite = 10;
+
+        if (bestiole.getVitesse() < 4) {
+            bestiole.setVitesse(bestiole.getVitesse() + 1);
+        } else {
+            bestiole.setVitesse(4);
+        }
+
         return calculerDirectionFuite(bestiole, milieu);
     }
 

@@ -66,7 +66,7 @@ public:
     IComportement* getComportement() const { return comportement; }
     
     // Pour la détection des collisions
-    double getSize() const { return AFF_SIZE; }
+    double getSize() const override { return AFF_SIZE; }
     
     // Méthodes utiles pour les capteurs et accessoires
     double getCoeffCamouflage() const;
