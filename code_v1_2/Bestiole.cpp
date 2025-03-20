@@ -166,14 +166,39 @@ void Bestiole::action(Milieu& monMilieu)
     vieillir();
 }
 
-void Bestiole::draw(UImg& support)
-{
+void Bestiole::draw(UImg &support) {
     double xt = x + cos(orientation) * AFF_SIZE / 2.1;
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
-
+ 
+    double LIMITE_ECOUTE = LIMITE_VUE / 2;
+    int couleur_vue[3] = {255, 0, 0};  // Rouge pour la vision
+    int couleur_ecoute[3] = {0, 0, 255}; // Bleu pour l'écoute
+    float alpha_vue = 0.3f;   // Transparence 30% pour la vision
+    float alpha_ecoute = 0.2f; // Transparence 20% pour l'écoute
+    double ALPHA = M_PI / 3;  // Angle de vision de 60°
+ 
+    // Dessin du cône de vision en utilisant un polygone triangulaire
+    double angle1 = orientation - ALPHA / 2;
+    double angle2 = orientation + ALPHA / 2;
+    double x1 = x + cos(angle1) * LIMITE_VUE;
+    double y1 = y - sin(angle1) * LIMITE_VUE;
+    double x2 = x + cos(angle2) * LIMITE_VUE;
+    double y2 = y - sin(angle2) * LIMITE_VUE;
+ 
+    CImg<int> points(3, 2);  // Création d'un tableau pour les points du triangle
+    points(0,0) = x; points(0,1) = y;
+    points(1,0) = x1; points(1,1) = y1;
+    points(2,0) = x2; points(2,1) = y2;
+ 
+    support.draw_polygon(points, couleur_vue, alpha_vue);
+ 
+    // Dessin du cercle d'écoute avec transparence
+    support.draw_circle(x, y, LIMITE_ECOUTE, couleur_ecoute, alpha_ecoute);
+ 
+    // Dessin de la bestiole
     support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5., -orientation / M_PI * 180., couleur);
     support.draw_circle(xt, yt, AFF_SIZE / 2., couleur);
-}
+ }
 
 bool Bestiole::jeTeVois(const IBestiole& b) const
 {
