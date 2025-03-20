@@ -3,23 +3,17 @@
 #define _YEUX_H_
 
 #include "ICapteur.h"
+#include <cstdlib>
 
-class Yeux : public ICapteur
-{
-private:
-    double champAngulaire; // α
-    double distance; // δ
-    double capaciteDetection; // γ
-
-public:
-    Yeux(double champAng = M_PI/2, double dist = 20.0, double capacite = 0.8);
-    virtual ~Yeux() = default;
-
-    bool detecte(const IBestiole & moi, const IBestiole & autre) const override;
-    double getDistance() const override { return distance; }
-    double getChampAngulaire() const override { return champAngulaire; }
-    double getCapaciteDetection() const override { return capaciteDetection; }
-    ICapteur* clone() const override;
-};
-
+class Yeux : public ICapteur {
+    public:
+        double angle_min, angle_max;  // Champ angulaire de vision
+        double distance_min, distance_max;  // Distance de détection
+        double gamma_min, gamma_max;  // Capacité de détection
+    
+        Yeux(double a_min, double a_max, double d_min, double d_max, double g_min, double g_max);
+        virtual ~Yeux() = default;
+    
+        bool detecterBestiole(double angle, double distance, double probabilite_detection);
+    };
 #endif // _YEUX_H_

@@ -1,35 +1,13 @@
-// Oreilles.cpp
 #include "Oreilles.h"
-#include "IBestiole.h"
-#include <cmath>
+#include <cstdlib>
 
-Oreilles::Oreilles(double dist, double capacite) : 
-    distance(dist), capaciteDetection(capacite)
-{
-}
 
-bool Oreilles::detecte(const IBestiole & moi, const IBestiole & autre) const
-{
-    // Récupération des positions
-    auto positionMoi = moi.getPosition();
-    auto positionAutre = autre.getPosition();
-    
-    // Calcul de la distance
-    double dx = positionAutre.first - positionMoi.first;
-    double dy = positionAutre.second - positionMoi.second;
-    double distanceCalc = std::sqrt(dx*dx + dy*dy);
-    
-    // Vérification de la distance
-    if (distanceCalc > distance) {
-        return false;
+Oreilles::Oreilles(double d_min, double d_max, double g_min, double g_max): distance_min(d_min), distance_max(d_max), gamma_min(g_min), gamma_max(g_max) {}
+
+bool Oreilles::detecterBestiole(double distance, double probabilite_detection) {
+    if (distance >= distance_min && distance <= distance_max) {
+        double gamma = gamma_min + (gamma_max - gamma_min) * (rand() / (double)RAND_MAX);
+        return (probabilite_detection <= gamma);
     }
-    
-    // Prise en compte de la capacité de détection
-    double proba = static_cast<double>(rand()) / RAND_MAX;
-    return proba <= capaciteDetection;
-}
-
-ICapteur* Oreilles::clone() const
-{
-    return new Oreilles(distance, capaciteDetection);
+    return false;
 }

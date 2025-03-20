@@ -1,50 +1,12 @@
-// Yeux.cpp
 #include "Yeux.h"
-#include "IBestiole.h"
-#include <cmath>
 
-Yeux::Yeux(double champAng, double dist, double capacite) : 
-    champAngulaire(champAng), distance(dist), capaciteDetection(capacite)
-{
-}
-
-bool Yeux::detecte(const IBestiole & moi, const IBestiole & autre) const
-{
-    // Récupération des positions
-    auto positionMoi = moi.getPosition();
-    auto positionAutre = autre.getPosition();
-    
-    // Calcul de la distance
-    double dx = positionAutre.first - positionMoi.first;
-    double dy = positionAutre.second - positionMoi.second;
-    double distanceCalc = std::sqrt(dx*dx + dy*dy);
-    
-    // Vérification de la distance
-    if (distanceCalc > distance) {
-        return false;
+bool Yeux::detecterBestiole(double angle, double distance, double probabilite_detection) {
+    if (angle >= angle_min && angle <= angle_max &&
+        distance >= distance_min && distance <= distance_max) {
+        double gamma = gamma_min + (gamma_max - gamma_min) * (rand() / (double)RAND_MAX);
+        return (probabilite_detection <= gamma);
     }
-    
-    // Calcul de l'angle
-    double angleVers = std::atan2(-dy, dx); // Angle vers l'autre bestiole
-    double orientationMoi = moi.getOrientation();
-    
-    // Normalisation de l'angle entre -π et π
-    double diffAngle = angleVers - orientationMoi;
-    while (diffAngle > M_PI) diffAngle -= 2 * M_PI;
-    while (diffAngle < -M_PI) diffAngle += 2 * M_PI;
-    diffAngle = std::abs(diffAngle);
-    
-    // Vérification de l'angle
-    if (diffAngle > champAngulaire / 2) {
-        return false;
-    }
-    
-    // Prise en compte de la capacité de détection
-    double proba = static_cast<double>(rand()) / RAND_MAX;
-    return proba <= capaciteDetection;
+    return false;
 }
 
-ICapteur* Yeux::clone() const
-{
-    return new Yeux(champAngulaire, distance, capaciteDetection);
-}
+Yeux::Yeux(double a_min, double a_max, double d_min, double d_max, double g_min, double g_max) : angle_min(a_min), angle_max(a_max), distance_min(d_min), distance_max(d_max), gamma_min(g_min), gamma_max(g_max) {}

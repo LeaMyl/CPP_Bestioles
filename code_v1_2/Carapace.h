@@ -4,20 +4,16 @@
 
 #include "IAccessoire.h"
 
-class Carapace : public IAccessoire
-{
-private:
-    double facteurResistance;
-    double facteurReduction;
-
-public:
-    Carapace(double resistance = 0.5, double reduction = 0.5);
-    virtual ~Carapace() = default;
-
-    double modulerVitesse(double vitesse) const override;
-    double modulerResistance(double proba) const override;
-    double getCoeffCamoufflage() const override;
-    IAccessoire* clone() const override;
+class Carapace {
+    public:
+        double omega_max;  // Coefficient de réduction de probabilité de mort
+        double eta_max;  // Facteur de réduction de vitesse
+    
+        Carapace(double omega, double eta);
+    
+        double reduireProbabiliteMort(double probabilite);
+    
+        double reduireVitesse(double vitesse);
 };
 
 #endif // _CARAPACE_H_

@@ -4,19 +4,13 @@
 
 #include "IAccessoire.h"
 
-class Nageoires : public IAccessoire
-{
-private:
-    double facteurVitesse;
-
-public:
-    Nageoires(double facteur = 1.5);
-    virtual ~Nageoires() = default;
-
-    double modulerVitesse(double vitesse) const override;
-    double modulerResistance(double proba) const override;
-    double getCoeffCamoufflage() const override;
-    IAccessoire* clone() const override;
+class Nageoires {
+    public:
+        double nu_max;  // Coefficient multiplicateur de vitesse
+    
+        Nageoires(double nu);
+    
+        double appliquerVitesse(double vitesse);
 };
 
 #endif // _NAGEOIRES_H_

@@ -1,27 +1,12 @@
 // Carapace.cpp
 #include "Carapace.h"
 
-Carapace::Carapace(double resistance, double reduction) : 
-    facteurResistance(resistance), facteurReduction(reduction)
-{
+double Carapace::reduireVitesse(double vitesse) {
+    return vitesse / eta_max;
 }
 
-double Carapace::modulerVitesse(double vitesse) const
-{
-    return vitesse * facteurReduction;
+double Carapace::reduireProbabiliteMort(double probabilite) {
+    return probabilite / omega_max;
 }
 
-double Carapace::modulerResistance(double proba) const
-{
-    return proba * facteurResistance;
-}
-
-double Carapace::getCoeffCamoufflage() const
-{
-    return 1.0; // Pas d'effet sur le camouflage
-}
-
-IAccessoire* Carapace::clone() const
-{
-    return new Carapace(facteurResistance, facteurReduction);
-}
+Carapace::Carapace(double omega, double eta) : omega_max(omega), eta_max(eta) {}

@@ -5,19 +5,15 @@
 
 #include "IAccessoire.h"
 
-class Camouflage : public IAccessoire
-{
-private:
-    double indiceCamoufflage;
-
-public:
-    Camouflage(double indice = 0.5);
-    virtual ~Camouflage() = default;
-
-    double modulerVitesse(double vitesse) const override;
-    double modulerResistance(double proba) const override;
-    double getCoeffCamoufflage() const override;
-    IAccessoire* clone() const override;
+class Camouflage {
+    public:
+        double psi_min, psi_max;  // Capacité de camouflage
+    
+        Camouflage(double psiMin, double psiMax);
+    
+        double getCamouflageCapacity() const {
+            return psi_max; // On considère le camouflage maximal
+        }
 };
 
 #endif // _CAMOUFLAGE_H_
