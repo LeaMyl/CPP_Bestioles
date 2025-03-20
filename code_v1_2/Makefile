@@ -1,7 +1,6 @@
 # Règle pour créer l'exécutable final
 main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o
-	g++ -Wno-deprecated-declarations -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o -I . -I /opt/X11/include -lX11 -lpthread -L /opt/X11/lib
-
+	g++ -Wno-deprecated-declarations -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o -I . -lX11 -lpthread
 # Règle pour compiler Aquarium.o
 Aquarium.o : Aquarium.h Aquarium.cpp
 	g++ -Wno-deprecated-declarations -std=c++11 -c Aquarium.cpp -I .
