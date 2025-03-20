@@ -2,13 +2,15 @@
 #ifndef _BESTIOLEFACTORY_H_
 #define _BESTIOLEFACTORY_H_
 
-#include 'Bestiole.h'
-#include 'FactoryMethod.h'
+#include "Bestiole.h"
+#include "FactoryMethod.h"
 
 class BestioleFactory : public FactoryMethod {
     public:
+        // Destructeur
+        ~BestioleFactory() override = default;
         // Méthode pour créer une bestiole
-        IBestiole* IBestiole() override {
+        IBestiole* creerIBestiole() override {
             return new Bestiole();
         }
     };
