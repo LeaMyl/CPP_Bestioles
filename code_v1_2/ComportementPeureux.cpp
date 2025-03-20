@@ -51,8 +51,9 @@ IComportement* ComportementPeureux::clone() const {
 bool ComportementPeureux::doitFuir(const Bestiole& bestiole, const Milieu& milieu) const {
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
 
-
-    std::cout<<"nb de voisins de = "<< voisines.size() <<std::endl;
+    if (voisines.size() != 0){
+        std::cout<<"nb de voisins de = "<< voisines.size() <<std::endl;
+    }
     return voisines.size() > 1;
 }
 
