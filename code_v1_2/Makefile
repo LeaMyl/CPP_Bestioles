@@ -1,6 +1,6 @@
 # Règle pour créer l'exécutable final
-main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o
-	g++ -Wno-deprecated-declarations -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o -I . -lX11 -lpthread
+main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o ComportementPrevoyant.o
+	g++ -Wno-deprecated-declarations -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o ComportementPrevoyant.o Configuration.o -I . -lX11 -lpthread
 # Règle pour compiler Aquarium.o
 Aquarium.o : Aquarium.h Aquarium.cpp
 	g++ -Wno-deprecated-declarations -std=c++11 -c Aquarium.cpp -I .
@@ -24,6 +24,10 @@ ComportementGregaire.o : ComportementGregaire.h ComportementGregaire.cpp
 # Règle pour compiler ComportementPeureux.o
 ComportementPeureux.o : ComportementPeureux.h ComportementPeureux.cpp
 	g++ -Wno-deprecated-declarations -std=c++11 -c ComportementPeureux.cpp -I .
+
+# Règle pour compiler ComportementPrevoyant.o
+ComportementPrevoyant.o : ComportementPrevoyant.h ComportementPrevoyant.cpp
+	g++ -Wno-deprecated-declarations -std=c++11 -c ComportementPrevoyant.cpp -I .
 
 # Règle pour compiler ComportementKamikaze.o
 ComportementKamikaze.o : ComportementKamikaze.h ComportementKamikaze.cpp
