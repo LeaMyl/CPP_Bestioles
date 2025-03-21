@@ -30,7 +30,11 @@ double ComportementKamikaze::calculerNouvelleDirection(Bestiole& bestiole, const
     double dy = positionCible.second - bestiole.getPosition().second;
 
     // Retourner l'angle de la direction vers la cible
-    return std::atan2(dy, dx);
+    double angle = std::atan2(dy, dx);
+    if (angle < 0) {
+        angle += 2.0 * M_PI; // Convertit les valeurs négatives en [0, 2π]
+  }
+    return angle;
 }
 
 // Implémentation de getCouleur
