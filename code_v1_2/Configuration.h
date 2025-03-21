@@ -9,7 +9,7 @@ using namespace std;
 
 class Configuration
 {
-protected :
+public :
    //___________Définition des taux de chaque comportement___________
    static double    TAUX_GREGAIRE;
    static double    TAUX_PEUREUSE;
@@ -48,8 +48,8 @@ protected :
    // Reducteur de vitesse
    static double     MAX_ETA;
    // Facteurs de camouflage
-   static double     MAX_PHI;
-   static double     MIN_PHI;
+   static double     MAX_PSI;
+   static double     MIN_PSI;
 
    //___________Paramètres de la simulation___________
    // Nombre de bestioles générées naturellement
