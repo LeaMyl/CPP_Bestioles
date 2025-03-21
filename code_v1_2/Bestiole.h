@@ -21,8 +21,6 @@ class Bestiole : public IBestiole
 {
 private:
     static const double AFF_SIZE;
-    static const double MAX_VITESSE;
-    static const double LIMITE_VUE;
 
     static int next;
 
@@ -43,7 +41,7 @@ private:
 
 public:
     int identite;
-    Bestiole();
+    Bestiole( int ageLimite, double vitesse);
     Bestiole(const Bestiole& b);
     ~Bestiole();
     

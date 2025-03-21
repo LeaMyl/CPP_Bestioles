@@ -4,7 +4,9 @@
 #include <iostream>
 
 Oreilles::Oreilles(double d , double c)
-    : dist(d), capa(c) {}
+    : dist(d), capa(c) {
+        std::cout<< "Constructeur Oreilles"<<std::endl;
+    }
 
 bool Oreilles::detecte(const IBestiole& moi, const IBestiole& autre) const {
     // Calcul de la distance entre les deux bestioles

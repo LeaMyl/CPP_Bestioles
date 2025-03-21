@@ -6,27 +6,25 @@
 #include <cstdlib>
 #include <cmath>
 
-const double Bestiole::AFF_SIZE = 8.;
-const double Bestiole::MAX_VITESSE = 3.;
-const double Bestiole::LIMITE_VUE = 50.;
+const double Bestiole::AFF_SIZE = 10;
 
 int Bestiole::next = 0;
 
-Bestiole::Bestiole()
+Bestiole::Bestiole( int ageLimi, double vitess_init)
 {
     identite = ++next;
     age = 0;
     
-    // Récupération de la configuration
-    Configuration* config = Configuration::getInstance();
-    ageLimite = rand() % (config->ageLimiteMax - config->ageLimiteMin + 1) + config->ageLimiteMin;
-    
-    cout << "const Bestiole (" << identite << ") par defaut" << endl;
+     
 
-    x = y = 0;
-    cumulX = cumulY = 0.;
-    orientation = static_cast<double>(rand()) / RAND_MAX * 2. * M_PI;
-    vitesse = static_cast<double>(rand()) / RAND_MAX * MAX_VITESSE;
+    ageLimite = ageLimi;
+     cout << "const Bestiole (" << identite << ") par defaut" << endl;
+ 
+     x = y = 0;
+     cumulX = cumulY = 0.;
+     orientation = static_cast<double>(rand()) / RAND_MAX * 2. * M_PI;
+     vitesse = vitess_init;
+ 
 
     couleur = new T[3];
     couleur[0] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
@@ -41,6 +39,7 @@ Bestiole::Bestiole()
         couleur[2] = comportementCouleur[2];
     }
 }
+
 
 Bestiole::Bestiole(const Bestiole& b)
 {
@@ -96,7 +95,7 @@ Bestiole::~Bestiole()
         delete comportement;
     }
 
-    cout << "dest Bestiole" << endl;
+    cout << "dest Bestiole (" << identite << ") par defaut" << endl;;
 }
 
 void Bestiole::initCoords(int xLim, int yLim)
@@ -167,10 +166,11 @@ void Bestiole::action(Milieu& monMilieu)
 }
 
 void Bestiole::draw(UImg &support) {
+    Configuration* config;
     double xt = x + cos(orientation) * AFF_SIZE / 2.1;
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
- 
-    double LIMITE_ECOUTE = LIMITE_VUE;
+    
+    double LIMITE_ECOUTE = 50;
     int couleur_vue[3] = {255, 0, 0};  // Rouge pour la vision
     int couleur_ecoute[3] = {0, 0, 255}; // Bleu pour l'écoute
     float alpha_vue = 0.3f;   // Transparence 30% pour la vision
@@ -180,10 +180,10 @@ void Bestiole::draw(UImg &support) {
     // Dessin du cône de vision en utilisant un polygone triangulaire
     double angle1 = orientation - ALPHA / 2;
     double angle2 = orientation + ALPHA / 2;
-    double x1 = x + cos(angle1) * LIMITE_VUE;
-    double y1 = y - sin(angle1) * LIMITE_VUE;
-    double x2 = x + cos(angle2) * LIMITE_VUE;
-    double y2 = y - sin(angle2) * LIMITE_VUE;
+    double x1 = x + cos(angle1) * LIMITE_ECOUTE;
+    double y1 = y - sin(angle1) * LIMITE_ECOUTE;
+    double x2 = x + cos(angle2) * LIMITE_ECOUTE;
+    double y2 = y - sin(angle2) * LIMITE_ECOUTE;
  
     CImg<int> points(3, 2);  // Création d'un tableau pour les points du triangle
     points(0,0) = x; points(0,1) = y;
@@ -203,25 +203,24 @@ void Bestiole::draw(UImg &support) {
 bool Bestiole::jeTeVois(const IBestiole& b) const
 {
     return detecte(b) && estDetectee(b);
-    //double         dist;
-
-
-   //dist = std::sqrt( (x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) );
-   //std::cout<<"fuhezbfzhbfi = "<< dist <<std::endl;
-   //return ( dist <= 500 );
-
+    
 }
 
 bool Bestiole::detecte(const IBestiole& autre) const
 {
+ 
     
     if (capteurs.empty()) {
+        cout<<"Pas de Capteur"<< endl;
         // Si aucun capteur, utiliser la détection par défaut
         auto pos = autre.getPosition();
         double dist = std::sqrt((x - pos.first) * (x - pos.first) + (y - pos.second) * (y - pos.second));
-        return (dist <= LIMITE_VUE);
+        return (dist <=100);
+        
+      
     }
     
+
     // Sinon, utiliser les capteurs
     for (const auto& capteur : capteurs) {
         if (capteur->detecte(*this, autre)) {
@@ -281,12 +280,12 @@ IBestiole* Bestiole::clone() const
 
 void Bestiole::ajouterCapteur(ICapteur* capteur)
 {
-    capteurs.push_back(capteur);
+    capteurs.push_back(std::move(capteur));
 }
 
 void Bestiole::ajouterAccessoire(IAccessoire* accessoire)
 {
-    accessoires.push_back(accessoire);
+    accessoires.push_back(std::move(accessoire));
 }
 
 void Bestiole::setComportement(IComportement* comp)

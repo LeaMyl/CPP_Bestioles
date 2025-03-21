@@ -11,7 +11,7 @@ public:
     double capa;  // Capacité de détection [γymin ; γymax]
 
     Yeux(double a ,double d, double c);
-    virtual ~Yeux() = default;
+    ~Yeux();
 
     // Implémentation des méthodes de ICapteur
     bool detecte(const IBestiole& moi, const IBestiole& autre) const override;

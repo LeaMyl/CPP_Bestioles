@@ -1,18 +1,22 @@
 #include "Configuration.h"
 
-double Configuration::TAUX_GREGAIRE = 1/6;
-double Configuration::TAUX_PEUREUSE = 1/6;
-double Configuration::TAUX_KAMIKAZE = 1/6;
-double Configuration::TAUX_PREVOYANTE = 1/6;
-double Configuration::TAUX_MULTIPLE = 1/6;
-double Configuration::TAUX_NORMALE = 1/6;
-double Configuration::TAUX_CAPTEURS = 2/3;
-double Configuration::TAUX_ACCESSOIRES = 1/3;
+double Configuration::TAUX_GREGAIRE = 2.0/6.0;
+double Configuration::TAUX_PEUREUSE = 1.0/6.0;
+double Configuration::TAUX_KAMIKAZE = 1.0/6.0;
+double Configuration::TAUX_PREVOYANTE = 1.0/6.0;
+double Configuration::TAUX_MULTIPLE = 1.0/6.0;
+double Configuration::TAUX_NORMALE = 0.0/6.0;
+
+
+double Configuration::TAUX_CAPTEURS = 2.0/3.0;
+double Configuration::TAUX_ACCESSOIRES = 1.0/3.0;
+
 
 double Configuration::AFF_SIZE = 10;
 double Configuration::MAX_VITESSE = 5;
 int Configuration::VIE = 500;
 double Configuration::PROPORTION_CHANGE = 10;
+
 
 double Configuration::MAX_DELTA_O = 10;
 double Configuration::MIN_DELTA_O = 5;

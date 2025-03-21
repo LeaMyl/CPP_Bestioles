@@ -4,7 +4,9 @@
 #include <iostream>
 
 Yeux::Yeux(double a, double d, double c)
-    : angle(a), dist(d), capa(c) {}
+    : angle(a), dist(d), capa(c) {
+        std::cout<<"Constructeur Yeux"<<std::endl;
+    }
 
 bool Yeux::detecte(const IBestiole& moi, const IBestiole& autre) const {
     // Calcul de la distance entre les deux bestioles

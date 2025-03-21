@@ -1,6 +1,6 @@
 # Règle pour créer l'exécutable final
-main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o Configuration.o ComportementPrevoyant.o
-	g++ -Wno-deprecated-declarations -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o ComportementPrevoyant.o Configuration.o -I . -lX11 -lpthread
+main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o  Configuration.o ComportementPrevoyant.o BestioleFactory.o Yeux.o Oreilles.o
+	g++ -Wno-deprecated-declarations -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o ComportementPrevoyant.o Configuration.o BestioleFactory.o Yeux.o Oreilles.o -I . -lX11 -lpthread
 # Règle pour compiler Aquarium.o
 Aquarium.o : Aquarium.h Aquarium.cpp
 	g++ -Wno-deprecated-declarations -std=c++11 -c Aquarium.cpp -I .
@@ -21,6 +21,11 @@ Milieu.o : Milieu.h Milieu.cpp
 ComportementGregaire.o : ComportementGregaire.h ComportementGregaire.cpp
 	g++ -Wno-deprecated-declarations -std=c++11 -c ComportementGregaire.cpp -I .
 
+# Règle pour compiler ComportementGregaire.o
+#ComportementMultiple.o : ComportementMultiple.h ComportementMultiple.cpp
+#	g++ -Wno-deprecated-declarations -std=c++11 -c ComportementMultiple.cpp -I .
+
+
 # Règle pour compiler ComportementPeureux.o
 ComportementPeureux.o : ComportementPeureux.h ComportementPeureux.cpp
 	g++ -Wno-deprecated-declarations -std=c++11 -c ComportementPeureux.cpp -I .
@@ -35,6 +40,20 @@ ComportementKamikaze.o : ComportementKamikaze.h ComportementKamikaze.cpp
 
 Capteurs.o : Capteurs.h Capteurs.cpp
 	g++ -Wno-deprecated-declarations -std=c++11  -c Capteurs.cpp -I .
+
+# Règle pour compiler BestioleFactory.o
+BestioleFactory.o : BestioleFactory.h BestioleFactory.cpp
+	g++ -Wno-deprecated-declarations -std=c++11 -c BestioleFactory.cpp -I .
+
+
+# Règle pour compiler BestioleFactory.o
+Yeux.o : Yeux.h Yeux.cpp
+	g++ -Wno-deprecated-declarations -std=c++11 -c Yeux.cpp -I .
+
+
+Oreilles.o : Oreilles.h Oreilles.cpp
+	g++ -Wno-deprecated-declarations -std=c++11 -c Oreilles.cpp -I .
+
 clean:	
 	clear
 	rm -rf *.o main
