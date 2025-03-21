@@ -5,6 +5,7 @@
 #include "Configuration.h"
 #include <memory>
 #include <vector>
+#include "Bestiole.h"
 
 class BestioleFactory {
 private:
@@ -12,6 +13,10 @@ private:
 
 public:
     BestioleFactory();
+    BestioleFactory(Configuration* config);
+    int initialiserAttributsAgeLimite(Configuration* config);
+    double initialiserAttributsVitesse(Configuration* config);
+
     double random_between(double a, double b);
     std::vector<std::unique_ptr<Bestiole>> creerPopulationBestioles(int nombreTotal);
     ~BestioleFactory() ;
