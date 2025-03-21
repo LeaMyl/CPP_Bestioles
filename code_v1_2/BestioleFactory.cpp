@@ -18,7 +18,7 @@
 
 
 BestioleFactory::BestioleFactory() {
-    config = Configuration::getInstance();
+    cout<<"Factory Creer ";
 }
 
 
@@ -61,12 +61,13 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
 
     // Liste Aléotoire
-    std::vector<int>  listeAl = generate_shuffled_list(nombreTotal) ;
+    std::vector<int>  listeO = generate_shuffled_list(nombreTotal) ;
+    std::vector<int>  listeY = generate_shuffled_list(nombreTotal) ;
     // Calculer le nombre de bestioles pour chaque comportement
-    int nbGregaires = static_cast<int>(nombreTotal * config->tauxGregaire);
-    int nbPeureuses = static_cast<int>(nombreTotal * config->tauxPeureuse);
-    int nbKamikazes = static_cast<int>(nombreTotal * config->tauxKamikaze);
-    int nbPrevoyantes = static_cast<int>(nombreTotal * config->tauxPrevoyante);
+    int nbGregaires = static_cast<int>(nombreTotal * config->TAUX_GREGAIRE);
+    int nbPeureuses = static_cast<int>(nombreTotal * config->TAUX_PEUREUSE);
+    int nbKamikazes = static_cast<int>(nombreTotal * config->TAUX_KAMIKAZE);
+    int nbPrevoyantes = static_cast<int>(nombreTotal * config->TAUX_PREVOYANTE);
     int nbMultiples = nombreTotal - (nbGregaires + nbPeureuses + nbKamikazes + nbPrevoyantes);
 
     // Créer les bestioles grégaires
@@ -118,18 +119,18 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
     // Ajouter des Yeux aux bestioles
     for (int i = 0; i < nbYeux; ++i) {
-        double delta = random_between(config->dMin, config->dMax);
-        double GAMA_O = random_between(config->MIN_GAMA_O, config->MAX_GAMA_O);
-        population[listeAl[i]]->ajouterCapteur(new Yeux(delta, GAMA_O));
+        double angle = random_between(config->MAX_ALPHA, config->MIN_ALPHA);
+        double delta = random_between(config->MAX_DELTA_Y, config->MAX_DELTA_Y);
+        double gama = random_between(config->MIN_GAMA_Y, config->MAX_GAMA_Y);
+        population[listeY[i]]->ajouterCapteur(new Yeux(angle, delta, gama));
     }
 
     // Ajouter des Oreilles aux bestioles
     for (int i = nbYeux; i < nbYeux + nbOreilles; ++i) {
-        double angle = random_between(config->angleMin, config->angleMax);
-        double delta = random_between(config->dMin, config->dMax);
-        double GAMA_O = random_between(config->MIN_GAMA_O, config->MAX_GAMA_O);
+        double delta = random_between(config->MAX_DELTA_O, config->MIN_DELTA_O);
+        double gama = random_between(config->MIN_GAMA_O, config->MAX_GAMA_O);
 
-        population[listeAl[i]]->ajouterCapteur(new Oreilles(config->dMin, config->dMax, config->MIN_GAMA_O, config->MAX_GAMA_O));
+        population[listeO[i]]->ajouterCapteur(new Oreilles(delta,gama));
     }
 
     return population;
