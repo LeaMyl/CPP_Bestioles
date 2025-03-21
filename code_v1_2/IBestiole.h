@@ -30,6 +30,7 @@ public:
     virtual void draw(UImg & support) = 0;
     virtual bool jeTeVois(const IBestiole & b) const = 0;
     virtual void initCoords(int xLim, int yLim) = 0;
+    virtual double getLimit() const { return ageLimite; };
     virtual std::pair<int, int> getPosition() const = 0;
     virtual double getSize() const = 0;
     virtual double getVitesse() const = 0;

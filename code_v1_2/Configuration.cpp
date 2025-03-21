@@ -11,6 +11,8 @@ double Configuration::TAUX_ACCESSOIRES = 1/3;
 
 double Configuration::AFF_SIZE = 10;
 double Configuration::MAX_VITESSE = 5;
+int Configuration::VIE = 500;
+double Configuration::PROPORTION_CHANGE = 10;
 
 double Configuration::MAX_DELTA_O = 10;
 double Configuration::MIN_DELTA_O = 5;

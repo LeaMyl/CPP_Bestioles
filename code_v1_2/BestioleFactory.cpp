@@ -21,13 +21,6 @@ BestioleFactory::BestioleFactory() {
     cout<<"Factory Creer ";
 }
 
-
-// Initialiser les attributs d'une bestiole
-void BestioleFactory::initialiserAttributsBestiole(Bestiole& bestiole) {
-    // Initialiser l'âge limite aléatoirement entre les bornes définies dans la configuration
-    bestiole.ageLimite = generate_shuffled_list(VIE);
-}
-
 double BestioleFactory::random_between(double a, double b) {
     // Générateur de nombres aléatoires
     std::random_device rd;
@@ -57,6 +50,7 @@ std::vector<int> generate_shuffled_list(int nombreTotal) {
 
 // Créer une population de bestioles
 std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles(int nombreTotal) {
+
     std::vector<std::unique_ptr<Bestiole>> population;
 
 
@@ -111,24 +105,24 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
     }
 
     // Calculer le nombre de bestioles avec des capteurs
-    int nbBestiolesAvecCapteurs = static_cast<int>(nombreTotal * config->tauxCapteurs);
+    int nbBestiolesAvecCapteurs = static_cast<int>(nombreTotal * config->TAUX_CAPTEURS);
 
     // Calculer le nombre de Yeux et Oreilles en fonction des proportions
-    int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * config->tauxCapteurs);
+    int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * config->TAUX_CAPTEURS);
     int nbOreilles = nbBestiolesAvecCapteurs - nbYeux;
 
     // Ajouter des Yeux aux bestioles
     for (int i = 0; i < nbYeux; ++i) {
-        double angle = random_between(config->MAX_ALPHA, config->MIN_ALPHA);
-        double delta = random_between(config->MAX_DELTA_Y, config->MAX_DELTA_Y);
-        double gama = random_between(config->MIN_GAMA_Y, config->MAX_GAMA_Y);
+        double angle = random_between(config->MIN_ALPHA, config->MIN_ALPHA);
+        double delta = random_between(config->MIN_DELTA_Y, config->MAX_DELTA_Y);
+        double gama = random_between(config->MIN_GAMMA_Y, config->MAX_GAMMA_Y);
         population[listeY[i]]->ajouterCapteur(new Yeux(angle, delta, gama));
     }
 
     // Ajouter des Oreilles aux bestioles
     for (int i = nbYeux; i < nbYeux + nbOreilles; ++i) {
         double delta = random_between(config->MAX_DELTA_O, config->MIN_DELTA_O);
-        double gama = random_between(config->MIN_GAMA_O, config->MAX_GAMA_O);
+        double gama = random_between(config->MIN_GAMMA_O, config->MAX_GAMMA_O);
 
         population[listeO[i]]->ajouterCapteur(new Oreilles(delta,gama));
     }

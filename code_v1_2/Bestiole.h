@@ -26,7 +26,7 @@ private:
 
     static int next;
 
-    int identite;
+    
     int x, y;
     double cumulX, cumulY;
     double orientation;
@@ -42,6 +42,7 @@ private:
     void bouge(int xLim, int yLim) override;
 
 public:
+    int identite;
     Bestiole();
     Bestiole(const Bestiole& b);
     ~Bestiole();
@@ -63,10 +64,12 @@ public:
     void ajouterCapteur(ICapteur* capteur);
     void ajouterAccessoire(IAccessoire* accessoire);
     void setComportement(IComportement* comp);
-    IComportement* getComportement() const { return comportement; }
+    IComportement* getComportement() const { return comportement; };
     
     // Pour la détection des collisions
-    double getSize() const override { return AFF_SIZE; }
+    double getSize() const override { return AFF_SIZE; };
+
+    double getLimit() const override { return ageLimite; };
     
     // Méthodes utiles pour les capteurs et accessoires
     double getCoeffCamouflage() const;

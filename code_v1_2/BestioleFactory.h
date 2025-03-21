@@ -12,7 +12,6 @@ private:
 
 public:
     BestioleFactory();
-    void BestioleFactory::initialiserAttributsBestiole(Bestiole& bestiole) ;
     double random_between(double a, double b);
     std::vector<std::unique_ptr<Bestiole>> creerPopulationBestioles(int nombreTotal);
     ~BestioleFactory() ;
