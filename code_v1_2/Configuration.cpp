@@ -6,6 +6,8 @@ double Configuration::TAUX_KAMIKAZE = 1/6;
 double Configuration::TAUX_PREVOYANTE = 1/6;
 double Configuration::TAUX_MULTIPLE = 1/6;
 double Configuration::TAUX_NORMALE = 1/6;
+double Configuration::TAUX_CAPTEURS = 2/3;
+double Configuration::TAUX_ACCESSOIRES = 1/3;
 
 double Configuration::AFF_SIZE = 10;
 double Configuration::MAX_VITESSE = 5;
@@ -24,8 +26,8 @@ double Configuration::MIN_ALPHA = 5;
 double Configuration::MAX_NU = 10;
 double Configuration::MAX_OMEGA = 10;
 double Configuration::MAX_ETA = 10;
-double Configuration::MAX_PHI = 10;
-double Configuration::MIN_PHI = 5;
+double Configuration::MAX_PSI = 10;
+double Configuration::MIN_PSI = 5;
 
 double Configuration::GENERATION_RATE = 0.1;
 double Configuration::CLONE_RATE = 0.1;
@@ -36,3 +38,4 @@ Configuration::Configuration() {}
 
 // Destructeur
 Configuration::~Configuration() {}
+
