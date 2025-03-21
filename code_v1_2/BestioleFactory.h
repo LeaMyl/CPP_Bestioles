@@ -1,17 +1,21 @@
-// BestioleFactory.h
 #ifndef _BESTIOLEFACTORY_H_
 #define _BESTIOLEFACTORY_H_
 
-#include "Bestiole.h"
-#include "FactoryMethod.h"
+#include "IBestiole.h"
+#include "Configuration.h"
+#include <memory>
+#include <vector>
 
-class BestioleFactory : public FactoryMethod {
-    public:
-        // Destructeur
-        ~BestioleFactory() override = default;
-        // Méthode pour créer une bestiole
-        IBestiole* creerIBestiole() override {
-            return new Bestiole();
-        }
-    };
-#endif // BESTIOLEFACTORY_H
+class BestioleFactory {
+private:
+    Configuration* config;
+
+public:
+    BestioleFactory();
+    void BestioleFactory::initialiserAttributsBestiole(Bestiole& bestiole) ;
+    double random_between(double a, double b);
+    std::vector<std::unique_ptr<Bestiole>> creerPopulationBestioles(int nombreTotal);
+    ~BestioleFactory() ;
+};
+
+#endif // _BESTIOLEFACTORY_H_

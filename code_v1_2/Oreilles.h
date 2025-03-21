@@ -1,27 +1,21 @@
-// Oreilles.h
 #ifndef _OREILLES_H_
 #define _OREILLES_H_
 
 #include "ICapteur.h"
 #include <cmath>
 
-class Oreilles {
+class Oreilles : public ICapteur {
     public:
-        double distance_min, distance_max;  // Plage de distance d'écoute
-        double gamma_min, gamma_max;  // Capacité de détection auditive
-    
-        Oreilles(double d_min, double d_max, double g_min, double g_max)
-            : distance_min(d_min), distance_max(d_max), gamma_min(g_min), gamma_max(g_max) {}
+    double angle;  // Champ angulaire de vision [αmin ; αmax]
+    double dist;  // Distance de détection [δymin ; δymax]
+    double capa;  // Capacité de détection [γymin ; γymax]
 
-        virtual ~Oreilles() = default;
+    Oreilles(double d, double c);
+    virtual ~Oreilles() = default;
 
-        bool detecterBestiole(double distance, double probabilite_detection) {
-            if (distance >= distance_min && distance <= distance_max) {
-                double gamma = gamma_min + (gamma_max - gamma_min) * (rand() / (double)RAND_MAX);
-                return (probabilite_detection <= gamma);
-            }
-            return false;
-        }
-    };
+    // Implémentation des méthodes de ICapteur
+    bool detecte(const IBestiole& moi, const IBestiole& autre) const override;
+    ICapteur* clone() const override;
+};
 
 #endif // _OREILLES_H_
