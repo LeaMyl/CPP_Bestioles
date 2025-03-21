@@ -6,6 +6,8 @@ double Configuration::TAUX_KAMIKAZE = 1/6;
 double Configuration::TAUX_PREVOYANTE = 1/6;
 double Configuration::TAUX_MULTIPLE = 1/6;
 double Configuration::TAUX_NORMALE = 1/6;
+double Configuration::TAUX_CAPTEURS = 2/3;
+double Configuration::TAUX_ACCESSOIRES = 1/3;
 
 double Configuration::AFF_SIZE = 10;
 double Configuration::MAX_VITESSE = 5;

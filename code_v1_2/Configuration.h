@@ -17,6 +17,8 @@ public :
    static double    TAUX_PREVOYANTE;
    static double    TAUX_MULTIPLE;
    static double    TAUX_NORMALE;
+   static double    TAUX_CAPTEURS;
+   static double    TAUX_ACCESSOIRES;
 
    // Définition des tailles des bestioles
    static double     AFF_SIZE;
