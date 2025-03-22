@@ -32,8 +32,9 @@ private:
     T* couleur;
     int age;
     int ageLimite;
+
     
-    vector<ICapteur*> capteurs;
+    std::vector<std::unique_ptr<ICapteur>> capteurs;
     vector<IAccessoire*> accessoires;
     IComportement* comportement;
 
@@ -59,7 +60,7 @@ public:
     // Méthodes supplémentaires
     int getIdentite() const { return identite; }
     void vieillir();
-    void ajouterCapteur(ICapteur* capteur);
+    void ajouterCapteur(std::unique_ptr<ICapteur> capteur);
     void ajouterAccessoire(IAccessoire* accessoire);
     void setComportement(IComportement* comp);
     IComportement* getComportement() const { return comportement; };

@@ -2,7 +2,8 @@
 #include "Bestiole.h"
 #include "Milieu.h"
 #include "Configuration.h"
-
+#include "Yeux.h"
+#include "Oreilles.h"
 #include <cstdlib>
 #include <cmath>
 
@@ -60,7 +61,7 @@ Bestiole::Bestiole(const Bestiole& b)
     
     // Copie des capteurs
     for (const auto& capteur : b.capteurs) {
-        capteurs.push_back(capteur->clone());
+        capteurs.push_back(std::unique_ptr<ICapteur>(capteur->clone()));
     }
     
     // Copie des accessoires
@@ -80,10 +81,10 @@ Bestiole::~Bestiole()
 {
     delete[] couleur;
     
-    // Libération des capteurs
-    for (auto& capteur : capteurs) {
-        delete capteur;
-    }
+    // Libération des capteurs : // Pas besoin de libérer manuellement les capteurs, unique_ptr s'en charge
+    //for (auto& capteur : capteurs) {
+        //delete capteur;
+    //}
     
     // Libération des accessoires
     for (auto& accessoire : accessoires) {
@@ -170,30 +171,50 @@ void Bestiole::draw(UImg &support) {
     double xt = x + cos(orientation) * AFF_SIZE / 2.1;
     double yt = y - sin(orientation) * AFF_SIZE / 2.1;
     
-    double LIMITE_ECOUTE = 50;
     int couleur_vue[3] = {255, 0, 0};  // Rouge pour la vision
     int couleur_ecoute[3] = {0, 0, 255}; // Bleu pour l'écoute
     float alpha_vue = 0.3f;   // Transparence 30% pour la vision
-    float alpha_ecoute = 0.2f; // Transparence 20% pour l'écoute
-    double ALPHA = M_PI / 3;  // Angle de vision de 60°
- 
-    // Dessin du cône de vision en utilisant un polygone triangulaire
-    double angle1 = orientation - ALPHA / 2;
-    double angle2 = orientation + ALPHA / 2;
-    double x1 = x + cos(angle1) * LIMITE_ECOUTE;
-    double y1 = y - sin(angle1) * LIMITE_ECOUTE;
-    double x2 = x + cos(angle2) * LIMITE_ECOUTE;
-    double y2 = y - sin(angle2) * LIMITE_ECOUTE;
- 
-    CImg<int> points(3, 2);  // Création d'un tableau pour les points du triangle
-    points(0,0) = x; points(0,1) = y;
-    points(1,0) = x1; points(1,1) = y1;
-    points(2,0) = x2; points(2,1) = y2;
- 
-    support.draw_polygon(points, couleur_vue, alpha_vue);
- 
-    // Dessin du cercle d'écoute avec transparence
-    support.draw_circle(x, y, LIMITE_ECOUTE, couleur_ecoute, alpha_ecoute);
+    float alpha_ecoute = 0.2f;// Transparence 20% pour l'écoute
+
+    for (const auto& capteur : capteurs) {
+        // Essayer de convertir le capteur en Yeux
+        if (auto yeux = dynamic_cast<Yeux*>(capteur.get())) {
+            // Le capteur est de type Yeux
+            double angle = yeux->angle;  // Récupérer l'angle de vision
+            double dist = yeux->dist;    // Récupérer la distance de détection
+    
+
+              // Dessin du cône de vision en utilisant un polygone triangulaire
+            double angle1 = orientation - angle / 2;
+            double angle2 = orientation + angle / 2;
+            double x1 = x + cos(angle1) * dist;
+            double y1 = y - sin(angle1) * dist;
+            double x2 = x + cos(angle2) * dist;
+            double y2 = y - sin(angle2) * dist;
+        
+            CImg<int> points(3, 2);  // Création d'un tableau pour les points du triangle
+            points(0,0) = x; points(0,1) = y;
+            points(1,0) = x1; points(1,1) = y1;
+            points(2,0) = x2; points(2,1) = y2;
+        
+            support.draw_polygon(points, couleur_vue, alpha_vue);
+        }
+        // Essayer de convertir le capteur en Oreilles
+        else if (auto oreilles = dynamic_cast<Oreilles*>(capteur.get())) {
+
+            // Le capteur est de type Oreilles
+            double dist = oreilles->dist;  // Récupérer la distance de détection
+
+            // Dessin du cercle d'écoute avec transparence
+            support.draw_circle(x, y, dist, couleur_ecoute, alpha_ecoute);
+    
+        }
+        else {
+            // Le capteur est d'un autre type (non géré)
+            std::cout << "Capteur inconnu" << std::endl;
+        }
+    }
+
  
     // Dessin de la bestiole
     support.draw_ellipse(x, y, AFF_SIZE, AFF_SIZE / 5., -orientation / M_PI * 180., couleur);
@@ -208,22 +229,22 @@ bool Bestiole::jeTeVois(const IBestiole& b) const
 
 bool Bestiole::detecte(const IBestiole& autre) const
 {
- 
+    //std::cout << "detecte() appelé pour Bestiole " << identite << " avec " << capteurs.size() << " capteurs" << std::endl;
     
     if (capteurs.empty()) {
-        cout<<"Pas de Capteur"<< endl;
-        // Si aucun capteur, utiliser la détection par défaut
+        std::cout << "Aucun capteur trouvé pour Bestiole " << identite << std::endl;
+        // Your default detection logic here
+        /*
         auto pos = autre.getPosition();
         double dist = std::sqrt((x - pos.first) * (x - pos.first) + (y - pos.second) * (y - pos.second));
-        return (dist <=100);
-        
-      
+        return (dist <= 100);
+        */
     }
     
-
-    // Sinon, utiliser les capteurs
+    // Otherwise, use capteurs
     for (const auto& capteur : capteurs) {
         if (capteur->detecte(*this, autre)) {
+            std::cout << "Bestiole " << identite << " détecte avec un capteur" << std::endl;
             return true;
         }
     }
@@ -278,9 +299,14 @@ IBestiole* Bestiole::clone() const
     return new Bestiole(*this);
 }
 
-void Bestiole::ajouterCapteur(ICapteur* capteur)
+
+void Bestiole::ajouterCapteur(std::unique_ptr<ICapteur> capteur) 
 {
+    
+    //std::cout << "AVANT: Bestiole " << identite << " a " << capteurs.size() << " capteurs" << std::endl;
     capteurs.push_back(std::move(capteur));
+    //std::cout << "APRES: Bestiole " << identite << " a " << capteurs.size() << " capteurs" << std::endl;
+
 }
 
 void Bestiole::ajouterAccessoire(IAccessoire* accessoire)

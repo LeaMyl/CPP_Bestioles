@@ -98,7 +98,9 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
     // Liste Aléotoire
     std::vector<int>  listeO = generate_shuffled_list(nombreTotal) ;
+    
     std::vector<int>  listeY = generate_shuffled_list(nombreTotal) ;
+
     // Calculer le nombre de bestioles pour chaque comportement
     int nbGregaires = static_cast<int>(nombreTotal * config->TAUX_GREGAIRE);
     int nbPeureuses = static_cast<int>(nombreTotal * config->TAUX_PEUREUSE);
@@ -158,25 +160,25 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
     int nbBestiolesAvecCapteurs = static_cast<int>(nombreTotal * config->TAUX_CAPTEURS);
 
     // Calculer le nombre de Yeux et Oreilles en fonction des proportions
-    int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * config->TAUX_CAPTEURS);
-    int nbOreilles = nbBestiolesAvecCapteurs - nbYeux;
+    int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * config->TAUX_YEUX);
+    int nbOreilles = static_cast<int>(nbBestiolesAvecCapteurs * config->TAUX_OREILLES);
 
-    cout<< "nbBestiolesAvecCapteurs = "<<nbBestiolesAvecCapteurs<< " , nbYeux = " << nbYeux<< " nbOreilles = " <<nbOreilles<<endl;
+    //cout<< "nbBestiolesAvecCapteurs = "<<nbBestiolesAvecCapteurs<< " , nbYeux = " << nbYeux<< " nbOreilles = " <<nbOreilles<<endl;
     // Ajouter des Yeux aux bestioles
     for (int i = 0; i < nbYeux; ++i) {
         double angle = random_between(config->MIN_ALPHA, config->MIN_ALPHA);
         double delta = random_between(config->MIN_DELTA_Y, config->MAX_DELTA_Y);
         double gama = random_between(config->MIN_GAMMA_Y, config->MAX_GAMMA_Y);
-        population[listeY[i]]->ajouterCapteur(std::unique_ptr<Yeux>(new Yeux(angle, delta, gama)).release());
+        population[listeY[i]]->ajouterCapteur(std::unique_ptr<ICapteur>(new Yeux(angle, delta, gama)));
+
         
     }
 
     // Ajouter des Oreilles aux bestioles
-    for (int i = nbYeux; i < nbYeux + nbOreilles; ++i) {
+    for (int i = 0; i <  nbOreilles; ++i) {
         double delta = random_between(config->MAX_DELTA_O, config->MIN_DELTA_O);
         double gama = random_between(config->MIN_GAMMA_O, config->MAX_GAMMA_O);
-
-        population[listeO[i]]->ajouterCapteur(std::unique_ptr<Oreilles>(new Oreilles(delta,gama)).release());
+        population[listeO[i]]->ajouterCapteur(std::unique_ptr<ICapteur>(new Oreilles(delta, gama)));
     }
     // Vérifier si la population est bien remplie
     std::cout << "Nombre de bestioles créées : " << population.size() << std::endl;
