@@ -8,6 +8,7 @@
 #include "IAccessoire.h"
 #include "IComportement.h"
 #include "UImg.h"
+#include "Configuration.h"
 
 #include <iostream>
 #include <vector>
@@ -20,7 +21,6 @@ class Milieu;
 class Bestiole : public IBestiole
 {
 private:
-    static const double AFF_SIZE;
 
     static int next;
 
@@ -48,12 +48,13 @@ public:
     
     // Méthodes de IBestiole
     void action(Milieu& monMilieu) override;
+    
     void draw(UImg& support) override;
     bool jeTeVois(const IBestiole& b) const override;
     void initCoords(int xLim, int yLim) override;
-    std::pair<int, int> getPosition() const override { return std::pair<int, int>(x, y); }
-    double getVitesse() const override { return vitesse; }
-    double getOrientation() const override { return orientation; }
+    std::pair<int, int> getPosition() const ;
+    double getVitesse() const override;
+    double getOrientation() const override;
     bool meurt() override;
     IBestiole* clone() const override;
     
@@ -66,7 +67,7 @@ public:
     IComportement* getComportement() const { return comportement; };
     
     // Pour la détection des collisions
-    double getSize() const override { return AFF_SIZE; };
+    double getSize() const ;
 
     double getLimit() const override { return ageLimite; };
     
@@ -78,6 +79,15 @@ public:
 
     friend bool operator==(const Bestiole& b1, const Bestiole& b2);
     void setVitesse(double nouvelleVitesse);
+    bool possedeYeux() const ;
+    bool possedeOreilles() const ;
+    double getResistanceCollision(double probaBase) const;
+
+    int getX() const;
+    int getY() const;
+    void setX(int x);
+    void setY(int y);
+    const std::vector<IAccessoire*>& getAccessoires() const;
 };
 
 #endif // _BESTIOLE_H_

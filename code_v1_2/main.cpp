@@ -10,9 +10,8 @@ int main() {
     Aquarium       ecosysteme( 960, 720, 30 );
     // Création de l'écosystème (Aquarium)
 
-    Configuration config; 
     // Étape 2 : Créer une instance de BestioleFactory avec la configuration
-    BestioleFactory factory(&config); 
+    BestioleFactory factory; 
 
     
     // Étape 3 : Créer une population de bestioleTAUX_CAPTEURSs

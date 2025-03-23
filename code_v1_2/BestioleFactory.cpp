@@ -17,7 +17,12 @@
 #include <random>
 
 
+// Initialize static instance
+BestioleFactory* BestioleFactory::instance = nullptr;
+
+
 BestioleFactory::BestioleFactory() {
+    //factory = AccessoireFactory::getInstance();
     cout<<"Factory Creer "<<endl;
 }
 
@@ -32,25 +37,31 @@ double BestioleFactory::random_between(double a, double b) {
     return dist(gen);
 }
 
-BestioleFactory::BestioleFactory(Configuration* config) : config(config) {}
+//BestioleFactory::BestioleFactory(Configuration* Configuration::) : Configuration::(Configuration::) {
+    //factory = AccessoireFactory::getInstance();
+//}
 
 BestioleFactory::~BestioleFactory()
 {
     // Si la factory gère des ressources internes, les libérer ici
-    // Par exemple, si config est alloué dynamiquement :
-    if (config != nullptr) {
-        delete config;
-        config = nullptr;
-    }
+   
     cout<<"Factory  "<<endl;
     // Pas besoin de détruire les bestioles, elles sont gérées par des std::unique_ptr
 }
 
-int BestioleFactory::initialiserAttributsAgeLimite(Configuration* config)
+
+BestioleFactory* BestioleFactory::getInstance() {
+    if (instance == nullptr) {
+        instance = new BestioleFactory();
+    }
+    return instance;
+}
+
+int BestioleFactory::initialiserAttributsAgeLimite()
 {
     // Récupération de la configuration
-    int ageLimiteMax = config->VIE*1.2 ;
-    int ageLimiteMin = config->VIE*1.2 ;
+    int ageLimiteMax = Configuration::VIE*1.2 ;
+    int ageLimiteMin = Configuration::VIE*1.2 ;
     int ageLimite = rand() % (ageLimiteMax- ageLimiteMin + 1) + ageLimiteMin;
 
     
@@ -59,10 +70,10 @@ int BestioleFactory::initialiserAttributsAgeLimite(Configuration* config)
  
 };
 
-double BestioleFactory::initialiserAttributsVitesse(Configuration* config)
+double BestioleFactory::initialiserAttributsVitesse()
 {
 
-    double vitesse = static_cast<double>(rand()) / RAND_MAX * config->MAX_VITESSE;
+    double vitesse = static_cast<double>(rand()) / RAND_MAX * Configuration::MAX_VITESSE;
 
     return vitesse;
  
@@ -86,11 +97,6 @@ std::vector<int> generate_shuffled_list(int nombreTotal) {
 
 // Créer une population de bestioles
 std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles(int nombreTotal) {
-
-    if (!config) {
-        std::cerr << "Erreur : config est nullptr !" << std::endl;
-        return {}; // Retourne un vector vide
-    }
     
     std::vector<std::unique_ptr<Bestiole>> population;
     int age_limite;
@@ -101,17 +107,19 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
     
     std::vector<int>  listeY = generate_shuffled_list(nombreTotal) ;
 
+    std::vector<int>  listeBestioleAccessoires = generate_shuffled_list(nombreTotal) ;
+
     // Calculer le nombre de bestioles pour chaque comportement
-    int nbGregaires = static_cast<int>(nombreTotal * config->TAUX_GREGAIRE);
-    int nbPeureuses = static_cast<int>(nombreTotal * config->TAUX_PEUREUSE);
-    int nbKamikazes = static_cast<int>(nombreTotal * config->TAUX_KAMIKAZE);
-    int nbPrevoyantes = static_cast<int>(nombreTotal * config->TAUX_PREVOYANTE);
+    int nbGregaires = static_cast<int>(nombreTotal * Configuration::TAUX_GREGAIRE);
+    int nbPeureuses = static_cast<int>(nombreTotal * Configuration::TAUX_PEUREUSE);
+    int nbKamikazes = static_cast<int>(nombreTotal * Configuration::TAUX_KAMIKAZE);
+    int nbPrevoyantes = static_cast<int>(nombreTotal * Configuration::TAUX_PREVOYANTE);
     int nbMultiples = nombreTotal - (nbGregaires + nbPeureuses + nbKamikazes + nbPrevoyantes);
 
     // Créer les bestioles grégaires
     for (int i = 0; i < nbGregaires; ++i) {
-        age_limite = initialiserAttributsAgeLimite(config);
-        vitesse = initialiserAttributsVitesse(config);
+        age_limite = initialiserAttributsAgeLimite();
+        vitesse = initialiserAttributsVitesse();
         auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse));  
         bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
         population.push_back(std::move(bestiole));
@@ -119,8 +127,8 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
     // Créer les bestioles peureuses
     for (int i = 0; i < nbPeureuses; ++i) {
-        age_limite = initialiserAttributsAgeLimite(config);
-        vitesse = initialiserAttributsVitesse(config);
+        age_limite = initialiserAttributsAgeLimite();
+        vitesse = initialiserAttributsVitesse();
         auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse));  
         bestiole->setComportement(std::unique_ptr<ComportementPeureux>(new ComportementPeureux()).release());
         population.push_back(std::move(bestiole));
@@ -128,8 +136,8 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
     // Créer les bestioles kamikazes
     for (int i = 0; i < nbKamikazes; ++i) {
-        age_limite = initialiserAttributsAgeLimite(config);
-        vitesse = initialiserAttributsVitesse(config);
+        age_limite = initialiserAttributsAgeLimite();
+        vitesse = initialiserAttributsVitesse();
         auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse));  
         bestiole->setComportement(std::unique_ptr<ComportementKamikaze>(new ComportementKamikaze()).release());
         population.push_back(std::move(bestiole));
@@ -138,8 +146,8 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
     // Créer les bestioles prévoyantes
     for (int i = 0; i < nbPrevoyantes; ++i) {
-        age_limite = initialiserAttributsAgeLimite(config);
-        vitesse = initialiserAttributsVitesse(config);
+        age_limite = initialiserAttributsAgeLimite();
+        vitesse = initialiserAttributsVitesse();
         auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse));  
         bestiole->setComportement(std::unique_ptr<ComportementPrevoyant>(new ComportementPrevoyant()).release());
         population.push_back(std::move(bestiole));
@@ -149,39 +157,110 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
     // Créer les bestioles multiples
     for (int i = 0; i < nbMultiples; ++i) {
         
-        age_limite = initialiserAttributsAgeLimite(config);
-        vitesse = initialiserAttributsVitesse(config);
+        age_limite = initialiserAttributsAgeLimite(Configuration::);
+        vitesse = initialiserAttributsVitesse(Configuration::);
         auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse));  
         bestiole->setComportement(std::unique_ptr<ComportementMultiple>(new ComportementMultiple()).release());
         population.push_back(std::move(bestiole));
     }
     */
     // Calculer le nombre de bestioles avec des capteurs
-    int nbBestiolesAvecCapteurs = static_cast<int>(nombreTotal * config->TAUX_CAPTEURS);
+    int nbBestiolesAvecCapteurs = static_cast<int>(nombreTotal * Configuration::TAUX_CAPTEURS);
 
     // Calculer le nombre de Yeux et Oreilles en fonction des proportions
-    int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * config->TAUX_YEUX);
-    int nbOreilles = static_cast<int>(nbBestiolesAvecCapteurs * config->TAUX_OREILLES);
+    int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * Configuration::TAUX_YEUX);
+    int nbOreilles = static_cast<int>(nbBestiolesAvecCapteurs * Configuration::TAUX_OREILLES);
 
     //cout<< "nbBestiolesAvecCapteurs = "<<nbBestiolesAvecCapteurs<< " , nbYeux = " << nbYeux<< " nbOreilles = " <<nbOreilles<<endl;
     // Ajouter des Yeux aux bestioles
     for (int i = 0; i < nbYeux; ++i) {
-        double angle = random_between(config->MIN_ALPHA, config->MIN_ALPHA);
-        double delta = random_between(config->MIN_DELTA_Y, config->MAX_DELTA_Y);
-        double gama = random_between(config->MIN_GAMMA_Y, config->MAX_GAMMA_Y);
+        double angle = random_between(Configuration::MIN_ALPHA, Configuration::MIN_ALPHA);
+        double delta = random_between(Configuration::MIN_DELTA_Y, Configuration::MAX_DELTA_Y);
+        double gama = random_between(Configuration::MIN_GAMMA_Y, Configuration::MAX_GAMMA_Y);
         population[listeY[i]]->ajouterCapteur(std::unique_ptr<ICapteur>(new Yeux(angle, delta, gama)));
 
-        
     }
 
     // Ajouter des Oreilles aux bestioles
     for (int i = 0; i <  nbOreilles; ++i) {
-        double delta = random_between(config->MAX_DELTA_O, config->MIN_DELTA_O);
-        double gama = random_between(config->MIN_GAMMA_O, config->MAX_GAMMA_O);
+        double delta = random_between(Configuration::MAX_DELTA_O, Configuration::MIN_DELTA_O);
+        double gama = random_between(Configuration::MIN_GAMMA_O, Configuration::MAX_GAMMA_O);
         population[listeO[i]]->ajouterCapteur(std::unique_ptr<ICapteur>(new Oreilles(delta, gama)));
     }
+
+
+    //Ajouter des Accessoires
+     // Ajouter des accessoires aléatoires
+    int nbBestiolesAvecAccessoires = static_cast<int>(nombreTotal * Configuration::TAUX_ACCESSOIRES);
+    for (int i = 0; i <  nbBestiolesAvecAccessoires; ++i) {
+        IAccessoire* accessoire = AccessoireFactory::getInstance()->createRandomAccessoire();
+        population[listeBestioleAccessoires[i]]->ajouterAccessoire(accessoire);
+    }
+
     // Vérifier si la population est bien remplie
     std::cout << "Nombre de bestioles créées : " << population.size() << std::endl;
+
+
     return population;
+}
+
+// Création d'une bestiole avec des capteurs aléatoires
+std::unique_ptr<Bestiole> BestioleFactory::createBestioleWithRandomBestiole() {
+    int age_limite = initialiserAttributsAgeLimite();
+    double vitesse = initialiserAttributsVitesse();
+    auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse)); 
+
+    //Ajouter Random Comportement
+    int randomValue = rand() % 8; 
+    switch (randomValue) {
+        case 1:
+            bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
+            break;
+        case 2:
+
+            bestiole->setComportement(std::unique_ptr<ComportementPeureux>(new ComportementPeureux()).release());
+            break;
+        case 3:
+            bestiole->setComportement(std::unique_ptr<ComportementKamikaze>(new ComportementKamikaze()).release());
+            break;
+        case 4:
+            bestiole->setComportement(std::unique_ptr<ComportementPrevoyant>(new ComportementPrevoyant()).release());
+            break;
+        case 5: 
+            //bestiole->setComportement(std::unique_ptr<ComportementMultiple>(new ComportementMultiple()).release());
+            cout<<"ComportementMultiple a implementer"<<endl;
+        default:
+            cout<<"Pas de comportement ajouter"<<endl;
+    }
+
+    
+    
+    // Determine if bestiole will have eyes based on configuration
+    if ((static_cast<double>(rand()) / RAND_MAX) < Configuration::TAUX_CAPTEURS) {
+        // Add eyes
+        double angle = random_between(Configuration::MIN_ALPHA, Configuration::MIN_ALPHA);
+        double delta = random_between(Configuration::MIN_DELTA_Y, Configuration::MAX_DELTA_Y);
+        double gama = random_between(Configuration::MIN_GAMMA_Y, Configuration::MAX_GAMMA_Y);
+        bestiole->ajouterCapteur(std::unique_ptr<ICapteur>(new Yeux(angle, delta, gama)));
+    }
+    
+    // Determine if bestiole will have ears based on configuration
+    if ((static_cast<double>(rand()) / RAND_MAX) < Configuration::TAUX_CAPTEURS) {
+        // Add ears
+        double delta = random_between(Configuration::MAX_DELTA_O, Configuration::MIN_DELTA_O);
+        double gama = random_between(Configuration::MIN_GAMMA_O, Configuration::MAX_GAMMA_O);
+        bestiole->ajouterCapteur(std::unique_ptr<ICapteur>(new Oreilles(delta, gama)));
+      
+    }
+    
+    // Ajouter des accessoires
+    // Determine if bestiole will have eyes based on configuration
+    if ((static_cast<double>(rand()) / RAND_MAX) < Configuration::TAUX_ACCESSOIRES)
+    {
+        IAccessoire* accessoire = AccessoireFactory::getInstance()->createRandomAccessoire();
+        bestiole->ajouterAccessoire(accessoire);
+    }
+
+    return bestiole;
 }
 

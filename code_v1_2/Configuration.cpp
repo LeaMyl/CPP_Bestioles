@@ -15,12 +15,12 @@ double Configuration::TAUX_YEUX = 2.0/3.0;
 double Configuration::TAUX_OREILLES = 2.0/3.0; //TAUX_OREILLES + TAUX_YEUX peut etre <1 car on peut avoir des yeux et des oreilles en même temps
 
 
-double Configuration::TAUX_ACCESSOIRES = 1.0/3.0;
+double Configuration::TAUX_ACCESSOIRES = 3.0/3.0;
 
 
 double Configuration::AFF_SIZE = 10;
 double Configuration::MAX_VITESSE = 5;
-int Configuration::VIE = 500;
+int Configuration::VIE = 1000;
 double Configuration::PROPORTION_CHANGE = 10;
 
 
@@ -32,14 +32,17 @@ double Configuration::MAX_DELTA_Y = 100;
 double Configuration::MIN_DELTA_Y = 50;
 double Configuration::MAX_GAMMA_Y = 10;
 double Configuration::MIN_GAMMA_Y = 5;
-double Configuration::MAX_ALPHA = M_PI ;
-double Configuration::MIN_ALPHA = M_PI/6;
+double Configuration::MAX_ALPHA = M_PI +  M_PI/4;
+double Configuration::MIN_ALPHA = M_PI/4;
 
 double Configuration::MAX_NU = 10;
 double Configuration::MAX_OMEGA = 10;
 double Configuration::MAX_ETA = 10;
 double Configuration::MAX_PSI = 10;
 double Configuration::MIN_PSI = 5;
+
+
+
 
 double Configuration::GENERATION_RATE = 0.1;
 double Configuration::CLONE_RATE = 0.1;

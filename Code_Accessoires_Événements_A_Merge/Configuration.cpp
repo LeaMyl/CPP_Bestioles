@@ -1,4 +1,5 @@
 #include "Configuration.h"
+#include <cmath>
 
 double Configuration::TAUX_GREGAIRE = 0.15;
 double Configuration::TAUX_PEUREUSE = 0.15;

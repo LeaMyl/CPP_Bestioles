@@ -6,19 +6,23 @@
 #include <memory>
 #include <vector>
 #include "Bestiole.h"
+#include "AccessoireFactory.h"
 
 class BestioleFactory {
 private:
-    Configuration* config;
-
+    static BestioleFactory* instance;
+    //AccessoireFactory* factory;
 public:
     BestioleFactory();
-    BestioleFactory(Configuration* config);
-    int initialiserAttributsAgeLimite(Configuration* config);
-    double initialiserAttributsVitesse(Configuration* config);
+    //BestioleFactory(Configuration* config);
+
+    BestioleFactory* getInstance();
+    int initialiserAttributsAgeLimite();
+    double initialiserAttributsVitesse();
 
     double random_between(double a, double b);
     std::vector<std::unique_ptr<Bestiole>> creerPopulationBestioles(int nombreTotal);
+    std::unique_ptr<Bestiole> createBestioleWithRandomBestiole() ;
     ~BestioleFactory() ;
 };
 
