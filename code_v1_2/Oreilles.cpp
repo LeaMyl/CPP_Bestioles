@@ -1,5 +1,6 @@
 #include "Oreilles.h"
 #include "IBestiole.h"
+#include "IAccessoire.h"
 #include <cmath>
 #include <iostream>
 
@@ -18,10 +19,14 @@ bool Oreilles::detecte(const IBestiole& moi, const IBestiole& autre) const {
 
     // Vérification si l'autre bestiole est dans la plage d'écoute
     if (distance <= dist) {
-        // Calcul de la capacité de détection aléatoire dans [capaMin ; capaMax]
         
-        double probabilite_detection_bestiole = 1.0; // Probabilité de détection fixée à 100% pour l'exemple
-        return (probabilite_detection_bestiole <= capa);
+        double probabilite_Camoufflage_bestiole = 0; // Probabilité de Camouflage de autre
+    
+        for (const auto& accessoire : autre.getAccessoires()) {
+            //Normalement, seule l'accessoire camoufflage à probabilite_Camoufflage_bestiole different de 0
+            probabilite_Camoufflage_bestiole = accessoire->getCoeffCamoufflage();
+        }
+        return (probabilite_Camoufflage_bestiole <= capa);
     }
     else
     {
