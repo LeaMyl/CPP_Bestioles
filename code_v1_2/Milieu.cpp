@@ -225,3 +225,12 @@ void Milieu::processNaturalEvents() {
     }
 
 }
+
+
+void Milieu::toggleFieldOfView() { 
+   showFieldOfView = !showFieldOfView; 
+}
+
+bool Milieu::getShowFieldOfView() const { 
+   return showFieldOfView; 
+}

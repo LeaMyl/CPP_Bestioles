@@ -15,13 +15,7 @@ int main() {
 
     
     // Étape 3 : Créer une population de bestioleTAUX_CAPTEURSs
-    int nombreTotalBestioles = 12;  // Nombre total de bestioles à créer
-    std::vector<std::unique_ptr<Bestiole>> population = factory.creerPopulationBestioles(nombreTotalBestioles);
-    cout<<"nb de bestiole "<<population.size()<<endl;
-    for (auto& bestiole : population) {
-        ecosysteme.getMilieu().addMember(bestiole.release());  // Ajouter au milieu et relâcher la propriété
-
-    }
+   
     // Démarre l'écosystème
     ecosysteme.run();
 

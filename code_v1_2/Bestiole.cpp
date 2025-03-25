@@ -183,46 +183,52 @@ void Bestiole::draw(UImg &support) {
     int couleur_ecoute[3] = {0, 0, 255}; // Bleu pour l'écoute
     float alpha_vue = 0.3f;   // Transparence 30% pour la vision
     float alpha_ecoute = 0.2f;// Transparence 20% pour l'écoute
+     
+    bool showFields = Milieu::showFieldOfView;
 
-    for (const auto& capteur : capteurs) {
-        // Essayer de convertir le capteur en Yeux
-        if (auto yeux = dynamic_cast<Yeux*>(capteur.get())) {
-            // Le capteur est de type Yeux
-            double angle = yeux->angle;  // Récupérer l'angle de vision
-            double dist = yeux->dist;    // Récupérer la distance de détection
-    
 
-              // Dessin du cône de vision en utilisant un polygone triangulaire
-            double angle1 = orientation - angle / 2;
-            double angle2 = orientation + angle / 2;
-            double x1 = x + cos(angle1) * dist;
-            double y1 = y - sin(angle1) * dist;
-            double x2 = x + cos(angle2) * dist;
-            double y2 = y - sin(angle2) * dist;
+    //Draw des capteurs
+    if (showFields)
+    {
+        for (const auto& capteur : capteurs) {
+            // Essayer de convertir le capteur en Yeux
+            if (auto yeux = dynamic_cast<Yeux*>(capteur.get())) {
+                // Le capteur est de type Yeux
+                double angle = yeux->angle;  // Récupérer l'angle de vision
+                double dist = yeux->dist;    // Récupérer la distance de détection
         
-            CImg<int> points(3, 2);  // Création d'un tableau pour les points du triangle
-            points(0,0) = x; points(0,1) = y;
-            points(1,0) = x1; points(1,1) = y1;
-            points(2,0) = x2; points(2,1) = y2;
+
+                // Dessin du cône de vision en utilisant un polygone triangulaire
+                double angle1 = orientation - angle / 2;
+                double angle2 = orientation + angle / 2;
+                double x1 = x + cos(angle1) * dist;
+                double y1 = y - sin(angle1) * dist;
+                double x2 = x + cos(angle2) * dist;
+                double y2 = y - sin(angle2) * dist;
+            
+                CImg<int> points(3, 2);  // Création d'un tableau pour les points du triangle
+                points(0,0) = x; points(0,1) = y;
+                points(1,0) = x1; points(1,1) = y1;
+                points(2,0) = x2; points(2,1) = y2;
+            
+                support.draw_polygon(points, couleur_vue, alpha_vue);
+            }
+            // Essayer de convertir le capteur en Oreilles
+            else if (auto oreilles = dynamic_cast<Oreilles*>(capteur.get())) {
+
+                // Le capteur est de type Oreilles
+                double dist = oreilles->dist;  // Récupérer la distance de détection
+
+                // Dessin du cercle d'écoute avec transparence
+                support.draw_circle(x, y, dist, couleur_ecoute, alpha_ecoute);
         
-            support.draw_polygon(points, couleur_vue, alpha_vue);
-        }
-        // Essayer de convertir le capteur en Oreilles
-        else if (auto oreilles = dynamic_cast<Oreilles*>(capteur.get())) {
-
-            // Le capteur est de type Oreilles
-            double dist = oreilles->dist;  // Récupérer la distance de détection
-
-            // Dessin du cercle d'écoute avec transparence
-            support.draw_circle(x, y, dist, couleur_ecoute, alpha_ecoute);
-    
-        }
-        else {
-            // Le capteur est d'un autre type (non géré)
-            std::cout << "Capteur inconnu" << std::endl;
+            }
+            else {
+                // Le capteur est d'un autre type (non géré)
+                std::cout << "Capteur inconnu" << std::endl;
+            }
         }
     }
-
 
     // Dessiner le corps de base (forme ronde pour noiraude)
    double corps_taille = Configuration::AFF_SIZE; // Corps principal

@@ -18,7 +18,7 @@ public:
     Milieu(int _width, int _height);
     ~Milieu();
 
-
+    static bool showFieldOView;
     int getWidth( void ) const { return width; };
     int getHeight( void ) const { return height; };
 
@@ -48,6 +48,10 @@ public:
 
     // Variable statique pour l'affichage du champ de vision
     static bool showFieldOfView;
+    const std::vector<IBestiole*> getListeBestioles() const {return listeBestioles ;}
+
+    void toggleFieldOfView();
+    bool getShowFieldOfView() const;
 
 private:
     int width;  // Largeur du milieu
