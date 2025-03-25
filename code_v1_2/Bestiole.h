@@ -52,7 +52,7 @@ public:
     void draw(UImg& support) override;
     bool jeTeVois(const IBestiole& b) const override;
     void initCoords(int xLim, int yLim) override;
-    std::pair<int, int> getPosition() const ;
+    std::pair<int, int> getPosition() const override;
     double getVitesse() const override;
     double getOrientation() const override;
     bool meurt() override;
@@ -60,14 +60,14 @@ public:
     
     // Méthodes supplémentaires
     int getIdentite() const { return identite; }
-    void vieillir();
+    void vieillir() override;
     void ajouterCapteur(std::unique_ptr<ICapteur> capteur);
     void ajouterAccessoire(IAccessoire* accessoire);
     void setComportement(IComportement* comp);
     IComportement* getComportement() const { return comportement; };
     
     // Pour la détection des collisions
-    double getSize() const ;
+    double getSize() const override;
 
     double getLimit() const override { return ageLimite; };
     
@@ -75,19 +75,19 @@ public:
     double getCoeffCamouflage() const;
     bool detecte(const IBestiole& autre) const;
     bool estDetectee(const IBestiole& autre) const;
-    void changeOrientation(double nouvelleOrientation);
+    void changeOrientation(double nouvelleOrientation) override;
 
     friend bool operator==(const Bestiole& b1, const Bestiole& b2);
     void setVitesse(double nouvelleVitesse);
-    bool possedeYeux() const ;
-    bool possedeOreilles() const ;
-    double getResistanceCollision(double probaBase) const;
+    bool possedeYeux() const override;
+    bool possedeOreilles() const override;
+    double getResistanceCollision(double probaBase) const override;
 
-    int getX() const;
-    int getY() const;
-    void setX(int x);
-    void setY(int y);
-    const std::vector<IAccessoire*>& getAccessoires() const;
+    int getX() const override;
+    int getY() const override;
+    void setX(int x) override;
+    void setY(int y) override;
+    const std::vector<IAccessoire*>& getAccessoires() const override;
 };
 
 #endif // _BESTIOLE_H_
