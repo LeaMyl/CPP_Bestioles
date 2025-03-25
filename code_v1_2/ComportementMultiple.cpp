@@ -24,14 +24,15 @@ ComportementMultiple::~ComportementMultiple() {
 
 // Initialiser les comportements disponibles
 void ComportementMultiple::initialiserComportements() {
-    comportementsDisponibles.push_back(std::make_unique<ComportementGregaire>());
-    comportementsDisponibles.push_back(std::make_unique<ComportementPeureux>());
-    comportementsDisponibles.push_back(std::make_unique<ComportementKamikaze>());
-    comportementsDisponibles.push_back(std::make_unique<ComportementPrevoyant>());
-    
-    // Initialiser le générateur de nombres aléatoires
+    // Ajouter des comportements clonés pour éviter de partager les instances
+    comportementsDisponibles.push_back(std::unique_ptr<IComportement>(ComportementGregaire().clone()));
+    comportementsDisponibles.push_back(std::unique_ptr<IComportement>(ComportementPeureux().clone()));
+    comportementsDisponibles.push_back(std::unique_ptr<IComportement>(ComportementKamikaze().clone()));
+    comportementsDisponibles.push_back(std::unique_ptr<IComportement>(ComportementPrevoyant().clone()));
+
+    // Initialiser le générateur aléatoire
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    
+
     // Choisir un comportement initial aléatoire
     comportementActuel = std::rand() % comportementsDisponibles.size();
 }
@@ -66,7 +67,19 @@ std::array<int, 3> ComportementMultiple::getCouleur() const {
     return {128, 0, 128}; // Couleur violette pour le comportement multiple
 }
 
-// Implémentation de clone
 IComportement* ComportementMultiple::clone() const {
-    return new ComportementMultiple(*this);
+    ComportementMultiple* copie = new ComportementMultiple();
+
+    // Copier les valeurs de l’objet actuel
+    copie->comportementActuel = this->comportementActuel;
+    copie->compteurChangement = this->compteurChangement;
+
+    // Cloner chaque comportement indépendamment
+    for (const auto& comportement : this->comportementsDisponibles) {
+        copie->comportementsDisponibles.push_back(
+            std::unique_ptr<IComportement>(comportement->clone()) // Cloner le comportement
+        );
+    }
+
+    return copie;
 }

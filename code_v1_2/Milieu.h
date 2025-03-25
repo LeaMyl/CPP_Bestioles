@@ -48,10 +48,7 @@ public:
 
     // Variable statique pour l'affichage du champ de vision
     static bool showFieldOfView;
-    const std::vector<IBestiole*> getListeBestioles() const {return listeBestioles ;}
-
-    void toggleFieldOfView();
-    bool getShowFieldOfView() const;
+    std::vector<IBestiole*> getListeBestioles() const {return listeBestioles ;}
 
 private:
     int width;  // Largeur du milieu

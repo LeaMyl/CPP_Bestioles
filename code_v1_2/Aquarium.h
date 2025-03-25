@@ -1,6 +1,10 @@
 #ifndef _AQUARIUM_H_
 #define _AQUARIUM_H_
 
+#include "AccessoireFactory.h"
+#include "BestioleFactory.h"
+#include "Milieu.h"
+#include "Configuration.h"
 
 #include <iostream>
 #include <CImg.h>
@@ -27,6 +31,7 @@ public :
    Milieu & getMilieu( void ) { return *flotte; }
 
    void run( void );
+   void initialisation( Configuration config, AccessoireFactory* factory, BestioleFactory* bestioleFactory );
 
 };
 

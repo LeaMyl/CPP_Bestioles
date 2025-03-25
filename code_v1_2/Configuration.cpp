@@ -1,11 +1,11 @@
 #include "Configuration.h"
 #include <cmath>
 
-double Configuration::TAUX_GREGAIRE = 2.0/6.0;
-double Configuration::TAUX_PEUREUSE = 2.0/6.0;
-double Configuration::TAUX_KAMIKAZE = 1.0/6.0;
-double Configuration::TAUX_PREVOYANTE = 1.0/6.0;
-double Configuration::TAUX_MULTIPLE = 0.0/6.0;
+double Configuration::TAUX_GREGAIRE = 0.0/6.0;
+double Configuration::TAUX_PEUREUSE = 0.0/6.0;
+double Configuration::TAUX_KAMIKAZE = 0.0/6.0;
+double Configuration::TAUX_PREVOYANTE = 0.0/6.0;
+double Configuration::TAUX_MULTIPLE = 6.0/6.0;
 double Configuration::TAUX_NORMALE = 0.0/6.0;
 
 

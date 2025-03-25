@@ -116,6 +116,13 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
     int nbPrevoyantes = static_cast<int>(nombreTotal * Configuration::TAUX_PREVOYANTE);
     int nbMultiples = nombreTotal - (nbGregaires + nbPeureuses + nbKamikazes + nbPrevoyantes);
 
+    std::cout << "Nombre de bestioles gregaires : " << nbGregaires << std::endl;
+    std::cout << "Nombre de bestioles peureuses : " << nbPeureuses << std::endl;
+    std::cout << "Nombre de bestioles kamikazes : " << nbKamikazes << std::endl;
+    std::cout << "Nombre de bestioles prevoyantes : " << nbPrevoyantes << std::endl;
+    std::cout << "Nombre de bestioles multiples : " << nbMultiples << std::endl;
+
+    std::cout << "Création des gregaires" << std::endl;
     // Créer les bestioles grégaires
     for (int i = 0; i < nbGregaires; ++i) {
         age_limite = initialiserAttributsAgeLimite();
@@ -125,6 +132,7 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
         population.push_back(std::move(bestiole));
     }
 
+    std::cout << "Création des peureuses" << std::endl;
     // Créer les bestioles peureuses
     for (int i = 0; i < nbPeureuses; ++i) {
         age_limite = initialiserAttributsAgeLimite();
@@ -134,6 +142,7 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
         population.push_back(std::move(bestiole));
     }
 
+    std::cout << "Création des kamikaazes" << std::endl;
     // Créer les bestioles kamikazes
     for (int i = 0; i < nbKamikazes; ++i) {
         age_limite = initialiserAttributsAgeLimite();
@@ -144,6 +153,7 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
         
     }
 
+    std::cout << "Création des prevoyantes" << std::endl;
     // Créer les bestioles prévoyantes
     for (int i = 0; i < nbPrevoyantes; ++i) {
         age_limite = initialiserAttributsAgeLimite();
@@ -152,26 +162,28 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
         bestiole->setComportement(std::unique_ptr<ComportementPrevoyant>(new ComportementPrevoyant()).release());
         population.push_back(std::move(bestiole));
     }
-    // Vérifier si la population est bien remplie
-    /*
+
     // Créer les bestioles multiples
     for (int i = 0; i < nbMultiples; ++i) {
         
-        age_limite = initialiserAttributsAgeLimite(Configuration::);
-        vitesse = initialiserAttributsVitesse(Configuration::);
+        age_limite = initialiserAttributsAgeLimite();
+        vitesse = initialiserAttributsVitesse();
         auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse));  
         bestiole->setComportement(std::unique_ptr<ComportementMultiple>(new ComportementMultiple()).release());
         population.push_back(std::move(bestiole));
     }
-    */
+
     // Calculer le nombre de bestioles avec des capteurs
     int nbBestiolesAvecCapteurs = static_cast<int>(nombreTotal * Configuration::TAUX_CAPTEURS);
+    std::cout << "Nombre de bestioles avec capteurs : " << nbBestiolesAvecCapteurs << std::endl;
 
     // Calculer le nombre de Yeux et Oreilles en fonction des proportions
     int nbYeux = static_cast<int>(nbBestiolesAvecCapteurs * Configuration::TAUX_YEUX);
     int nbOreilles = static_cast<int>(nbBestiolesAvecCapteurs * Configuration::TAUX_OREILLES);
+    std::cout << "Nombre de bestioles avec Yeux : " << nbYeux << std::endl;
+    std::cout << "Nombre de bestioles avec Oreilles : " << nbOreilles << std::endl;
 
-    //cout<< "nbBestiolesAvecCapteurs = "<<nbBestiolesAvecCapteurs<< " , nbYeux = " << nbYeux<< " nbOreilles = " <<nbOreilles<<endl;
+    std::cout << "Création des Yeux" << std::endl;
     // Ajouter des Yeux aux bestioles
     for (int i = 0; i < nbYeux; ++i) {
         double angle = random_between(Configuration::MIN_ALPHA, Configuration::MIN_ALPHA);
@@ -181,6 +193,7 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
     }
 
+    std::cout << "Création des Oreilles" << std::endl;
     // Ajouter des Oreilles aux bestioles
     for (int i = 0; i <  nbOreilles; ++i) {
         double delta = random_between(Configuration::MAX_DELTA_O, Configuration::MIN_DELTA_O);
@@ -188,7 +201,7 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
         population[listeO[i]]->ajouterCapteur(std::unique_ptr<ICapteur>(new Oreilles(delta, gama)));
     }
 
-
+    std::cout << "Création des accessoires" << std::endl;
     //Ajouter des Accessoires
      // Ajouter des accessoires aléatoires
     int nbBestiolesAvecAccessoires = static_cast<int>(nombreTotal * Configuration::TAUX_ACCESSOIRES);
@@ -273,4 +286,78 @@ std::unique_ptr<Bestiole> BestioleFactory::createBestioleWithRandomBestiole() {
 
 std::unique_ptr<IBestiole> BestioleFactory::cloneBestiole(const IBestiole& bestioleToClone) {
     return std::unique_ptr<IBestiole>(bestioleToClone.clone());
+}
+
+std::vector<std::unique_ptr<IBestiole>> BestioleFactory::ajouterBestiole(const std::vector<IBestiole*>& population, int nombre) {
+    std::vector<std::unique_ptr<IBestiole>> nouvellesBestioles;
+    
+    for (int i = 0; i < nombre; ++i) {
+        auto nouvelleBestiole = createBestioleWithRandomBestiole();
+        
+        // Vérifier les ratios actuels de comportements dans la population
+        int nbTotal = population.size();
+        int nbGregaires = 0, nbPeureuses = 0, nbKamikazes = 0, nbPrevoyantes = 0, nbMultiples = 0;
+
+        for (const auto& bestiole : population) {
+            if (dynamic_cast<ComportementGregaire*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
+                nbGregaires++;
+            } else if (dynamic_cast<ComportementPeureux*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
+                nbPeureuses++;
+            } else if (dynamic_cast<ComportementKamikaze*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
+                nbKamikazes++;
+            } else if (dynamic_cast<ComportementPrevoyant*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
+                nbPrevoyantes++;
+            } else if (dynamic_cast<ComportementMultiple*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
+                nbMultiples++;
+            }
+        }
+
+        // Calculer les taux actuels
+        double tauxGregaire = static_cast<double>(nbGregaires) / nbTotal;
+        double tauxPeureux = static_cast<double>(nbPeureuses) / nbTotal;
+        double tauxKamikaze = static_cast<double>(nbKamikazes) / nbTotal;
+        double tauxPrevoyante = static_cast<double>(nbPrevoyantes) / nbTotal;
+        double tauxMultiple = static_cast<double>(nbMultiples) / nbTotal;
+
+        // Vérifier si l'ajout respecte les ratios de configuration
+        bool respecteRatios = 
+            (std::abs(tauxGregaire - Configuration::TAUX_GREGAIRE) < 0.1) &&
+            (std::abs(tauxPeureux - Configuration::TAUX_PEUREUSE) < 0.1) &&
+            (std::abs(tauxKamikaze - Configuration::TAUX_KAMIKAZE) < 0.1) &&
+            (std::abs(tauxPrevoyante - Configuration::TAUX_PREVOYANTE) < 0.1) &&
+            (std::abs(tauxMultiple - Configuration::TAUX_MULTIPLE) < 0.1);
+
+        if (respecteRatios) {
+            // Ajouter la nouvelle bestiole à la liste des nouvelles bestioles
+            nouvellesBestioles.push_back(std::move(nouvelleBestiole));
+        } else {
+            // Ajuster le comportement de la nouvelle bestiole 
+            // pour respecter les proportions configurées
+            std::unique_ptr<Bestiole> bestioleAjustee = ajusterComportementSelonRatios(std::move(nouvelleBestiole));
+            nouvellesBestioles.push_back(std::move(bestioleAjustee));
+        }
+    }
+
+    return nouvellesBestioles;
+}
+
+std::unique_ptr<Bestiole> BestioleFactory::ajusterComportementSelonRatios(std::unique_ptr<Bestiole> bestiole) {
+    // Calculer quel comportement ajouter pour respecter les ratios
+    double rand_val = static_cast<double>(rand()) / RAND_MAX;
+    
+    if (rand_val < Configuration::TAUX_GREGAIRE) {
+        bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
+    } else if (rand_val < Configuration::TAUX_GREGAIRE + Configuration::TAUX_PEUREUSE) {
+        bestiole->setComportement(std::unique_ptr<ComportementPeureux>(new ComportementPeureux()).release());
+    } else if (rand_val < Configuration::TAUX_GREGAIRE + Configuration::TAUX_PEUREUSE + Configuration::TAUX_KAMIKAZE) {
+        bestiole->setComportement(std::unique_ptr<ComportementKamikaze>(new ComportementKamikaze()).release());
+    } else if (rand_val < Configuration::TAUX_GREGAIRE + Configuration::TAUX_PEUREUSE + 
+                           Configuration::TAUX_KAMIKAZE + Configuration::TAUX_PREVOYANTE) {
+        bestiole->setComportement(std::unique_ptr<ComportementPrevoyant>(new ComportementPrevoyant()).release());
+    } else {
+        // Fallback to a default behavior if needed
+        bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
+    }
+
+    return bestiole;
 }

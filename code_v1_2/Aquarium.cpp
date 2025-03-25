@@ -72,11 +72,12 @@ void Aquarium::run( void )
             int n;
             cout << "Combien de bestioles voulez-vous ajouter ? ";
             cin >> n;
-
-            std::vector<std::unique_ptr<Bestiole>> population = bestioleFactory->creerPopulationBestioles(n);
+            const auto& listeBestioles = flotte->getListeBestioles();
+            std::vector<std::unique_ptr<IBestiole>> population = bestioleFactory->ajouterBestiole(listeBestioles, n);
             for (auto& bestiole : population) {
+               std::cout<<"Ajout d'une bestiole"<<std::endl;
                flotte->addMember(bestiole.release());  // Ajouter au milieu et relâcher la propriété
-       
+               std::cout<<"Bestiole ajoutée"<<std::endl;
            }
             display( *flotte );
             paused = false;
