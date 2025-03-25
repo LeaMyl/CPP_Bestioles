@@ -36,7 +36,7 @@ private:
     
     std::vector<std::unique_ptr<ICapteur>> capteurs;
     vector<IAccessoire*> accessoires;
-    IComportement* comportement;
+    IComportement* comportement = nullptr;  // Initialisation explicite;
 
     void bouge(int xLim, int yLim) override;
 

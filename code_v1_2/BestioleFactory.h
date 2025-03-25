@@ -23,6 +23,8 @@ public:
     double random_between(double a, double b);
     std::vector<std::unique_ptr<Bestiole>> creerPopulationBestioles(int nombreTotal);
     std::unique_ptr<Bestiole> createBestioleWithRandomBestiole() ;
+    std::unique_ptr<IBestiole> cloneBestiole(const IBestiole& bestioleToClone);
+
     ~BestioleFactory() ;
 };
 

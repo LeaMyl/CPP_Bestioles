@@ -206,21 +206,27 @@ std::vector<std::unique_ptr<Bestiole>> BestioleFactory::creerPopulationBestioles
 
 // Création d'une bestiole avec des capteurs aléatoires
 std::unique_ptr<Bestiole> BestioleFactory::createBestioleWithRandomBestiole() {
+    cout<<"create Random Bestiole"<<endl;
     int age_limite = initialiserAttributsAgeLimite();
     double vitesse = initialiserAttributsVitesse();
+    
     auto bestiole = std::unique_ptr<Bestiole>(new Bestiole(age_limite, vitesse)); 
 
     //Ajouter Random Comportement
-    int randomValue = rand() % 8; 
+    int randomValue = rand() % 5; 
     switch (randomValue) {
         case 1:
+            
             bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
+            
             break;
         case 2:
-
+           
             bestiole->setComportement(std::unique_ptr<ComportementPeureux>(new ComportementPeureux()).release());
+            
             break;
         case 3:
+            
             bestiole->setComportement(std::unique_ptr<ComportementKamikaze>(new ComportementKamikaze()).release());
             break;
         case 4:
@@ -230,23 +236,24 @@ std::unique_ptr<Bestiole> BestioleFactory::createBestioleWithRandomBestiole() {
             //bestiole->setComportement(std::unique_ptr<ComportementMultiple>(new ComportementMultiple()).release());
             cout<<"ComportementMultiple a implementer"<<endl;
         default:
-            cout<<"Pas de comportement ajouter"<<endl;
+            cout<<"Pas de comportement ajouter "<<randomValue <<endl;
     }
 
-    
-    
     // Determine if bestiole will have eyes based on configuration
     if ((static_cast<double>(rand()) / RAND_MAX) < Configuration::TAUX_CAPTEURS) {
         // Add eyes
+        
         double angle = random_between(Configuration::MIN_ALPHA, Configuration::MIN_ALPHA);
         double delta = random_between(Configuration::MIN_DELTA_Y, Configuration::MAX_DELTA_Y);
         double gama = random_between(Configuration::MIN_GAMMA_Y, Configuration::MAX_GAMMA_Y);
         bestiole->ajouterCapteur(std::unique_ptr<ICapteur>(new Yeux(angle, delta, gama)));
+
     }
     
     // Determine if bestiole will have ears based on configuration
     if ((static_cast<double>(rand()) / RAND_MAX) < Configuration::TAUX_CAPTEURS) {
         // Add ears
+        
         double delta = random_between(Configuration::MAX_DELTA_O, Configuration::MIN_DELTA_O);
         double gama = random_between(Configuration::MIN_GAMMA_O, Configuration::MAX_GAMMA_O);
         bestiole->ajouterCapteur(std::unique_ptr<ICapteur>(new Oreilles(delta, gama)));
@@ -264,3 +271,6 @@ std::unique_ptr<Bestiole> BestioleFactory::createBestioleWithRandomBestiole() {
     return bestiole;
 }
 
+std::unique_ptr<IBestiole> BestioleFactory::cloneBestiole(const IBestiole& bestioleToClone) {
+    return std::unique_ptr<IBestiole>(bestioleToClone.clone());
+}

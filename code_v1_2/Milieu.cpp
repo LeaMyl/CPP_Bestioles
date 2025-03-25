@@ -206,21 +206,22 @@ void Milieu::gererCollisions() {
 
 void Milieu::processNaturalEvents() {
     // Naissances spontanées
+    BestioleFactory* factory ;
     if ((std::rand() % 1000) < (Configuration::GENERATION_RATE * 10)) {
-        BestioleFactory* factory ;
+        
         std::unique_ptr<IBestiole> b = factory->createBestioleWithRandomBestiole();
         b->initCoords(width, height);
         std::cout << "Nouvelle bestiole née!" << std::endl;
         addMember(b.release());
     }
 
-    // Clonages
-    for (auto it = listeBestioles.begin(); it != listeBestioles.end(); ++it) {
+    for (IBestiole* bestiole : listeBestioles) {
         if ((std::rand() % 1000) < (Configuration::CLONE_RATE * 10)) {
-            IBestiole* clone = (*it)->clone();
+            std::unique_ptr<IBestiole> clone = factory->cloneBestiole(*bestiole);
             clone->initCoords(width, height);
+            listeBestioles.push_back(clone.release()); // Si vous devez garder des raw pointers
             std::cout << "Bestiole clonée!" << std::endl;
-            addMember(clone);
         }
     }
+
 }

@@ -58,9 +58,9 @@ bool ComportementPeureux::doitFuir(const Bestiole& bestiole, const Milieu& milie
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
 
     if (voisines.size() != 0){
-        std::cout<<"nb de voisins de = "<< voisines.size() <<std::endl;
+        //std::cout<<"nb de voisins de = "<< voisines.size() <<std::endl;
     }
-    return voisines.size() > 1;
+    return voisines.size() >= 1;
 }
 
 // Méthode pour calculer la direction de fuite

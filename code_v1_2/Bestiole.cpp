@@ -24,7 +24,7 @@ Bestiole::Bestiole( int ageLimi, double vitess_init)
      
 
     ageLimite = ageLimi;
-     cout << "const Bestiole (" << identite << ") par defaut" << endl;
+    cout << "const Bestiole (" << identite << ") par defaut" << endl;
  
      x = y = 0;
      cumulX = cumulY = 0.;
@@ -36,7 +36,7 @@ Bestiole::Bestiole( int ageLimi, double vitess_init)
     couleur[0] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
     couleur[1] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
     couleur[2] = static_cast<int>(static_cast<double>(rand()) / RAND_MAX * 230.);
-    
+
     // Si un comportement est défini, utiliser sa couleur
     if (comportement != nullptr) {
         auto comportementCouleur = comportement->getCouleur();
@@ -365,7 +365,7 @@ bool Bestiole::detecte(const IBestiole& autre) const
     //std::cout << "detecte() appelé pour Bestiole " << identite << " avec " << capteurs.size() << " capteurs" << std::endl;
     
     if (capteurs.empty()) {
-        std::cout << "Aucun capteur trouvé pour Bestiole " << identite << std::endl;
+        //std::cout << "Aucun capteur trouvé pour Bestiole " << identite << std::endl;
         // Your default detection logic here
         /*
         auto pos = autre.getPosition();

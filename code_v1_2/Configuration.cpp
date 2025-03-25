@@ -20,7 +20,7 @@ double Configuration::TAUX_ACCESSOIRES = 3.0/3.0;
 
 double Configuration::AFF_SIZE = 10;
 double Configuration::MAX_VITESSE = 5;
-int Configuration::VIE = 1000;
+int Configuration::VIE = 2000;
 double Configuration::PROPORTION_CHANGE = 10;
 
 
@@ -35,9 +35,9 @@ double Configuration::MIN_GAMMA_Y = 5;
 double Configuration::MAX_ALPHA = M_PI +  M_PI/4;
 double Configuration::MIN_ALPHA = M_PI/4;
 
-double Configuration::MAX_NU = 10;
+double Configuration::MAX_NU = 5;
 double Configuration::MAX_OMEGA = 10;
-double Configuration::MAX_ETA = 10;
+double Configuration::MAX_ETA = 5;
 double Configuration::MAX_PSI = 10;
 double Configuration::MIN_PSI = 5;
 
