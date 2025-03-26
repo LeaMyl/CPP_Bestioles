@@ -39,18 +39,14 @@ L'utilisateur peut modifier la valeur maximale que peut prendre le coefficient m
 
 Concernant les <b>carapaces</b>, il est possible d'influer sur la probabilité de mort suite à une collision des bestioles qui en sont munies (donnée par l'inverse de oméga). La valeur de MAX_OMEGA correspond donc à la réduction maximale de probabilité de mort en collision des bestioles possédant une carapace. On peut aussi gérer le ralentissement maximal entraîné par la carapace via MAX_ETA. <b>MAX_OMEGA et MAX_ETA doivent donc être strictement supérieurs à 1.</b>
 
-Enfin, concernant le camouflage, 
-
-
-
+Enfin, la gestion de la plage de valeurs que peuvent prendre les <b>camouflages</b> se fait en modifiant les valeurs de MIN_PSI et MAX_PSI respectivement le coefficient de camouflage minimal et maximal.
 
 ## III.7/Gestion des paramètres de reproduction et de survie
 
 ## III.8/Autres paramètres modifiables
 
 ## IV/Fonctionnalités lors de l'exécution de la simulation
-configuration dans le dossier CPP Bestioles si besoin de revenir aux parametres initiaux
- // Menu interactif de simulation :
+Voici les différentes possibilités offertes à l'utilisateur au cours de l'exécution de la simulation et les commandes associées :
     // - ESC : fermer la fenêtre
     // - N : ajouter des bestioles
     // - M : supprimer des bestioles
@@ -59,7 +55,8 @@ configuration dans le dossier CPP Bestioles si besoin de revenir aux parametres 
     // - F : afficher/masquer les champs de vision
 
  ## V/Configuration de secours
-configuration dans le dossier CPP Bestioles si besoin de revenir aux parametres initiaux
+ S'il arrivait à l'utilisateur de rentrer des valeurs incohérentes qui empêcheraient l'exécution de la simulation, de rencontrer un quelconque problème avec sa configuration personnalisée ou s'il souhaite simplement revenir à la configuration par défaut, cette dernière est accessible dans le dossier CPP_Bestioles.
+
 
 ## Auteurs : Sara Adi, Marine Delabaere, Titouan Dupasquier, Mouhamed Leye et Léa Miqueu
-## Projet académique réalisé dans le cadre de l'UE H "Advanced C++ Programming" proposée par IMT Atlantique et encadrée par Reda Bellafqira, Didier Guériot et Johanne Vincent
+## Projet académique réalisé dans le cadre de l'UE H "Advanced C++ Programming" proposée par IMT Atlantique (Ecole nationale supérieure Mines-Télécom Atlantique Bretagne Pays de la Loire) et encadrée par Reda Bellafqira, Didier Guériot et Johanne Vincent
