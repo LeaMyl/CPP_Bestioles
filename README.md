@@ -42,8 +42,10 @@ Concernant les <b>carapaces</b>, il est possible d'influer sur la probabilité d
 Enfin, la gestion de la plage de valeurs que peuvent prendre les <b>camouflages</b> se fait en modifiant les valeurs de MIN_PSI et MAX_PSI respectivement le coefficient de camouflage minimal et maximal.
 
 ## III.7/Gestion des paramètres de reproduction et de survie
+L'utilisateur peut aussi choisir le taux de génération de nouvelles bestioles, le taux de clonage et la probabilité de survie aux collisions (pour les bestioles sans carapace) en modifiant les valeurs respectives de GENERATION_RATE, CLONE_RATE et SURVIVE_COLLISION <b> qui doivent être comprises entre 0 et 1</b>.
 
 ## III.8/Autres paramètres modifiables
+On peut également choisir la taille d'affichage des bestioles (avec AFF_SIZE), leur vitesse maximale (avec MAX_VITESSE), leur durée de vie maximale (avec VIE).
 
 ## IV/Fonctionnalités lors de l'exécution de la simulation
 Voici les différentes possibilités offertes à l'utilisateur au cours de l'exécution de la simulation et les commandes associées :
