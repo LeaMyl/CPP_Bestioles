@@ -244,7 +244,7 @@ void Milieu::processNaturalEvents() {
     if ((std::rand() % 1000) < (Configuration::GENERATION_RATE * 10)) {
         std::unique_ptr<IBestiole> b = factory->createBestioleWithRandomBestiole();
         b->initCoords(width, height);
-        std::cout << "Nouvelle bestiole née!" << std::endl;
+        // std::cout << "Nouvelle bestiole née!" << std::endl;
         addMember(b.release());
     }
 
@@ -254,7 +254,7 @@ void Milieu::processNaturalEvents() {
             std::unique_ptr<IBestiole> clone = factory->cloneBestiole(*bestiole);
             clone->initCoords(width, height);
             listeBestioles.push_back(clone.release());
-            std::cout << "Bestiole clonée!" << std::endl;
+            // std::cout << "Bestiole clonée!" << std::endl;
         }
     }
 

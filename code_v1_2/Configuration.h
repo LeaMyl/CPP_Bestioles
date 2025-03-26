@@ -14,7 +14,6 @@ public:
     static double TAUX_KAMIKAZE;
     static double TAUX_PREVOYANTE;
     static double TAUX_MULTIPLE;
-    static double TAUX_NORMALE;
 
     // Taux des capteurs
     static double TAUX_CAPTEURS;
@@ -25,8 +24,9 @@ public:
     static double TAUX_ACCESSOIRES;
 
     // Paramètres de simulation
-    static double AFF_SIZE;       // Taille d'affichage
-    static double MAX_VITESSE;    // Vitesse maximale
+    static double AFF_SIZE;         // Taille d'affichage
+    static double MAX_VITESSE;      // Vitesse maximale
+    static double NOMBRE_BESTIOLES; // Nombre de bestioles
 
     // Paramètres des capteurs (oreilles et yeux)
     static double MAX_DELTA_O, MIN_DELTA_O;     // Distance d'écoute

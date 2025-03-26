@@ -7,12 +7,12 @@
 
 // Constructeur par défaut
 ComportementPrevoyant::ComportementPrevoyant() {
-    std::cout << "Constructeur de comportement prévoyant" << std::endl;
+    // std::cout << "Constructeur de comportement prévoyant" << std::endl;
 }
 
 // Destructeur
 ComportementPrevoyant::~ComportementPrevoyant() {
-    std::cout << "Destructeur de comportement prévoyant" << std::endl;
+    // std::cout << "Destructeur de comportement prévoyant" << std::endl;
 }
 
 // Calculer la nouvelle direction basée sur le comportement prévoyant

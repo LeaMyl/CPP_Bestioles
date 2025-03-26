@@ -12,13 +12,13 @@
 // Constructeur par défaut
 ComportementMultiple::ComportementMultiple() 
     : comportementActuel(0), compteurChangement(0) {
-    std::cout << "Constructeur de comportement multiple" << std::endl;
+    // std::cout << "Constructeur de comportement multiple" << std::endl;
     initialiserComportements();
 }
 
 // Destructeur
 ComportementMultiple::~ComportementMultiple() {
-    std::cout << "Destructeur de comportement multiple" << std::endl;
+    // std::cout << "Destructeur de comportement multiple" << std::endl;
     // Les comportements sont nettoyés automatiquement par les unique_ptr
 }
 

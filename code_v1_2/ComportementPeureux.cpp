@@ -7,12 +7,12 @@
 // Constructeur par défaut
 ComportementPeureux::ComportementPeureux() 
     : enTrainDeFuir(false), dureeFuite(0) {
-    std::cout << "Constructeur de comportement peureux" << std::endl;
+    // std::cout << "Constructeur de comportement peureux" << std::endl;
 }
 
 // Destructeur
 ComportementPeureux::~ComportementPeureux() {
-    std::cout << "Destructeur de comportement peureux" << std::endl;
+    // std::cout << "Destructeur de comportement peureux" << std::endl;
 }
 
 // Calculer la nouvelle direction basée sur le comportement peureux

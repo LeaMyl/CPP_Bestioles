@@ -7,7 +7,7 @@
 // Constructeur avec initialisation des paramètres auditifs
 Oreilles::Oreilles(double d, double c)
     : dist(d), capa(c) {
-    std::cout << "Constructeur Oreilles" << std::endl;
+    // std::cout << "Constructeur Oreilles" << std::endl;
 }
 
 // Méthode de détection auditive
@@ -39,5 +39,5 @@ ICapteur* Oreilles::clone() const {
 
 // Destructeur
 Oreilles::~Oreilles() {
-    std::cout << "Destructeur de Oreilles appelé" << std::endl;
+    // std::cout << "Destructeur de Oreilles appelé" << std::endl;
 }

@@ -24,7 +24,7 @@ Bestiole::Bestiole( int ageLimi, double vitess_init)
      
 
     ageLimite = ageLimi;
-    cout << "const Bestiole (" << identite << ") par defaut" << endl;
+    // cout << "const Bestiole (" << identite << ") par defaut" << endl;
  
      x = y = 0;
      cumulX = cumulY = 0.;
@@ -53,7 +53,7 @@ Bestiole::Bestiole(const Bestiole& b)
     age = 0;
     ageLimite = b.ageLimite;
 
-    cout << "const Bestiole (" << identite << ") par copie" << endl;
+    // cout << "const Bestiole (" << identite << ") par copie" << endl;
 
     x = b.x;
     y = b.y;
@@ -101,7 +101,7 @@ Bestiole::~Bestiole()
         delete comportement;
     }
 
-    cout << "dest Bestiole (" << identite << ") par defaut" << endl;;
+    // cout << "dest Bestiole (" << identite << ") par defaut" << endl;;
 }
 
 void Bestiole::initCoords(int xLim, int yLim)
@@ -225,7 +225,7 @@ void Bestiole::draw(UImg &support) {
             }
             else {
                 // Le capteur est d'un autre type (non géré)
-                std::cout << "Capteur inconnu" << std::endl;
+                // std::cout << "Capteur inconnu" << std::endl;
             }
         }
     }
@@ -368,10 +368,10 @@ bool Bestiole::jeTeVois(const IBestiole& b) const
 
 bool Bestiole::detecte(const IBestiole& autre) const
 {
-    //std::cout << "detecte() appelé pour Bestiole " << identite << " avec " << capteurs.size() << " capteurs" << std::endl;
+    //// std::cout << "detecte() appelé pour Bestiole " << identite << " avec " << capteurs.size() << " capteurs" << std::endl;
     
     if (capteurs.empty()) {
-        //std::cout << "Aucun capteur trouvé pour Bestiole " << identite << std::endl;
+        //// std::cout << "Aucun capteur trouvé pour Bestiole " << identite << std::endl;
         // Your default detection logic here
         /*
         auto pos = autre.getPosition();
@@ -383,7 +383,7 @@ bool Bestiole::detecte(const IBestiole& autre) const
     // Otherwise, use capteurs
     for (const auto& capteur : capteurs) {
         if (capteur->detecte(*this, autre)) {
-            //std::cout << "Bestiole " << identite << " détecte avec un capteur" << std::endl;
+            //// std::cout << "Bestiole " << identite << " détecte avec un capteur" << std::endl;
             return true;
         }
     }
@@ -449,9 +449,9 @@ IBestiole* Bestiole::clone() const {
 void Bestiole::ajouterCapteur(std::unique_ptr<ICapteur> capteur) 
 {
     
-    //std::cout << "AVANT: Bestiole " << identite << " a " << capteurs.size() << " capteurs" << std::endl;
+    //// std::cout << "AVANT: Bestiole " << identite << " a " << capteurs.size() << " capteurs" << std::endl;
     capteurs.push_back(std::move(capteur));
-    //std::cout << "APRES: Bestiole " << identite << " a " << capteurs.size() << " capteurs" << std::endl;
+    //// std::cout << "APRES: Bestiole " << identite << " a " << capteurs.size() << " capteurs" << std::endl;
 
 }
 

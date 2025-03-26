@@ -6,12 +6,12 @@
 
 // Constructeur par défaut
 ComportementGregaire::ComportementGregaire() {
-    std::cout << "Constructeur de comportement grégaire" << std::endl;
+    // std::cout << "Constructeur de comportement grégaire" << std::endl;
 }
 
 // Destructeur
 ComportementGregaire::~ComportementGregaire() {
-    std::cout << "Destructeur de comportement grégaire" << std::endl;
+    // std::cout << "Destructeur de comportement grégaire" << std::endl;
 }
 
 // Calculer la nouvelle direction basée sur le comportement grégaire

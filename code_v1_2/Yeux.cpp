@@ -7,7 +7,7 @@
 // Constructeur avec initialisation des paramètres de vision
 Yeux::Yeux(double a, double d, double c)
     : angle(a), dist(d), capa(c) {
-    std::cout << "Constructeur Yeux" << std::endl;
+    // std::cout << "Constructeur Yeux" << std::endl;
 }
 
 // Méthode de détection d'une autre bestiole
@@ -45,5 +45,5 @@ ICapteur* Yeux::clone() const {
 
 // Destructeur
 Yeux::~Yeux() {
-    std::cout << "Destructeur de Yeux appelé" << std::endl;
+    // std::cout << "Destructeur de Yeux appelé" << std::endl;
 }

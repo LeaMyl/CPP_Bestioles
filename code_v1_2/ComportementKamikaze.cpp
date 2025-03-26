@@ -6,12 +6,12 @@
 
 // Constructeur par défaut
 ComportementKamikaze::ComportementKamikaze() {
-    std::cout << "Constructeur de comportement kamikaze" << std::endl;
+    // std::cout << "Constructeur de comportement kamikaze" << std::endl;
 }
 
 // Destructeur
 ComportementKamikaze::~ComportementKamikaze() {
-    std::cout << "Destructeur de comportement kamikaze" << std::endl;
+    // std::cout << "Destructeur de comportement kamikaze" << std::endl;
 }
 
 // Calculer la nouvelle direction basée sur le comportement kamikaze

@@ -2,26 +2,26 @@
 #include <cmath>
 
 // Définition des taux de comportement pour les différents types de bestioles
-double Configuration::TAUX_GREGAIRE = 0.0/6.0;     // Taux de comportement grégaire (suivre le groupe)
-double Configuration::TAUX_PEUREUSE = 0.0/6.0;     // Taux de comportement peureux
-double Configuration::TAUX_KAMIKAZE = 0.0/6.0;     // Taux de comportement kamikaze
-double Configuration::TAUX_PREVOYANTE = 0.0/6.0;   // Taux de comportement prévoyant
-double Configuration::TAUX_MULTIPLE = 6.0/6.0;     // Taux de comportement multiple
-double Configuration::TAUX_NORMALE = 0.0/6.0;      // Taux de comportement normal
+double Configuration::TAUX_GREGAIRE = 1.0/6.0;     // Taux de comportement grégaire (suivre le groupe)
+double Configuration::TAUX_PEUREUSE = 1.0/6.0;     // Taux de comportement peureux
+double Configuration::TAUX_KAMIKAZE = 1.0/6.0;     // Taux de comportement kamikaze
+double Configuration::TAUX_PREVOYANTE = 1.0/6.0;   // Taux de comportement prévoyant
+double Configuration::TAUX_MULTIPLE = 1.0/6.0;     // Taux de comportement multiple
 
 // Taux de détection des capteurs
-double Configuration::TAUX_CAPTEURS = 3.0/3.0;     // Taux global de détection des capteurs
+double Configuration::TAUX_CAPTEURS = 2.0/3.0;     // Taux global de détection des capteurs
 
 // Taux de perception des yeux et oreilles
 double Configuration::TAUX_YEUX = 2.0/3.0;         // Taux de perception visuelle
 double Configuration::TAUX_OREILLES = 2.0/3.0;     // Taux de perception auditive
 
 // Taux d'accessoires
-double Configuration::TAUX_ACCESSOIRES = 3.0/3.0;  // Taux global d'accessoires
+double Configuration::TAUX_ACCESSOIRES = 2.0/3.0;  // Taux global d'accessoires
 
 // Paramètres de simulation
 double Configuration::AFF_SIZE = 10;               // Taille d'affichage des bestioles
 double Configuration::MAX_VITESSE = 5;             // Vitesse maximale
+double Configuration::NOMBRE_BESTIOLES = 12;      // Nombre de bestioles
 int Configuration::VIE = 2000;                     // Durée de vie maximale
 double Configuration::PROPORTION_CHANGE = 10;      // Proportion de changement
 

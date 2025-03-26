@@ -72,9 +72,9 @@ void Aquarium::run() {
                     bestioleFactory->ajouterBestiole(listeBestioles, n);
 
                 for (auto& bestiole : population) {
-                    std::cout << "Ajout d'une bestiole" << std::endl;
+                    // std::cout << "Ajout d'une bestiole" << std::endl;
                     flotte->addMember(bestiole.release());
-                    std::cout << "Bestiole ajoutée" << std::endl;
+                    // std::cout << "Bestiole ajoutée" << std::endl;
                 }
                 display(*flotte);
                 paused = false;
@@ -85,11 +85,13 @@ void Aquarium::run() {
                 int n;
                 cout << "Combien de bestioles voulez-vous supprimer ? ";
                 cin >> n;
-
+                if (flotte->getListeBestioles().size() < n) {
+                    n = flotte->getListeBestioles().size();
+                }
                 for (int i = 0; i < n; i++) {
                     IBestiole* b = flotte->getListeBestioles()[rand() % flotte->getListeBestioles().size()];
                     flotte->removeMember(b);
-                    cout << "Bestiole supprimée" << endl;
+                    // cout << "Bestiole supprimée" << endl;
                 }
                 display(*flotte);
                 paused = false;
@@ -121,7 +123,7 @@ void Aquarium::initialisation(Configuration config, AccessoireFactory* factory, 
     cout << "Initialisation de l'Aquarium" << endl;
     
     // Créer une population initiale de bestioles
-    int nombreTotalBestioles = 12;
+    int nombreTotalBestioles = Configuration::NOMBRE_BESTIOLES;
     std::vector<std::unique_ptr<Bestiole>> population = 
         bestioleFactory->creerPopulationBestioles(nombreTotalBestioles);
     
