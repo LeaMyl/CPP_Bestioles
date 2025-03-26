@@ -203,50 +203,15 @@ std::unique_ptr<IBestiole> BestioleFactory::cloneBestiole(const IBestiole& besti
 // Ajoute de nouvelles bestioles à une population existante
 std::vector<std::unique_ptr<IBestiole>> BestioleFactory::ajouterBestiole(const std::vector<IBestiole*>& population, int nombre) {
     std::vector<std::unique_ptr<IBestiole>> nouvellesBestioles;
+    std::vector<IBestiole*> populationMutable = population;
     
     for (int i = 0; i < nombre; ++i) {
         auto nouvelleBestiole = createBestioleWithRandomBestiole();
         
-        // Calcul des ratios actuels de comportements
-        int nbTotal = population.size();
-        int nbGregaires = 0, nbPeureuses = 0, nbKamikazes = 0, nbPrevoyantes = 0, nbMultiples = 0;
-
-        for (const auto& bestiole : population) {
-            if (dynamic_cast<ComportementGregaire*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
-                nbGregaires++;
-            } else if (dynamic_cast<ComportementPeureux*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
-                nbPeureuses++;
-            } else if (dynamic_cast<ComportementKamikaze*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
-                nbKamikazes++;
-            } else if (dynamic_cast<ComportementPrevoyant*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
-                nbPrevoyantes++;
-            } else if (dynamic_cast<ComportementMultiple*>(dynamic_cast<Bestiole*>(bestiole)->getComportement())) {
-                nbMultiples++;
-            }
-        }
-
-        // Calcul des taux actuels
-        double tauxGregaire = static_cast<double>(nbGregaires) / nbTotal;
-        double tauxPeureux = static_cast<double>(nbPeureuses) / nbTotal;
-        double tauxKamikaze = static_cast<double>(nbKamikazes) / nbTotal;
-        double tauxPrevoyante = static_cast<double>(nbPrevoyantes) / nbTotal;
-        double tauxMultiple = static_cast<double>(nbMultiples) / nbTotal;
-
-        // Vérification du respect des ratios de configuration
-        bool respecteRatios = 
-            (std::abs(tauxGregaire - Configuration::TAUX_GREGAIRE) < 0.1) &&
-            (std::abs(tauxPeureux - Configuration::TAUX_PEUREUSE) < 0.1) &&
-            (std::abs(tauxKamikaze - Configuration::TAUX_KAMIKAZE) < 0.1) &&
-            (std::abs(tauxPrevoyante - Configuration::TAUX_PREVOYANTE) < 0.1) &&
-            (std::abs(tauxMultiple - Configuration::TAUX_MULTIPLE) < 0.1);
-
-        if (respecteRatios) {
-            nouvellesBestioles.push_back(std::move(nouvelleBestiole));
-        } else {
-            // Ajustement du comportement pour respecter les proportions
-            std::unique_ptr<Bestiole> bestioleAjustee = ajusterComportementSelonRatios(std::move(nouvelleBestiole), population);
-            nouvellesBestioles.push_back(std::move(bestioleAjustee));
-        }
+        // Directement passer à l'ajustement du comportement en utilisant la fonction existante
+        std::unique_ptr<Bestiole> bestioleAjustee = ajusterComportementSelonRatios(std::move(nouvelleBestiole), populationMutable);
+        nouvellesBestioles.push_back(std::move(bestioleAjustee));
+        populationMutable.push_back(nouvellesBestioles.back().get());
     }
 
     return nouvellesBestioles;
@@ -284,12 +249,12 @@ std::unique_ptr<Bestiole> BestioleFactory::ajusterComportementSelonRatios(
     double tauxPrevoyante = static_cast<double>(nbPrevoyantes) / nbTotal;
     double tauxMultiple = static_cast<double>(nbMultiples) / nbTotal;
 
-    // Calcul des écarts par rapport aux taux de configuration
-    double ecartGregaire = std::abs(tauxGregaire - Configuration::TAUX_GREGAIRE);
-    double ecartPeureux = std::abs(tauxPeureux - Configuration::TAUX_PEUREUSE);
-    double ecartKamikaze = std::abs(tauxKamikaze - Configuration::TAUX_KAMIKAZE);
-    double ecartPrevoyante = std::abs(tauxPrevoyante - Configuration::TAUX_PREVOYANTE);
-    double ecartMultiple = std::abs(tauxMultiple - Configuration::TAUX_MULTIPLE);
+    // Calcul des écarts SIGNÉS par rapport aux taux de configuration
+    double ecartGregaire   = tauxGregaire - Configuration::TAUX_GREGAIRE;
+    double ecartPeureux    = tauxPeureux - Configuration::TAUX_PEUREUSE;
+    double ecartKamikaze   = tauxKamikaze - Configuration::TAUX_KAMIKAZE;
+    double ecartPrevoyante = tauxPrevoyante - Configuration::TAUX_PREVOYANTE;
+    double ecartMultiple   = tauxMultiple - Configuration::TAUX_MULTIPLE;
 
     // Structure pour stocker les écarts et les créateurs de comportements
     struct ComportementEcart {
@@ -307,14 +272,38 @@ std::unique_ptr<Bestiole> BestioleFactory::ajusterComportementSelonRatios(
 
     // Sélection du comportement avec l'écart maximum
     ComportementEcart comportementChoisi = comportements[0];
+    std::vector<ComportementEcart> candidats;
+    double maxEcart = 0;
+
     for (const auto& comp : comportements) {
-        if (comp.ecart > comportementChoisi.ecart) {
-            comportementChoisi = comp;
+        if (comp.ecart < maxEcart) {
+            maxEcart = comp.ecart;
+            candidats.clear();
+            candidats.push_back(comp);
+        } else if (comp.ecart == maxEcart) {
+            candidats.push_back(comp);
         }
     }
 
+    if (!candidats.empty()) {
+        int index = rand() % candidats.size();
+        comportementChoisi = candidats[index];
+    }
+
+    std::cout << "Écarts : "
+          << " Gregaire: " << ecartGregaire
+          << ", Peureux: " << ecartPeureux
+          << ", Kamikaze: " << ecartKamikaze
+          << ", Prevoyant: " << ecartPrevoyante
+          << ", Multiple: " << ecartMultiple
+          << std::endl;
+
+
+
     // Définition du comportement de la bestiole
     bestiole->setComportement(comportementChoisi.createur());
+    std::cout << "Comportement choisi : " << typeid(*bestiole->getComportement()).name() << std::endl;
+
 
     return bestiole;
 }

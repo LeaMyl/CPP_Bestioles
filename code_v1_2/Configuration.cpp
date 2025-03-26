@@ -5,11 +5,11 @@
 double Configuration::NOMBRE_BESTIOLES = 12;      // Nombre de bestioles
 
 // Définition des taux de comportement pour les différents types de bestioles
-double Configuration::TAUX_GREGAIRE = 1.0/6.0;     // Taux de comportement grégaire (suivre le groupe)
-double Configuration::TAUX_PEUREUSE = 1.0/6.0;     // Taux de comportement peureux
-double Configuration::TAUX_KAMIKAZE = 1.0/6.0;     // Taux de comportement kamikaze
-double Configuration::TAUX_PREVOYANTE = 1.0/6.0;   // Taux de comportement prévoyant
-double Configuration::TAUX_MULTIPLE = 1.0/6.0;     // Taux de comportement multiple
+double Configuration::TAUX_GREGAIRE = 1.0/5.0;     // Taux de comportement grégaire (suivre le groupe)
+double Configuration::TAUX_PEUREUSE = 1.0/5.0;     // Taux de comportement peureux
+double Configuration::TAUX_KAMIKAZE = 1.0/5.0;     // Taux de comportement kamikaze
+double Configuration::TAUX_PREVOYANTE = 1.0/5.0;   // Taux de comportement prévoyant
+double Configuration::TAUX_MULTIPLE = 1.0/5.0;     // Taux de comportement multiple
 
 // Taux de détection des capteurs
 double Configuration::TAUX_CAPTEURS = 2.0/3.0;     // Taux global de détection des capteurs
