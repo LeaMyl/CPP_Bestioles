@@ -3,18 +3,23 @@
 
 #include "IBestiole.h"
 #include "Configuration.h"
+#include "FactoryMethod.h"
 #include <memory>
 #include <vector>
 #include "Bestiole.h"
 #include "AccessoireFactory.h"
 
-class BestioleFactory {
+class BestioleFactory : public FactoryMethod {
 private:
     static BestioleFactory* instance;
-    //AccessoireFactory* factory;
+
 public:
     BestioleFactory();
-    //BestioleFactory(Configuration* config);
+
+    // Implémentation de la méthode virtuelle de FactoryMethod
+    IBestiole* creerIBestiole() override {
+        return createBestioleWithRandomBestiole().release();
+    }
 
     BestioleFactory* getInstance();
     int initialiserAttributsAgeLimite();
@@ -22,7 +27,7 @@ public:
 
     double random_between(double a, double b);
     std::vector<std::unique_ptr<Bestiole>> creerPopulationBestioles(int nombreTotal);
-    std::unique_ptr<Bestiole> createBestioleWithRandomBestiole() ;
+    std::unique_ptr<Bestiole> createBestioleWithRandomBestiole();
     std::unique_ptr<IBestiole> cloneBestiole(const IBestiole& bestioleToClone);
 
     std::unique_ptr<Bestiole> ajusterComportementSelonRatios(
@@ -30,7 +35,7 @@ public:
         const std::vector<IBestiole*>& population);
     std::vector<std::unique_ptr<IBestiole>> ajouterBestiole(const std::vector<IBestiole*>& population, int nombre);
 
-    ~BestioleFactory() ;
+    ~BestioleFactory();
 };
 
 #endif // _BESTIOLEFACTORY_H_
