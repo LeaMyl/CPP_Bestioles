@@ -13,10 +13,11 @@ Il faut ensuite exécuter la simulation avec la commande ./main qui fait appara�
 ## III/Gestion des paramètres de la simulation
 En réalisant l'étape précédente, l'utilisateur lance la simulation avec des paramètres par défaut. Cependant, il a la possibilité de choisir les différents paramètres de celle-ci. Pour ce faire, il lui suffit d'ouvrir le fichier Configuration.cpp. 
 
-## III.1/Gestion de la répartition des comportements
+## III.1/Gestion de la proportion des comportements
 Tout d'abord, il peut choisir le nombre de bestioles à générer initialement en modifiant la valeur de NOMBRE_BESTIOLES. Il est également possible de gérer la proportion en termes de comportements des bestioles générées, en modifiant les valeurs de TAUX_GREGAIRE, TAUX_PEUREUSE, TAUX_KAMIKAZE, TAUX_PREVOYANTE et TAUX_MULTIPLE. <b>Pour des raisons évidentes, leurs valeurs doivent être comprises entre 0 et 6 et leur somme doit être égale à 6.</b> A noter que le comportement d'une bestiole peut être identifié grâce à sa couleur (bleu pour grégaire, rouge pour peureuse, orange pour kamikaze, vert pour prévoyante et violet pour multiple).
 
-## III.2/Gestion
+## III.2/Gestion de la proportion de capteurs 
+
 
 
 
