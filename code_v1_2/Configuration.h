@@ -8,6 +8,8 @@
 class Configuration
 {
 public:
+
+    static double NOMBRE_BESTIOLES; // Nombre de bestioles
     // Taux de probabilité des différents comportements
     static double TAUX_GREGAIRE;
     static double TAUX_PEUREUSE;
@@ -26,7 +28,7 @@ public:
     // Paramètres de simulation
     static double AFF_SIZE;         // Taille d'affichage
     static double MAX_VITESSE;      // Vitesse maximale
-    static double NOMBRE_BESTIOLES; // Nombre de bestioles
+
 
     // Paramètres des capteurs (oreilles et yeux)
     static double MAX_DELTA_O, MIN_DELTA_O;     // Distance d'écoute

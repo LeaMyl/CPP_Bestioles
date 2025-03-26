@@ -1,6 +1,9 @@
 #include "Configuration.h"
 #include <cmath>
 
+
+double Configuration::NOMBRE_BESTIOLES = 12;      // Nombre de bestioles
+
 // Définition des taux de comportement pour les différents types de bestioles
 double Configuration::TAUX_GREGAIRE = 1.0/6.0;     // Taux de comportement grégaire (suivre le groupe)
 double Configuration::TAUX_PEUREUSE = 1.0/6.0;     // Taux de comportement peureux
@@ -21,7 +24,7 @@ double Configuration::TAUX_ACCESSOIRES = 2.0/3.0;  // Taux global d'accessoires
 // Paramètres de simulation
 double Configuration::AFF_SIZE = 10;               // Taille d'affichage des bestioles
 double Configuration::MAX_VITESSE = 5;             // Vitesse maximale
-double Configuration::NOMBRE_BESTIOLES = 12;      // Nombre de bestioles
+
 int Configuration::VIE = 2000;                     // Durée de vie maximale
 double Configuration::PROPORTION_CHANGE = 10;      // Proportion de changement
 
