@@ -6,36 +6,41 @@
 
 // Constructeur par défaut
 ComportementGregaire::ComportementGregaire() {
-    // Initialisation des attributs si nécessaire
-    std::cout << "Constructeur ComportementGregaire" << std::endl;
+    std::cout << "Constructeur de comportement grégaire" << std::endl;
 }
 
 // Destructeur
 ComportementGregaire::~ComportementGregaire() {
-    // Libération des ressources si nécessaire
-    std::cout << "Destructeur ComportementGregaire" << std::endl;
+    std::cout << "Destructeur de comportement grégaire" << std::endl;
 }
 
-// Implémentation de calculerNouvelleDirection
+// Calculer la nouvelle direction basée sur le comportement grégaire
+// Alignement de direction avec les bestioles voisines
 double ComportementGregaire::calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) {
+    // Détecter les bestioles voisines
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
+    
+    // Si aucune bestiole voisine, conserver la direction actuelle
     if (voisines.empty()) {
         return bestiole.getOrientation();
     }
+    
+    // Calculer la direction moyenne des voisines
     double directionMoyenne = 0.0;
     for (const auto& voisine : voisines) {
         directionMoyenne += voisine->getOrientation();
     }
     directionMoyenne /= voisines.size();
+    
     return directionMoyenne;
 }
 
-// Implémentation de getCouleur
+// Retourne la couleur associée au comportement grégaire (bleu)
 std::array<int, 3> ComportementGregaire::getCouleur() const {
-    return {0, 0, 255}; // Couleur bleue pour le comportement grégaire
+    return {0, 0, 255}; // Bleu
 }
 
-// Implémentation de clone
+// Créer un clone du comportement
 IComportement* ComportementGregaire::clone() const {
     return new ComportementGregaire(*this);
 }

@@ -3,24 +3,28 @@
 
 #include <array>
 
-// Déclaration anticipée de Bestiole
+// Déclarations anticipées pour éviter les inclusions circulaires
 class Bestiole;
 class Milieu;
 
-// Interface IComportement
+// Interface définissant le comportement des bestioles
 class IComportement {
 public:
-    // Méthode virtuelle pure pour calculer la nouvelle direction d'une bestiole
+    // Calcule la nouvelle direction de déplacement de la bestiole
+    // @param bestiole La bestiole dont on calcule la direction
+    // @param milieu L'environnement dans lequel la bestiole évolue
+    // @return L'angle de la nouvelle direction
     virtual double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) = 0;
 
-    // Méthode virtuelle pour obtenir la couleur associée au comportement
+    // Obtient la couleur associée au comportement
+    // @return Un tableau RGB représentant la couleur
     virtual std::array<int, 3> getCouleur() const = 0;
 
-    // Méthode virtuelle pour cloner le comportement (utile pour le polymorphisme)
+    // Méthode de clonage pour le patron de conception Prototype
     virtual IComportement* clone() const = 0;
 
-    // Destructeur virtuel pour assurer une destruction propre des objets dérivés
+    // Destructeur virtuel pour une destruction sécurisée des dérivés
     virtual ~IComportement() = default;
 };
 
-#endif // ICOMPORTEMENT_H
+#endif

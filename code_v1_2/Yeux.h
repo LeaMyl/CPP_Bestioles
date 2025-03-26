@@ -7,15 +7,17 @@
 class Yeux : public ICapteur {
 public:
     double angle;  // Champ angulaire de vision [αmin ; αmax]
-    double dist;  // Distance de détection [δymin ; δymax]
-    double capa;  // Capacité de détection [γymin ; γymax]
+    double dist;   // Distance de détection [δymin ; δymax]
+    double capa;   // Capacité de détection [γymin ; γymax]
 
-    Yeux(double a ,double d, double c);
+    Yeux(double a, double d, double c);
     ~Yeux();
 
-    // Implémentation des méthodes de ICapteur
+    // Implémentation de la détection de bestioles
     bool detecte(const IBestiole& moi, const IBestiole& autre) const override;
+    
+    // Clonage du capteur
     ICapteur* clone() const override;
 };
 
-#endif // _YEUX_H_
+#endif

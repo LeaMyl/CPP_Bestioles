@@ -18,47 +18,41 @@ public:
     Milieu(int _width, int _height);
     ~Milieu();
 
+    // Propriétés statiques et accesseurs
     static bool showFieldOView;
-    int getWidth( void ) const { return width; };
-    int getHeight( void ) const { return height; };
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
 
+    // Méthodes principales de simulation
+    void step();                         // Effectue une étape de simulation
+    void addMember(IBestiole* b);        // Ajoute une bestiole au milieu
+    void removeMember(IBestiole* b);     // Supprime une bestiole du milieu
 
-    // Méthodes principales
-    void step(); // Effectue une étape de simulation
-    void addMember(IBestiole* b); // Ajoute une bestiole au milieu
-    void removeMember(IBestiole* b); // Supprime une bestiole du milieu
+    // Gestion des événements naturels
+    void gererCollisions();               // Gère les collisions entre bestioles
+    void processNaturalEvents();          // Gère les naissances et clonages
 
-    // Gestion des collisions et des événements naturels
-    void gererCollisions(); // Gère les collisions entre bestioles
-    void processNaturalEvents(); // Gère les naissances et clonages
+    // Utilitaires d'information
+    void printInfo() const;               // Affiche des statistiques sur les bestioles
+    void toggleFieldOfView();             // Active/désactive l'affichage du champ de vision
+    bool getShowFieldOfView() const;      // Retourne l'état du champ de vision
 
-    // Affichage des informations
-    void printInfo() const; // Affiche des statistiques sur les bestioles
-
-    // Gestion du champ de vision
-    void toggleFieldOfView(); // Active/désactive l'affichage du champ de vision
-    bool getShowFieldOfView() const; // Retourne l'état du champ de vision
-
-    // Méthodes utilitaires
-    int nbVoisins(const IBestiole& b) const; // Retourne le nombre de voisins d'une bestiole
+    // Méthodes de détection
+    int nbVoisins(const IBestiole& b) const;                       // Compte les voisins d'une bestiole
     std::vector<const IBestiole*> detecteBestiolesVoisines(const IBestiole& b) const; // Détecte les bestioles voisines
 
     // Couleur de fond
     static const T white[];
-
-    // Variable statique pour l'affichage du champ de vision
     static bool showFieldOfView;
-    std::vector<IBestiole*> getListeBestioles() const {return listeBestioles ;}
+    std::vector<IBestiole*> getListeBestioles() const { return listeBestioles; }
 
 private:
-    int width;  // Largeur du milieu
-    int height; // Hauteur du milieu
-
-    // Liste des bestioles dans le milieu
-    std::vector<IBestiole*> listeBestioles;
+    int width;                            // Largeur du milieu
+    int height;                           // Hauteur du milieu
+    std::vector<IBestiole*> listeBestioles; // Liste des bestioles dans le milieu
 
     // Méthode interne pour tester les collisions
     bool testCollision(const IBestiole& b1, const IBestiole& b2) const;
 };
 
-#endif // _MILIEU_H_
+#endif

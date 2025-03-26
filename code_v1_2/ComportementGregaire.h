@@ -3,23 +3,21 @@
 
 #include "IComportement.h"
 
-// Classe ComportementGregaire implémentant IComportement
+// Comportement Grégaire : la bestiole suit le groupe
 class ComportementGregaire : public IComportement {
 public:
-    // Constructeur par défaut
+    // Constructeur et destructeur
     ComportementGregaire();
-
-    // Destructeur
     ~ComportementGregaire() override;
 
-    // Implémentation de la méthode calculerNouvelleDirection
+    // Calcule la direction en fonction du groupe
     double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
-    // Implémentation de la méthode getCouleur
+    // Retourne la couleur associée à ce comportement
     std::array<int, 3> getCouleur() const override;
 
-    // Implémentation de la méthode clone
+    // Clone le comportement courant
     IComportement* clone() const override;
 };
 
-#endif // COMPORTEMENTGREGAIRE_H
+#endif

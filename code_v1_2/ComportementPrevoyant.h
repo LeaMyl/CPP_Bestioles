@@ -1,32 +1,29 @@
-// ComportementPrevoyant.h
 #ifndef COMPORTEMENTPREVOYANT_H
 #define COMPORTEMENTPREVOYANT_H
 
 #include "IComportement.h"
 #include "IBestiole.h"
 
-// Classe ComportementPrevoyant implémentant IComportement
+// Comportement Prévoyant : la bestiole anticipe les collisions
 class ComportementPrevoyant : public IComportement {
 public:
-    // Constructeur par défaut
+    // Constructeur et destructeur
     ComportementPrevoyant();
-
-    // Destructeur
     ~ComportementPrevoyant() override;
 
-    // Implémentation de la méthode calculerNouvelleDirection
+    // Calcule la nouvelle direction en évitant les collisions potentielles
     double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
-    // Implémentation de la méthode getCouleur
+    // Retourne la couleur associée à ce comportement
     std::array<int, 3> getCouleur() const override;
 
-    // Implémentation de la méthode clone
+    // Clone le comportement courant
     IComportement* clone() const override;
 
 private:
-    // Méthode pour prédire les collisions potentielles
+    // Méthode interne de détection des collisions
     bool detecterCollisionPotentielle(const Bestiole& bestiole, const IBestiole& autre, 
                                      double& tempsCollision, double& angleEvitement) const;
 };
 
-#endif // COMPORTEMENTPREVOYANT_H
+#endif

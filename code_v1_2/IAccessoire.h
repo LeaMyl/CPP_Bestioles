@@ -1,23 +1,30 @@
 #ifndef _IACCESSOIRE_H_
 #define _IACCESSOIRE_H_
 
+// Interface définissant les caractéristiques des accessoires pour les bestioles
 class IAccessoire {
 public:
+    // Destructeur virtuel pour permettre une destruction sécurisée des dérivés
     virtual ~IAccessoire() {}
     
-    // Modify speed of the bestiole (returns modified speed)
+    // Modifie la vitesse de la bestiole
+    // @param vitesse Vitesse initiale
+    // @return Vitesse modifiée
     virtual double modulerVitesse(double vitesse) const = 0;
     
-    // Modify death probability in collisions (returns modified probability)
+    // Modifie la probabilité de mort lors des collisions
+    // @param proba Probabilité initiale
+    // @return Probabilité modifiée
     virtual double modulerResistance(double proba) const = 0;
     
-    // Get camouflage coefficient (0 = not camouflaged, 1 = perfectly camouflaged)
+    // Obtient le coefficient de camouflage
+    // @return Coefficient entre 0 (pas camouflé) et 1 (parfaitement camouflé)
     virtual double getCoeffCamoufflage() const = 0;
     
-    // Clone method for the prototype pattern
+    // Méthode de clonage pour le patron de conception Prototype
     virtual IAccessoire* clone() const = 0;
     
-    // For visual representation
+    // Obtient le type d'accessoire pour représentation visuelle
     virtual int getType() const = 0;
 };
 

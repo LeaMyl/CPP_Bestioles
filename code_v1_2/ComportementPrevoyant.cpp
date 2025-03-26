@@ -1,4 +1,3 @@
-// ComportementPrevoyant.cpp
 #include "ComportementPrevoyant.h"
 #include "Bestiole.h"
 #include "Milieu.h"
@@ -8,31 +7,36 @@
 
 // Constructeur par défaut
 ComportementPrevoyant::ComportementPrevoyant() {
-    std::cout << "Constructeur ComportementPrevoyant" << std::endl;
+    std::cout << "Constructeur de comportement prévoyant" << std::endl;
 }
 
 // Destructeur
 ComportementPrevoyant::~ComportementPrevoyant() {
-    std::cout << "Destructeur ComportementPrevoyant" << std::endl;
+    std::cout << "Destructeur de comportement prévoyant" << std::endl;
 }
 
-// Implémentation de calculerNouvelleDirection
+// Calculer la nouvelle direction basée sur le comportement prévoyant
 double ComportementPrevoyant::calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) {
+    // Détecter les bestioles voisines
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
+    
+    // Si aucune bestiole voisine, conserver la direction actuelle
     if (voisines.empty()) {
         return bestiole.getOrientation();
     }
 
-    // Vérifier les collisions potentielles avec les bestioles voisines
+    // Variables pour stocker les informations de collision
     double tempsCollisionMin = std::numeric_limits<double>::max();
     double angleEvitement = bestiole.getOrientation();
     bool collisionDetectee = false;
 
+    // Vérifier les collisions potentielles avec chaque bestiole voisine
     for (const auto& voisine : voisines) {
         double tempsCollision;
         double angleEvitementLocal;
         
         if (detecterCollisionPotentielle(bestiole, *voisine, tempsCollision, angleEvitementLocal)) {
+            // Mettre à jour l'angle d'évitement si une collision plus proche est détectée
             if (tempsCollision < tempsCollisionMin) {
                 tempsCollisionMin = tempsCollision;
                 angleEvitement = angleEvitementLocal;
@@ -41,52 +45,51 @@ double ComportementPrevoyant::calculerNouvelleDirection(Bestiole& bestiole, cons
         }
     }
 
+    // Retourner l'angle d'évitement si une collision est détectée
     if (collisionDetectee) {
         return angleEvitement;
     }
     
+    // Sinon, conserver la direction actuelle
     return bestiole.getOrientation();
 }
 
-// Implémentation de getCouleur
+// Retourne la couleur associée au comportement prévoyant (vert)
 std::array<int, 3> ComportementPrevoyant::getCouleur() const {
-    return {0, 128, 0}; // Couleur verte pour le comportement prévoyant
+    return {0, 128, 0}; // Vert
 }
 
-// Implémentation de clone
+// Créer un clone du comportement
 IComportement* ComportementPrevoyant::clone() const {
     return new ComportementPrevoyant(*this);
 }
 
-// Méthode pour prédire les collisions potentielles
+// Détecter les collisions potentielles
 bool ComportementPrevoyant::detecterCollisionPotentielle(const Bestiole& bestiole, const IBestiole& autre, 
                                                         double& tempsCollision, double& angleEvitement) const {
-    // Position et vélocité de la bestiole actuelle
+    // Récupérer les positions et vélocités des bestioles
     auto pos1 = bestiole.getPosition();
-    double x1 = pos1.first;
-    double y1 = pos1.second;
+    double x1 = pos1.first, y1 = pos1.second;
     double vx1 = bestiole.getVitesse() * cos(bestiole.getOrientation());
     double vy1 = bestiole.getVitesse() * sin(bestiole.getOrientation());
     
-    // Position et vélocité de l'autre bestiole
     auto pos2 = autre.getPosition();
-    double x2 = pos2.first;
-    double y2 = pos2.second;
+    double x2 = pos2.first, y2 = pos2.second;
     double vx2 = autre.getVitesse() * cos(autre.getOrientation());
     double vy2 = autre.getVitesse() * sin(autre.getOrientation());
     
-    // Calculer les vitesses relatives
+    // Calculer les vitesses et positions relatives
     double dvx = vx2 - vx1;
     double dvy = vy2 - vy1;
     double dx = x2 - x1;
     double dy = y2 - y1;
     
-    // Somme des rayons (utiliser getSize depuis IBestiole)
+    // Calculer la somme des rayons des bestioles
     double sumRadius = bestiole.getSize() / 2.0 + autre.getSize() / 2.0;
     
-    // Calculer les coefficients de l'équation quadratique
+    // Résoudre l'équation quadratique pour détecter la collision
     double a = dvx * dvx + dvy * dvy;
-    if (a < 0.0001) return false; // Les bestioles se déplacent parallèlement
+    if (a < 0.0001) return false; // Mouvement parallèle
     
     double b = 2 * (dx * dvx + dy * dvy);
     double c = dx * dx + dy * dy - sumRadius * sumRadius;
@@ -105,17 +108,16 @@ bool ComportementPrevoyant::detecterCollisionPotentielle(const Bestiole& bestiol
     // Prendre le premier temps de collision positif
     tempsCollision = (t1 > 0) ? t1 : t2;
     
-    // Si la collision est trop lointaine, l'ignorer
+    // Ignorer les collisions trop lointaines
     if (tempsCollision > 20) return false;
     
-    // Calculer l'angle pour éviter la collision
-    // Calculer le vecteur normal à la collision
+    // Calculer le point de collision
     double xCollision = x1 + vx1 * tempsCollision;
     double yCollision = y1 + vy1 * tempsCollision;
     double xOther = x2 + vx2 * tempsCollision;
     double yOther = y2 + vy2 * tempsCollision;
     
-    // Vecteur allant de la position de collision à la position de l'autre
+    // Calculer le vecteur normal à la collision
     double nx = xOther - xCollision;
     double ny = yOther - yCollision;
     
@@ -127,10 +129,10 @@ bool ComportementPrevoyant::detecterCollisionPotentielle(const Bestiole& bestiol
     }
     
     // Calculer l'angle d'évitement (perpendiculaire au vecteur normal)
-    // Choisir aléatoirement l'une des deux directions perpendiculaires possibles
+    // Choix aléatoire de la direction perpendiculaire
     bool direction = (rand() % 2 == 0);
     if (direction) {
-        angleEvitement = atan2(-nx, ny);  // Tourner à 90 degrés dans un sens
+        angleEvitement = atan2(-nx, ny);  // Tourner à 90 degrés
     } else {
         angleEvitement = atan2(nx, -ny);  // Tourner à 90 degrés dans l'autre sens
     }

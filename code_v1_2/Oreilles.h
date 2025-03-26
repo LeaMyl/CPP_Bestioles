@@ -5,17 +5,19 @@
 #include <cmath>
 
 class Oreilles : public ICapteur {
-    public:
-    double angle;  // Champ angulaire de vision [αmin ; αmax]
-    double dist;  // Distance de détection [δymin ; δymax]
-    double capa;  // Capacité de détection [γymin ; γymax]
+public:
+    double angle;  // Champ angulaire de perception
+    double dist;   // Distance de détection
+    double capa;   // Capacité de détection
 
     Oreilles(double d, double c);
     ~Oreilles();
 
-    // Implémentation des méthodes de ICapteur
+    // Détection d'une autre bestiole
     bool detecte(const IBestiole& moi, const IBestiole& autre) const override;
+    
+    // Clonage du capteur
     ICapteur* clone() const override;
 };
 
-#endif // _OREILLES_H_
+#endif

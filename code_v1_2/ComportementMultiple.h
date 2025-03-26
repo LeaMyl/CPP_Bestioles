@@ -1,4 +1,3 @@
-// ComportementMultiple.h
 #ifndef COMPORTEMENTMULTIPLE_H
 #define COMPORTEMENTMULTIPLE_H
 
@@ -6,42 +5,34 @@
 #include <vector>
 #include <memory>
 
-// Classe ComportementMultiple implémentant IComportement
+// Comportement Multiple : change dynamiquement de comportement
 class ComportementMultiple : public IComportement {
 public:
-    // Constructeur par défaut
+    // Constructeur et destructeur
     ComportementMultiple();
-
-    // Destructeur
     ~ComportementMultiple() override;
 
-    // Implémentation de la méthode calculerNouvelleDirection
+    // Calcule la nouvelle direction selon le comportement courant
     double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
-    // Implémentation de la méthode getCouleur
+    // Retourne la couleur associée au comportement courant
     std::array<int, 3> getCouleur() const override;
 
-    // Implémentation de la méthode clone
+    // Clone le comportement courant
     IComportement* clone() const override;
 
 private:
     // Liste des comportements disponibles
     std::vector<std::unique_ptr<IComportement>> comportementsDisponibles;
     
-    // Index du comportement actuel
+    // Gestion dynamique du changement de comportement
     mutable int comportementActuel;
-    
-    // Compteur pour changer de comportement
     mutable int compteurChangement;
-    
-    // Durée maximale d'un comportement
     const int DUREE_MAX_COMPORTEMENT = 100;
     
-    // Initialiser les comportements disponibles
+    // Méthodes internes
     void initialiserComportements();
-    
-    // Changer de comportement aléatoirement
     void changerComportement() const;
 };
 
-#endif // COMPORTEMENTMULTIPLE_H
+#endif

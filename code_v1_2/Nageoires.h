@@ -5,28 +5,28 @@
 
 class Nageoires : public IAccessoire {
 private:
-    double coeffVitesse; // Speed multiplier coefficient ν ∈ [1; νmax]
+    double coeffVitesse; // Coefficient multiplicateur de vitesse
 
 public:
     Nageoires(double coeff = 1.5);
     virtual ~Nageoires();
     
-    // Speed modifier (increase speed)
+    // Modification de la vitesse (augmentation)
     virtual double modulerVitesse(double vitesse) const override;
     
-    // No effect on resistance
+    // Aucun effet sur la résistance
     virtual double modulerResistance(double proba) const override;
     
-    // No camouflage effect
+    // Aucun effet de camouflage
     virtual double getCoeffCamoufflage() const override;
     
-    // Clone for prototype pattern
+    // Clonage pour le patron prototype
     virtual IAccessoire* clone() const override;
     
-    // Type identifier for visual representation
+    // Identifiant de type pour représentation visuelle
     virtual int getType() const override;
     
-    // Specific getters/setters
+    // Accesseurs spécifiques
     double getCoeffVitesse() const;
     void setCoeffVitesse(double coeff);
 };

@@ -1,49 +1,52 @@
 #include "Camouflage.h"
-#include <algorithm> // For std::clamp
+#include <algorithm> // Pour une utilisation potentielle de std::clamp
 
-// Type identifiers for visual representation
+// Énumération des types d'accessoires (cohérente entre les implémentations)
 enum AccessoireType { NAGEOIRES = 1, CARAPACE = 2, CAMOUFLAGE = 3 };
 
+// Constructeur avec validation de l'indice de camouflage
 Camouflage::Camouflage(double indice) 
     : indiceCamoufflage(indice) {
-    // Ensure the camouflage index is between 0 and 1
-    if (indiceCamoufflage < 0.0) indiceCamoufflage = 0.0;
-    if (indiceCamoufflage > 1.0) indiceCamoufflage = 1.0;
+    // Garantir que l'indice de camouflage est entre 0 et 1
+    indiceCamoufflage = std::max(0.0, std::min(indice, 1.0));
 }
 
+// Destructeur (vide car pas de gestion de mémoire dynamique)
 Camouflage::~Camouflage() {
 }
 
+// Aucune modification de vitesse
 double Camouflage::modulerVitesse(double vitesse) const {
-    // No effect on speed
     return vitesse;
 }
 
+// Aucune modification de résistance
 double Camouflage::modulerResistance(double proba) const {
-    // No effect on collision resistance
     return proba;
 }
 
+// Retourne le coefficient de camouflage
 double Camouflage::getCoeffCamoufflage() const {
-    // Return the camouflage coefficient
     return indiceCamoufflage;
 }
 
+// Créer une copie profonde du camouflage
 IAccessoire* Camouflage::clone() const {
     return new Camouflage(*this);
 }
 
+// Identifier le type d'accessoire pour la visualisation
 int Camouflage::getType() const {
     return CAMOUFLAGE;
 }
 
+// Accesseur de l'indice de camouflage
 double Camouflage::getIndiceCamoufflage() const {
     return indiceCamoufflage;
 }
 
+// Modificateur de l'indice de camouflage avec validation
 void Camouflage::setIndiceCamoufflage(double indice) {
-    // Ensure the camouflage index is between 0 and 1
-    if (indice < 0.0) indice = 0.0;
-    if (indice > 1.0) indice = 1.0;
-    indiceCamoufflage = indice;
+    // Garantir que l'indice de camouflage est entre 0 et 1
+    indiceCamoufflage = std::max(0.0, std::min(indice, 1.0));
 }

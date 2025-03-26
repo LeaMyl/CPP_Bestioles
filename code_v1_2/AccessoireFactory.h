@@ -1,45 +1,53 @@
 #ifndef _ACCESSOIRE_FACTORY_H_
 #define _ACCESSOIRE_FACTORY_H_
 
-#include "IAccessoire.h"
-#include "Nageoires.h"
-#include "Carapace.h"
-#include "Camouflage.h"
+#include "Configuration.h"  // Paramètres de configuration
+#include "IAccessoire.h"    // Interface des accessoires
+#include "Nageoires.h"      // Accessoire de nageoires
+#include "Carapace.h"       // Accessoire de carapace
+#include "Camouflage.h"     // Accessoire de camouflage
 
-#include "Configuration.h" // Pour définir les paramètres de configuration
-
+/**
+ * @class AccessoireFactory
+ * @brief Fabrique de singleton pour la création d'accessoires de créatures
+ * 
+ * Cette fabrique implémente le patron Singleton pour gérer la création 
+ * de différents types d'accessoires avec des paramètres aléatoires configurables.
+ */
 class AccessoireFactory {
 private:   
+    // Instance unique du singleton
     static AccessoireFactory* instance;
     
-    // Configuration
-    double MAX_NU = Configuration::MAX_NU;
-    double MAX_OMEGA = Configuration::MAX_OMEGA;      
-    double MAX_ETA = Configuration::MAX_ETA;    
-    double MAX_PSI = Configuration::MAX_PSI;
-    double MIN_PSI = Configuration::MIN_PSI; 
-    double TAUX_ACCESSOIRES = Configuration::TAUX_ACCESSOIRES;
+    // Paramètres de configuration avec valeurs par défaut
+    double MAX_NU = Configuration::MAX_NU;      // Coefficient max de vitesse des nageoires
+    double MAX_OMEGA = Configuration::MAX_OMEGA;// Coefficient max de résistance de la carapace
+    double MAX_ETA = Configuration::MAX_ETA;    // Coefficient max de réduction de vitesse
+    double MAX_PSI = Configuration::MAX_PSI;    // Coefficient max de camouflage
+    double MIN_PSI = Configuration::MIN_PSI;    // Coefficient min de camouflage
+    double TAUX_ACCESSOIRES = Configuration::TAUX_ACCESSOIRES; // Taux d'accessoires
     
-    // Private constructor for singleton
+    // Constructeur privé pour empêcher l'instanciation externe
     AccessoireFactory();
     
 public:
-    // Get singleton instance
+    // Obtenir l'instance unique du singleton
     static AccessoireFactory* getInstance();
     
-    // Destructor
+    // Destructeur
     ~AccessoireFactory();
     
-    // Set configuration parameters
-    void setConfig(double MAX_NU, double MAX_OMEGA, double MAX_ETA, double MIN_PSI, double MAX_PSI);
+    // Modifier les paramètres de configuration avec validation
+    void setConfig(double MAX_NU, double MAX_OMEGA, double MAX_ETA, 
+                   double MIN_PSI, double MAX_PSI);
     
-    // Create accessories with random attributes within configured ranges
-    IAccessoire* createNageoires();
-    IAccessoire* createCarapace();
-    IAccessoire* createCamouflage();
+    // Créer des types spécifiques d'accessoires avec attributs aléatoires
+    IAccessoire* createNageoires();    // Créer des nageoires
+    IAccessoire* createCarapace();     // Créer une carapace
+    IAccessoire* createCamouflage();   // Créer un camouflage
     
-    // Create a random accessory
+    // Créer un accessoire complètement aléatoire
     IAccessoire* createRandomAccessoire();
 };
 
-#endif
+#endif // _ACCESSOIRE_FACTORY_H_

@@ -2,25 +2,25 @@
 #include "Bestiole.h"
 #include "Milieu.h"
 #include <cmath>
-#include <limits> // Pour utiliser std::numeric_limits
+#include <limits>
 
 // Constructeur par défaut
 ComportementKamikaze::ComportementKamikaze() {
-    std::cout << "Constructeur ComportementKamikaze" << std::endl;
+    std::cout << "Constructeur de comportement kamikaze" << std::endl;
 }
 
 // Destructeur
 ComportementKamikaze::~ComportementKamikaze() {
-    std::cout << "Destructeur ComportementKamikaze" << std::endl;
+    std::cout << "Destructeur de comportement kamikaze" << std::endl;
 }
 
-// Implémentation de calculerNouvelleDirection
+// Calculer la nouvelle direction basée sur le comportement kamikaze
 double ComportementKamikaze::calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) {
     // Trouver la bestiole la plus proche
     const IBestiole* cible = trouverBestioleLaPlusProche(bestiole, milieu);
 
+    // Si aucune cible n'est trouvée, conserver la direction actuelle
     if (cible == nullptr) {
-        // Si aucune bestiole n'est trouvée, conserver la direction actuelle
         return bestiole.getOrientation();
     }
 
@@ -29,35 +29,40 @@ double ComportementKamikaze::calculerNouvelleDirection(Bestiole& bestiole, const
     double dx = positionCible.first - bestiole.getPosition().first;
     double dy = positionCible.second - bestiole.getPosition().second;
 
-    // Retourner l'angle de la direction vers la cible
+    // Calculer l'angle de direction vers la cible
     double angle = std::atan2(dy, dx);
     if (angle < 0) {
-        angle += 2.0 * M_PI; // Convertit les valeurs négatives en [0, 2π]
-  }
+        angle += 2.0 * M_PI; // Convertir les angles négatifs en [0, 2π]
+    }
     return angle;
 }
 
-// Implémentation de getCouleur
+// Retourne la couleur associée au comportement kamikaze (orange)
 std::array<int, 3> ComportementKamikaze::getCouleur() const {
-    return {255, 165, 0}; // Couleur orange pour le comportement kamikaze
+    return {255, 165, 0}; // Orange
 }
 
-// Implémentation de clone
+// Créer un clone du comportement
 IComportement* ComportementKamikaze::clone() const {
     return new ComportementKamikaze(*this);
 }
 
-// Méthode pour trouver la bestiole la plus proche
+// Trouver la bestiole la plus proche
 const IBestiole* ComportementKamikaze::trouverBestioleLaPlusProche(const Bestiole& bestiole, const Milieu& milieu) const {
     const IBestiole* cible = nullptr;
-    double distanceMin = std::numeric_limits<double>::max(); // Initialiser avec une valeur très grande
+    double distanceMin = std::numeric_limits<double>::max();
+    
+    // Détecter les bestioles voisines
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
+    
+    // Parcourir les voisines pour trouver la plus proche
     for (const auto& autre : voisines) {
-        if (&bestiole != autre) { // Ne pas se comparer à soi-même
+        if (&bestiole != autre) { // Éviter de se comparer à soi-même
             double dx = autre->getPosition().first - bestiole.getPosition().first;
             double dy = autre->getPosition().second - bestiole.getPosition().second;
             double distance = std::sqrt(dx * dx + dy * dy);
 
+            // Mettre à jour la cible si une distance plus courte est trouvée
             if (distance < distanceMin) {
                 distanceMin = distance;
                 cible = autre;

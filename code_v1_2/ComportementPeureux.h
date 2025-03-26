@@ -3,34 +3,30 @@
 
 #include "IComportement.h"
 
-// Classe ComportementPeureux implémentant IComportement
+// Comportement Peureux : la bestiole fuit les autres bestioles
 class ComportementPeureux : public IComportement {
 public:
-    // Constructeur par défaut
+    // Constructeur et destructeur
     ComportementPeureux();
-
-    // Destructeur
     ~ComportementPeureux() override;
 
-    // Implémentation de la méthode calculerNouvelleDirection
+    // Calcule la direction de fuite si nécessaire
     double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
-    // Implémentation de la méthode getCouleur
+    // Retourne la couleur associée à ce comportement
     std::array<int, 3> getCouleur() const override;
 
-    // Implémentation de la méthode clone
+    // Clone le comportement courant
     IComportement* clone() const override;
 
 private:
-    // Méthode pour vérifier si la bestiole doit fuir
+    // Méthodes internes de gestion du comportement
     bool doitFuir(const Bestiole& bestiole, const Milieu& milieu) const;
-
-    // Méthode pour calculer la direction de fuite
     double calculerDirectionFuite(const Bestiole& bestiole, const Milieu& milieu) const;
-
-    // Attribut pour suivre si la bestiole est en train de fuir
+    
+    // État de fuite
     mutable bool enTrainDeFuir;
-    mutable int dureeFuite; // Durée de la fuite (en pas de simulation)
+    mutable int dureeFuite;
 };
 
-#endif // COMPORTEMENTPEUREUX_H
+#endif

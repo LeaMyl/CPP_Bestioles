@@ -3,32 +3,42 @@
 
 #include "IAccessoire.h"
 
+/**
+ * @class Camouflage
+ * @brief Représente un accessoire de camouflage pour une créature
+ * 
+ * Le Camouflage fournit un coefficient de dissimulation visuelle
+ * sans affecter directement la vitesse ou la résistance.
+ */
 class Camouflage : public IAccessoire {
 private:
-    double indiceCamoufflage; // Camouflage coefficient ψ ∈ [ψmin; ψmax]
+    double indiceCamoufflage; // Coefficient de camouflage ψ ∈ [ψmin; ψmax]
 
 public:
+    // Constructeur avec indice de camouflage par défaut
     Camouflage(double indice = 0.5);
+    
+    // Destructeur
     virtual ~Camouflage();
     
-    // No effect on speed
+    // Aucune modification de vitesse
     virtual double modulerVitesse(double vitesse) const override;
     
-    // No effect on resistance
+    // Aucune modification de résistance
     virtual double modulerResistance(double proba) const override;
     
-    // Provide camouflage coefficient
+    // Retourne le coefficient de camouflage
     virtual double getCoeffCamoufflage() const override;
     
-    // Clone for prototype pattern
+    // Créer une copie profonde du camouflage
     virtual IAccessoire* clone() const override;
     
-    // Type identifier for visual representation
+    // Identifier le type d'accessoire pour la visualisation
     virtual int getType() const override;
     
-    // Specific getters/setters
+    // Accesseurs spécifiques
     double getIndiceCamoufflage() const;
     void setIndiceCamoufflage(double indice);
 };
 
-#endif
+#endif // _CAMOUFLAGE_H_

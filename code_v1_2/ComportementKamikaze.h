@@ -4,27 +4,25 @@
 #include "IComportement.h"
 #include "IBestiole.h"
 
-// Classe ComportementKamikaze implémentant IComportement
+// Comportement Kamikaze : la bestiole cherche à se diriger vers une autre bestiole
 class ComportementKamikaze : public IComportement {
 public:
-    // Constructeur par défaut
+    // Constructeur et destructeur
     ComportementKamikaze();
-
-    // Destructeur
     ~ComportementKamikaze() override;
 
-    // Implémentation de la méthode calculerNouvelleDirection
+    // Calcule la direction vers la bestiole la plus proche
     double calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) override;
 
-    // Implémentation de la méthode getCouleur
+    // Retourne la couleur associée à ce comportement
     std::array<int, 3> getCouleur() const override;
 
-    // Implémentation de la méthode clone
+    // Clone le comportement courant
     IComportement* clone() const override;
 
 private:
-    // Méthode pour trouver la bestiole la plus proche
+    // Méthode interne pour trouver la bestiole la plus proche
     const IBestiole* trouverBestioleLaPlusProche(const Bestiole& bestiole, const Milieu& milieu) const;
 };
 
-#endif // COMPORTEMENTKAMIKAZE_H
+#endif

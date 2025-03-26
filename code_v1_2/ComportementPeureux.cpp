@@ -5,71 +5,80 @@
 #include <vector>
 
 // Constructeur par défaut
-ComportementPeureux::ComportementPeureux() : enTrainDeFuir(false), dureeFuite(0) {
-    // Initialisation des attributs si nécessaire
-    std::cout << "Constructeur ComportementPeureux" << std::endl;
+ComportementPeureux::ComportementPeureux() 
+    : enTrainDeFuir(false), dureeFuite(0) {
+    std::cout << "Constructeur de comportement peureux" << std::endl;
 }
 
 // Destructeur
 ComportementPeureux::~ComportementPeureux() {
-    // Libération des ressources si nécessaire
-    std::cout << "Destructeur ComportementPeureux" << std::endl;
+    std::cout << "Destructeur de comportement peureux" << std::endl;
 }
 
-// Implémentation de calculerNouvelleDirection
-double ComportementPeureux::calculerNouvelleDirection( Bestiole& bestiole, const Milieu& milieu) {
+// Calculer la nouvelle direction basée sur le comportement peureux
+double ComportementPeureux::calculerNouvelleDirection(Bestiole& bestiole, const Milieu& milieu) {
+    // Si déjà en train de fuir
     if (enTrainDeFuir) {
         dureeFuite--;
         if (dureeFuite <= 0) {
+            // Fin de la phase de fuite
             enTrainDeFuir = false;
             bestiole.setVitesse(3.);
         }
         return bestiole.getOrientation();
     }
 
+    // Vérifier s'il faut fuir
     if (doitFuir(bestiole, milieu)) {
         enTrainDeFuir = true;
         dureeFuite = 10;
 
+        // Augmenter progressivement la vitesse
         if (bestiole.getVitesse() < 4) {
             bestiole.setVitesse(bestiole.getVitesse() + 1);
         } else {
             bestiole.setVitesse(4);
         }
 
+        // Calculer la direction de fuite
         return calculerDirectionFuite(bestiole, milieu);
     }
 
+    // Conserver la direction actuelle si pas de menace
     return bestiole.getOrientation();
 }
 
-// Implémentation de getCouleur
+// Retourne la couleur associée au comportement peureux (rouge)
 std::array<int, 3> ComportementPeureux::getCouleur() const {
-    return {255, 0, 0}; // Couleur rouge pour le comportement peureux
+    return {255, 0, 0}; // Rouge
 }
 
-// Implémentation de clone
+// Créer un clone du comportement
 IComportement* ComportementPeureux::clone() const {
     return new ComportementPeureux(*this);
 }
 
-// Méthode pour vérifier si la bestiole doit fuir
+// Déterminer si la bestiole doit fuir
 bool ComportementPeureux::doitFuir(const Bestiole& bestiole, const Milieu& milieu) const {
+    // Détecter les bestioles voisines
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
 
-    if (voisines.size() != 0){
-        //std::cout<<"nb de voisins de = "<< voisines.size() <<std::endl;
-    }
-    return voisines.size() >= 1;
+    // Fuir si au moins une bestiole voisine est détectée
+    return !voisines.empty();
 }
 
-// Méthode pour calculer la direction de fuite
+// Calculer la direction de fuite
 double ComportementPeureux::calculerDirectionFuite(const Bestiole& bestiole, const Milieu& milieu) const {
+    // Détecter les bestioles voisines
     std::vector<const IBestiole*> voisines = milieu.detecteBestiolesVoisines(bestiole);
+    
+    // Calculer la direction moyenne des voisines
     double directionMoyenne = 0.0;
     for (const auto& voisine : voisines) {
         directionMoyenne += voisine->getOrientation();
     }
     directionMoyenne /= voisines.size();
+    
+    // Fuir dans la direction opposée
     return directionMoyenne + M_PI;
 }
