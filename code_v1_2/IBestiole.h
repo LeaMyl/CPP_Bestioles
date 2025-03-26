@@ -12,7 +12,7 @@ class ICapteur;
 
 class IBestiole
 {
-    public:
+public:
 
     static int next;
 
