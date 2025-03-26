@@ -290,19 +290,19 @@ std::unique_ptr<Bestiole> BestioleFactory::ajusterComportementSelonRatios(
         comportementChoisi = candidats[index];
     }
 
-    std::cout << "Écarts : "
-          << " Gregaire: " << ecartGregaire
-          << ", Peureux: " << ecartPeureux
-          << ", Kamikaze: " << ecartKamikaze
-          << ", Prevoyant: " << ecartPrevoyante
-          << ", Multiple: " << ecartMultiple
-          << std::endl;
+    // std::cout << "Écarts : "
+    //       << " Gregaire: " << ecartGregaire
+    //       << ", Peureux: " << ecartPeureux
+    //       << ", Kamikaze: " << ecartKamikaze
+    //       << ", Prevoyant: " << ecartPrevoyante
+    //       << ", Multiple: " << ecartMultiple
+    //       << std::endl;
 
 
 
     // Définition du comportement de la bestiole
     bestiole->setComportement(comportementChoisi.createur());
-    std::cout << "Comportement choisi : " << typeid(*bestiole->getComportement()).name() << std::endl;
+    // std::cout << "Comportement choisi : " << typeid(*bestiole->getComportement()).name() << std::endl;
 
 
     return bestiole;
