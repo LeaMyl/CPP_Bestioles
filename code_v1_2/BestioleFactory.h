@@ -25,7 +25,9 @@ public:
     std::unique_ptr<Bestiole> createBestioleWithRandomBestiole() ;
     std::unique_ptr<IBestiole> cloneBestiole(const IBestiole& bestioleToClone);
 
-    std::unique_ptr<Bestiole> ajusterComportementSelonRatios(std::unique_ptr<Bestiole> bestiole);
+    std::unique_ptr<Bestiole> ajusterComportementSelonRatios(
+        std::unique_ptr<Bestiole> bestiole, 
+        const std::vector<IBestiole*>& population);
     std::vector<std::unique_ptr<IBestiole>> ajouterBestiole(const std::vector<IBestiole*>& population, int nombre);
 
     ~BestioleFactory() ;

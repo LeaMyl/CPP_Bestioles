@@ -333,7 +333,7 @@ std::vector<std::unique_ptr<IBestiole>> BestioleFactory::ajouterBestiole(const s
         } else {
             // Ajuster le comportement de la nouvelle bestiole 
             // pour respecter les proportions configurées
-            std::unique_ptr<Bestiole> bestioleAjustee = ajusterComportementSelonRatios(std::move(nouvelleBestiole));
+            std::unique_ptr<Bestiole> bestioleAjustee = ajusterComportementSelonRatios(std::move(nouvelleBestiole), population);
             nouvellesBestioles.push_back(std::move(bestioleAjustee));
         }
     }
@@ -341,23 +341,68 @@ std::vector<std::unique_ptr<IBestiole>> BestioleFactory::ajouterBestiole(const s
     return nouvellesBestioles;
 }
 
-std::unique_ptr<Bestiole> BestioleFactory::ajusterComportementSelonRatios(std::unique_ptr<Bestiole> bestiole) {
-    // Calculer quel comportement ajouter pour respecter les ratios
-    double rand_val = static_cast<double>(rand()) / RAND_MAX;
-    
-    if (rand_val < Configuration::TAUX_GREGAIRE) {
-        bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
-    } else if (rand_val < Configuration::TAUX_GREGAIRE + Configuration::TAUX_PEUREUSE) {
-        bestiole->setComportement(std::unique_ptr<ComportementPeureux>(new ComportementPeureux()).release());
-    } else if (rand_val < Configuration::TAUX_GREGAIRE + Configuration::TAUX_PEUREUSE + Configuration::TAUX_KAMIKAZE) {
-        bestiole->setComportement(std::unique_ptr<ComportementKamikaze>(new ComportementKamikaze()).release());
-    } else if (rand_val < Configuration::TAUX_GREGAIRE + Configuration::TAUX_PEUREUSE + 
-                           Configuration::TAUX_KAMIKAZE + Configuration::TAUX_PREVOYANTE) {
-        bestiole->setComportement(std::unique_ptr<ComportementPrevoyant>(new ComportementPrevoyant()).release());
-    } else {
-        // Fallback to a default behavior if needed
-        bestiole->setComportement(std::unique_ptr<ComportementGregaire>(new ComportementGregaire()).release());
+std::unique_ptr<Bestiole> ajusterComportementSelonRatios(
+    std::unique_ptr<Bestiole> bestiole, 
+    const std::vector<IBestiole*>& population) 
+{
+    // Calculer les taux réels de comportements dans la population
+    int nbTotal = population.size() + 1; // +1 pour la nouvelle bestiole
+    int nbGregaires = 0, nbPeureuses = 0, nbKamikazes = 0, nbPrevoyantes = 0, nbMultiples = 0;
+
+    for (const auto& existingBestiole : population) {
+        IComportement* comportement = dynamic_cast<Bestiole*>(existingBestiole)->getComportement();
+        
+        if (dynamic_cast<ComportementGregaire*>(comportement)) {
+            nbGregaires++;
+        } else if (dynamic_cast<ComportementPeureux*>(comportement)) {
+            nbPeureuses++;
+        } else if (dynamic_cast<ComportementKamikaze*>(comportement)) {
+            nbKamikazes++;
+        } else if (dynamic_cast<ComportementPrevoyant*>(comportement)) {
+            nbPrevoyantes++;
+        } else if (dynamic_cast<ComportementMultiple*>(comportement)) {
+            nbMultiples++;
+        }
     }
+
+    // Calculer les taux réels
+    double tauxGregaire = static_cast<double>(nbGregaires) / nbTotal;
+    double tauxPeureux = static_cast<double>(nbPeureuses) / nbTotal;
+    double tauxKamikaze = static_cast<double>(nbKamikazes) / nbTotal;
+    double tauxPrevoyante = static_cast<double>(nbPrevoyantes) / nbTotal;
+    double tauxMultiple = static_cast<double>(nbMultiples) / nbTotal;
+
+    // Calculer les écarts par rapport aux taux de configuration
+    double ecartGregaire = std::abs(tauxGregaire - Configuration::TAUX_GREGAIRE);
+    double ecartPeureux = std::abs(tauxPeureux - Configuration::TAUX_PEUREUSE);
+    double ecartKamikaze = std::abs(tauxKamikaze - Configuration::TAUX_KAMIKAZE);
+    double ecartPrevoyante = std::abs(tauxPrevoyante - Configuration::TAUX_PREVOYANTE);
+    double ecartMultiple = std::abs(tauxMultiple - Configuration::TAUX_MULTIPLE);
+
+    // Tableau des écarts et des types de comportements
+    struct ComportementEcart {
+        double ecart;
+        IComportement* (*createur)();
+    };
+
+    ComportementEcart comportements[] = {
+        {ecartGregaire, []() -> IComportement* { return new ComportementGregaire(); }},
+        {ecartPeureux, []() -> IComportement* { return new ComportementPeureux(); }},
+        {ecartKamikaze, []() -> IComportement* { return new ComportementKamikaze(); }},
+        {ecartPrevoyante, []() -> IComportement* { return new ComportementPrevoyant(); }},
+        {ecartMultiple, []() -> IComportement* { return new ComportementMultiple(); }}
+    };
+
+    // Trouver le comportement avec l'écart maximum
+    ComportementEcart comportementChoisi = comportements[0];
+    for (const auto& comp : comportements) {
+        if (comp.ecart > comportementChoisi.ecart) {
+            comportementChoisi = comp;
+        }
+    }
+
+    // Définir le comportement de la bestiole
+    bestiole->setComportement(comportementChoisi.createur());
 
     return bestiole;
 }
