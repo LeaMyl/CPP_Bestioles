@@ -22,8 +22,8 @@ ComportementGregaire.o : ComportementGregaire.h ComportementGregaire.cpp
 	g++ -Wno-deprecated-declarations -std=c++14 -c ComportementGregaire.cpp -I .
 
 # Règle pour compiler ComportementGregaire.o
-#ComportementMultiple.o : ComportementMultiple.h ComportementMultiple.cpp
-#	g++ -Wno-deprecated-declarations -std=c++14 -c ComportementMultiple.cpp -I .
+ComportementMultiple.o : ComportementMultiple.h ComportementMultiple.cpp
+	g++ -Wno-deprecated-declarations -std=c++14 -c ComportementMultiple.cpp -I .
 
 
 # Règle pour compiler ComportementPeureux.o

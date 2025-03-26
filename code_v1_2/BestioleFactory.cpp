@@ -246,7 +246,7 @@ std::unique_ptr<Bestiole> BestioleFactory::createBestioleWithRandomBestiole() {
             bestiole->setComportement(std::unique_ptr<ComportementPrevoyant>(new ComportementPrevoyant()).release());
             break;
         case 5: 
-            //bestiole->setComportement(std::unique_ptr<ComportementMultiple>(new ComportementMultiple()).release());
+            bestiole->setComportement(std::unique_ptr<ComportementMultiple>(new ComportementMultiple()).release());
             cout<<"ComportementMultiple a implementer"<<endl;
         default:
             cout<<"Pas de comportement ajouter "<<randomValue <<endl;
