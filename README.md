@@ -47,12 +47,16 @@ Enfin, la gestion de la plage de valeurs que peuvent prendre les <b>camouflages<
 
 ## IV/Fonctionnalités lors de l'exécution de la simulation
 Voici les différentes possibilités offertes à l'utilisateur au cours de l'exécution de la simulation et les commandes associées :
-    // - ESC : fermer la fenêtre
-    // - N : ajouter des bestioles
-    // - M : supprimer des bestioles
-    // - ESPACE : mettre en pause/reprendre
-    // - I : afficher les informations
-    // - F : afficher/masquer les champs de vision
+
+
+| Touche | Fonction |
+|--------|----------|
+| ESC    | Fermer la fenêtre |
+| N      | Ajouter des bestioles |
+| M      | Supprimer des bestioles |
+| ESPACE | Mettre en pause/reprendre |
+| I      | Afficher les informations |
+| F      | Afficher/masquer les champs de vision |
 
  ## V/Configuration de secours
  S'il arrivait à l'utilisateur de rentrer des valeurs incohérentes qui empêcheraient l'exécution de la simulation, de rencontrer un quelconque problème avec sa configuration personnalisée ou s'il souhaite simplement revenir à la configuration par défaut, cette dernière est accessible dans le dossier CPP_Bestioles.
