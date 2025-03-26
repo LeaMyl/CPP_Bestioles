@@ -11,12 +11,11 @@ double Configuration::TAUX_KAMIKAZE = 1.0/5.0;     // Taux de comportement kamik
 double Configuration::TAUX_PREVOYANTE = 1.0/5.0;   // Taux de comportement prévoyant
 double Configuration::TAUX_MULTIPLE = 1.0/5.0;     // Taux de comportement multiple
 
-// Taux de détection des capteurs
-double Configuration::TAUX_CAPTEURS = 2.0/3.0;     // Taux global de détection des capteurs
-
-// Taux de perception des yeux et oreilles
-double Configuration::TAUX_YEUX = 2.0/3.0;         // Taux de perception visuelle
-double Configuration::TAUX_OREILLES = 2.0/3.0;     // Taux de perception auditive
+// Taux des capteurs
+double Configuration::TAUX_CAPTEURS = 2.0/3.0;     // Taux de bestioles qui ont des Capteurs
+// Taux des yeux et oreilles . TAUX_YEUX + TAUX_OREILLES peut etre superieur à 1 car une bestiolle peut avoir à la fois des yeux et des oreilles
+double Configuration::TAUX_YEUX = 2.0/3.0;         // Taux de bestioles avec des capteurs qui ont des Yeux
+double Configuration::TAUX_OREILLES = 2.0/3.0;     // Taux de bestioles avec des capteurs qui ont des Oreilles
 
 // Taux d'accessoires
 double Configuration::TAUX_ACCESSOIRES = 2.0/3.0;  // Taux global d'accessoires
