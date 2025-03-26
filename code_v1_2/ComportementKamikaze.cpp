@@ -32,9 +32,10 @@ double ComportementKamikaze::calculerNouvelleDirection(Bestiole& bestiole, const
     // Calculer l'angle de direction vers la cible
     double angle = std::atan2(dy, dx);
     if (angle < 0) {
+        std::cout << "Angle négatif : " << angle << std::endl;
         angle += 2.0 * M_PI; // Convertir les angles négatifs en [0, 2π]
     }
-    return angle;
+    return -angle;
 }
 
 // Retourne la couleur associée au comportement kamikaze (orange)

@@ -105,7 +105,7 @@ void Aquarium::run() {
                 flotte->toggleFieldOfView();
             }
             
-            wait(1000); // Éviter les pressions multiples de touches
+             
         }
 
         // Mettre à jour et afficher la simulation
