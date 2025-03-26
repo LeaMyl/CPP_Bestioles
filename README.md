@@ -35,7 +35,13 @@ Modifier la valeur de TAUX_ACCESSOIRES permet de modifier la proportion de besti
 
 
 ## III.6/Gestion des paramètres des accessoires
-L'utilisateur peut modifier la valeur maximale que peut prendre le coefficient multiplicateur des nageoires des bestioles qui en possèdent en changeant la valeur de MAX_NU. <b>Il est évident que celle-ci doit être strictement supérieure à 1.</b>
+L'utilisateur peut modifier la valeur maximale que peut prendre le coefficient multiplicateur des <b>nageoires</b> des bestioles qui en possèdent en changeant la valeur de MAX_NU. <b>Il est évident que celle-ci doit être strictement supérieure à 1.</b>
+
+Concernant les <b>carapaces</b>, il est possible d'influer sur la probabilité de mort suite à une collision des bestioles qui en sont munies (donnée par l'inverse de oméga). La valeur de MAX_OMEGA correspond donc à la réduction maximale de probabilité de mort en collision des bestioles possédant une carapace. On peut aussi gérer le ralentissement maximal entraîné par la carapace via MAX_ETA. <b>MAX_OMEGA et MAX_ETA doivent donc être strictement supérieurs à 1.</b>
+
+Enfin, concernant le camouflage, 
+
+
 
 
 ## III.7/Gestion des paramètres de reproduction et de survie
