@@ -16,10 +16,10 @@
 #include <iostream>
 #include <random>
 
-// Instance unique de la factory (Singleton)
+// Instance unique de la factory 
 BestioleFactory* BestioleFactory::instance = nullptr;
 
-// Constructeur privé pour le pattern Singleton
+// Constructeur privé pour le pattern
 BestioleFactory::BestioleFactory() {
     // Initialisations potentielles
 }
