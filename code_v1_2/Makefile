@@ -1,6 +1,6 @@
 # Règle pour créer l'exécutable final
-main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o  Configuration.o ComportementPrevoyant.o BestioleFactory.o Yeux.o Oreilles.o AccessoireFactory.o Nageoires.o Carapace.o Camouflage.o 
-	g++ -Wno-deprecated-declarations -g -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o ComportementPrevoyant.o Configuration.o BestioleFactory.o Yeux.o Oreilles.o AccessoireFactory.o Nageoires.o Carapace.o Camouflage.o  -I . -lX11 -lpthread
+main : main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o ComportementMultiple.o Configuration.o ComportementPrevoyant.o BestioleFactory.o Yeux.o Oreilles.o AccessoireFactory.o Nageoires.o Carapace.o Camouflage.o 
+	g++ -Wno-deprecated-declarations -g -std=c++14 -o main main.cpp Aquarium.o Bestiole.o Milieu.o ComportementGregaire.o ComportementPeureux.o ComportementKamikaze.o ComportementPrevoyant.o ComportementMultiple.o Configuration.o BestioleFactory.o Yeux.o Oreilles.o AccessoireFactory.o Nageoires.o Carapace.o Camouflage.o  -I . -lX11 -lpthread
 # Règle pour compiler Aquarium.o
 Aquarium.o : Aquarium.h Aquarium.cpp
 	g++ -Wno-deprecated-declarations -std=c++14 -c Aquarium.cpp -I .
@@ -21,7 +21,8 @@ Milieu.o : Milieu.h Milieu.cpp
 ComportementGregaire.o : ComportementGregaire.h ComportementGregaire.cpp
 	g++ -Wno-deprecated-declarations -std=c++14 -c ComportementGregaire.cpp -I .
 
-# Règle pour compiler ComportementGregaire.o
+
+# Règle pour compiler ComportementMultiple.o
 ComportementMultiple.o : ComportementMultiple.h ComportementMultiple.cpp
 	g++ -Wno-deprecated-declarations -std=c++14 -c ComportementMultiple.cpp -I .
 

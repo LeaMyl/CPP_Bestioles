@@ -341,7 +341,7 @@ std::vector<std::unique_ptr<IBestiole>> BestioleFactory::ajouterBestiole(const s
     return nouvellesBestioles;
 }
 
-std::unique_ptr<Bestiole> ajusterComportementSelonRatios(
+std::unique_ptr<Bestiole> BestioleFactory::ajusterComportementSelonRatios(
     std::unique_ptr<Bestiole> bestiole, 
     const std::vector<IBestiole*>& population) 
 {
